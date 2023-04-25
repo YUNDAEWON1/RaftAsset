@@ -118,6 +118,7 @@ public class BuildingPreview : MonoBehaviour
             Debug.DrawRay(transform.position + Vector3.up * 0.1f, Vector3.down * 3f, Color.white);
             Debug.DrawRay(transform.position + Vector3.up * 0.1f, transform.right * 3f, Color.white);
             Debug.DrawRay(transform.position + Vector3.up * 0.1f, -transform.right * 3f, Color.white);
+            // gittest
         }
 
     }
