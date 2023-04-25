@@ -115,8 +115,8 @@ public class StageManager : MonoBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
-            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(1.19f, 8.2f, 108f), Quaternion.identity, 0, null);
-            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(6f, 7.6f, 110f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-135f, 10.2f, 76f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-135f, 9.6f, 80f), Quaternion.identity, 0, null);
         }
 
         yield return null;
