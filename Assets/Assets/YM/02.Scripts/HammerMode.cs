@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class HammerMode : MonoBehaviour
 {
+    private Dictionary<int, string> photonMapping;
+
     private PhotonView pv;
     private PlayerCtrl playerCtrl;
     public Transform firePos;
 
-    private List<GameObject> raftList;
+    public Transform hammerShadow;
 
-    public GameObject raftPrefab;
+    private RaycastHit hitData;
+
+    public int rotation = 0;
+
+    public GameObject[] hammerObject;
+    public int selectObject = 0;
 
     void Awake()
     {
@@ -21,7 +28,9 @@ public class HammerMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.photonMapping = playerCtrl.photonMapping;
+        hammerShadow.position = Vector3.zero;
+        hammerShadow.rotation = Quaternion.identity;
     }
 
     void FixedUpdate()
@@ -33,27 +42,58 @@ public class HammerMode : MonoBehaviour
             {
                 if (hits[j].collider.tag == "HammerObject")
                 {
-                    Quaternion rotation = Quaternion.identity;
-                   
-                    // 충돌한 물체의 센터 - 충돌지점
-                    if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).x > 0.5)  // 왼쪽
+                    hitData = hits[j];
+
+                    hammerShadow.GetComponent<MeshFilter>().mesh = hammerObject[selectObject].GetComponent<MeshFilter>().sharedMesh;
+                    Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hitData.distance;
+                    hammerShadow.position = new Vector3(shadowPos.x, shadowPos.y - 0.2f, shadowPos.z);
+
+                    if (Input.GetKeyDown("r"))
                     {
-                        Debug.Log("왼쪽");
+                        hammerShadow.Rotate(0f, 90f, 0f);
                     }
-                    else if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).x < -0.5)   // 오른쪽
-                    {
-                        Debug.Log("오른쪽");
-                    }
-                    else if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).z > 0.5)     // 아래
-                    {
-                        Debug.Log("아래");
-                    }
-                    else if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).z < -0.5)   // 위
-                    {
-                        Debug.Log("위");
-                    }
+                    //// 충돌한 물체의 센터 - 충돌지점
+                    //if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).x > 0.5)  // 왼쪽
+                    //{
+                    //    Debug.Log("왼쪽");
+                    //}
+                    //else if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).x < -0.5)   // 오른쪽
+                    //{
+                    //    Debug.Log("오른쪽");
+                    //}
+                    //else if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).z > 0.5)     // 아래
+                    //{
+                    //    Debug.Log("아래");
+                    //}
+                    //else if ((hits[j].collider.bounds.center - (firePos.transform.position + Camera.main.transform.forward * hits[j].distance)).z < -0.5)   // 위
+                    //{
+                    //    Debug.Log("위");
+                    //}
+                    break;
+                }
+                else
+                {
+                    hammerShadow.GetComponent<MeshFilter>().mesh = null;
                 }
             }
+        }
+        else
+        {
+            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+        }
+    }
+
+    public void HammerClick()
+    {
+        pv.RPC("HammerClickMaster", PhotonTargets.AllBuffered, photonMapping[hammerObject[selectObject].GetComponent<PhotonObject>().objectNum], hammerShadow.position, hammerShadow.rotation);
+    }
+
+    [PunRPC]
+    void HammerClickMaster(string ID, Vector3 pos, Quaternion rot)
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.InstantiateSceneObject(ID, pos, rot, 0, null);
         }
     }
 
@@ -76,6 +116,7 @@ public class HammerMode : MonoBehaviour
 
                     // Hit된 지점에 Sphere를 그려준다.
                     Gizmos.DrawWireSphere(firePos.transform.position + Camera.main.transform.forward * hits[i].distance, sphereScale / 5f);
+                    break;
                 }
                 else
                 {
