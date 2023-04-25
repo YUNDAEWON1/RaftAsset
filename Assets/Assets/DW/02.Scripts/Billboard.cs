@@ -26,5 +26,6 @@ public class Billboard : MonoBehaviour {
     {
         //빌보드 처리 (항상 카메라를 90도 방향으로 바라봄)
         myTr.LookAt(mainCameraTr);
+        //test
     }
 }
