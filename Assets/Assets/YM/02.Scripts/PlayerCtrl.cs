@@ -11,6 +11,7 @@ public class PlayerCtrl : MonoBehaviour {
         {1, "Hook"},
         {2, "Spear_wood"},
         {3, "Plastic"},
+        {4, "Foundation"},
         {5, "Potato"},
         {6, "Purifier1"}
 
@@ -69,6 +70,7 @@ public class PlayerCtrl : MonoBehaviour {
     public Transform camTrans;
 
     private ConstructMode constructScript;
+    private HammerMode hammerScript;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
 
@@ -76,6 +78,7 @@ public class PlayerCtrl : MonoBehaviour {
     void Awake()
     {
         constructScript = GetComponent<ConstructMode>();
+        hammerScript = GetComponent<HammerMode>();
         ani = gameObject.GetComponentInChildren<Animator>();
         rightHandle = GameObject.FindGameObjectWithTag("RightHandle");
         controller = this.GetComponent<CharacterController>();
@@ -209,6 +212,10 @@ public class PlayerCtrl : MonoBehaviour {
                         {
                             ani.SetTrigger("Throw");
                             StartCoroutine(HookThrowGage());
+                        }
+                        else if(hammerMode && swimMode == false && hookThrow == false)
+                        {
+                            hammerScript.HammerClick();
                         }
                     }
                 }
