@@ -98,7 +98,6 @@ public class ConstructMode : MonoBehaviour
                 {
                     // Hit가 되지 않았으면 최대 검출 거리로 ray를 그려준다.
                     Gizmos.DrawRay(firePos.transform.position, Camera.main.transform.forward * 3f);
-                    //test
                 }
             }
         }
