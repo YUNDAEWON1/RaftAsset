@@ -3848,7 +3848,7 @@ MonoBehaviour:
   startItems:
   - {fileID: 11400000, guid: 601bce4aaea05dc40931fda58b67c5c0, type: 2}
   - {fileID: 11400000, guid: 51f739834dfc3a5428ce1dd219a92b83, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8765a86881b939145b9cb86af0341847, type: 2}
   maxItems: 10
   inventorySlots:
   - {fileID: 1448495542}
