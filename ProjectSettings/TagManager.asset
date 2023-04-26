@@ -14,6 +14,12 @@ TagManager:
   - ROOM_ITEM
   - Hook
   - InventoryManager
+  - R
+  - Up
+  - Down
+  - L
+  - Ground
+  - Land
   layers:
   - Default
   - TransparentFX

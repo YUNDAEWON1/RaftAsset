@@ -21,6 +21,9 @@ public class StageManager : MonoBehaviour
     private Transform[] playerPos;
     ////////////////////////////////////////////////////////////
 
+    // HG
+    private Transform objectPos;
+
     //스폰장소
     //private Transform[] EnemySpawnPoints;
 
@@ -48,6 +51,10 @@ public class StageManager : MonoBehaviour
 
         playerPos = GameObject.Find("PlayerSpawnPoint").GetComponentsInChildren<Transform>();
 
+        // HG
+        objectPos = GameObject.Find("Spawn_Object").transform;
+
+
         //룸에 입장한 후 기존 접속자 정보를 출력
         GetConnectPlayerCount();
         ////////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +78,9 @@ public class StageManager : MonoBehaviour
 
         //플레이어를 생성하는 함수 호출
         StartCoroutine(this.CreatePlayer());
+
+        // HG
+        StartCoroutine(this.CreateObject());
 
         //포톤 클라우드로부터 네트워크 메세지 수신을 다시 연결 이 씨이이이이이이이발
         PhotonNetwork.isMessageQueueRunning = true;
@@ -223,6 +233,20 @@ public class StageManager : MonoBehaviour
         //생성된 프리팹 오브젝트의 PhotonView 컴포넌트의 Owner는 Scene이 된다.
 
         yield return null;
+    }
+
+    // HG
+    IEnumerator CreateObject()
+    {
+        while(true)
+        {
+            GameObject plank = PhotonNetwork.Instantiate("Plank", objectPos.position, objectPos.rotation, 0);
+            Vector3 newPosition_1 = objectPos.position + new Vector3(0f, 0f, 50f);
+            GameObject plastic = PhotonNetwork.Instantiate("Plastic", newPosition_1, objectPos.rotation, 0);
+            Vector3 newPosition_2 = objectPos.position + new Vector3(0f, -2f, 100f);
+            GameObject leaf = PhotonNetwork.Instantiate("Leaf", newPosition_2, objectPos.rotation, 0);
+            yield return new WaitForSeconds(10f);
+        }
     }
 
     //포톤추가
