@@ -208,6 +208,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: d70f3b731f342f24a89f02d4e0ba37b6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: d70f3b731f342f24a89f02d4e0ba37b6, type: 3}
       propertyPath: waterQuality
       value: 2
@@ -627,8 +631,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658634279}
-  m_LocalRotation: {x: -0.1420487, y: 0.38438222, z: 0.059976723, w: 0.91020614}
-  m_LocalPosition: {x: -136.46027, y: 9.167844, z: 75.62952}
+  m_LocalRotation: {x: 0.12695757, y: 0.65748745, z: 0.11376614, w: -0.7339273}
+  m_LocalPosition: {x: -128.92467, y: 9.255407, z: 74.82462}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

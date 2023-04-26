@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: 0
-  turnSpeed: 4
+  turnSpeed: 2
   inventoryOn: 0
   constructMode: 0
   hammerMode: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
   shadowMat:
   - {fileID: 2100000, guid: 19f90d6b378b57d42b148b998ff767af, type: 2}
   - {fileID: 2100000, guid: 5355b6b3190157745b16a6ff4b1b446d, type: 2}
+  constuctPossibility: 1
 --- !u!114 &1909385029958009726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,10 +302,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePos: {fileID: 2359601795302359479}
   hammerShadow: {fileID: 2534763006767726885}
-  rotation: 0
   hammerObject:
   - {fileID: 3390702719595082227, guid: 1e5312efc4b3d524697a9ef941c3e9fc, type: 3}
+  - {fileID: 3390702719595082227, guid: 79de1bdd1c0aa3741ac02ec4f927f6d7, type: 3}
+  - {fileID: 3390702719595082227, guid: ffb01091b72042b429096458ae3e9eef, type: 3}
+  - {fileID: 3390702719595082227, guid: 6e46d041fc8a18b45a293a6ffaf78ae8, type: 3}
+  - {fileID: 3390702719595082227, guid: fa0406d5455068c4ca259a8242ca96e9, type: 3}
   selectObject: 0
+  rotation: 0
 --- !u!1 &2359601795302359478
 GameObject:
   m_ObjectHideFlags: 0

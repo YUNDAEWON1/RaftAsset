@@ -7,13 +7,22 @@ TagManager:
   - Sea
   - Tree
   - QuickSlot
-  - HammerObject
   - Stuffs
   - Object
   - RightHandle
   - ROOM_ITEM
   - Hook
   - InventoryManager
+  - R
+  - Up
+  - Down
+  - L
+  - Ground
+  - Foundation
+  - HammerObject
+  - WoodenPole
+  - WoodenStair
+  - WoodenFloor
   layers:
   - Default
   - TransparentFX
@@ -27,8 +36,8 @@ TagManager:
   - EatObject
   - Hook
   - Hammer
-  - 
-  - 
+  - HammerObject
+  - Axe
   - 
   - 
   - 

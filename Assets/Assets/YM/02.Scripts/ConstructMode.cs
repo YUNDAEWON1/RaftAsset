@@ -41,10 +41,10 @@ public class ConstructMode : MonoBehaviour
             RaycastHit[] hits = Physics.SphereCastAll(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, 3f); // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
             for (int j = 0; j < hits.Length; j++)
             {
-                if (hits[j].collider.tag == "HammerObject")
+                if (hits[j].collider.tag == "Foundation" || hits[j].collider.tag == "WoodenFloor")   //  일단 뗏목 바닥에만 건설한다고 생각하면 이게 맞음
                 {
                     Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo,3f);
-                    if (hitInfo.transform.gameObject.layer == 8)
+                    if (hitInfo.transform.gameObject.layer == 8)    // 기둥같은 애들이 있어도 건설 불가능하게 해야할거 같은데...
                     {
                         constructShadow.GetComponent<MeshRenderer>().material = shadowMat[1];
                         constuctPossibility = false;
@@ -103,7 +103,7 @@ public class ConstructMode : MonoBehaviour
             {
                 // 함수 파라미터 : 현재 위치, Sphere의 크기(x,y,z 중 가장 큰 값이 크기가 됨), Ray의 방향, RaycastHit 결과, Sphere의 회전값, SphereCast를 진행할 거리
                 //if (true == Physics.SphereCast(firePos.transform.position, sphereScale / 1f, Camera.main.transform.forward, out RaycastHit hit, 3f) && hit.collider.tag != "Ground")
-                if (hits[i].collider.tag == "HammerObject")
+                if (hits[i].collider.tag == "Foundation")
                 {
                     // Hit된 지점까지 ray를 그려준다.
                     Gizmos.DrawRay(firePos.transform.position, Camera.main.transform.forward * hits[i].distance);

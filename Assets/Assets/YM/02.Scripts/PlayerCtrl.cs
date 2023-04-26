@@ -13,15 +13,18 @@ public class PlayerCtrl : MonoBehaviour {
         {3, "Plastic"},
         {4, "Foundation"},
         {5, "Potato"},
-        {6, "Purifier1"}
-
-
+        {6, "Purifier1"},
+        {7, "WoodenPole"},
+        {8, "Axe"},
+        {9, "WoodenFloor"},
+        {10, "WoodenStair"},
+        {11, "WoodenWall"}
     };
 
     private float speed;                             // 캐릭터 움직임 스피드.
     private float jumpSpeed;                         // 캐릭터 점프 힘.
     public float gravity;                           // 캐릭터에게 작용하는 중력.
-    public float turnSpeed = 4.0f;                  // 마우스 회전 속도(추후 UI세팅에서 감도설정 넣을수도 있을듯)          
+    public float turnSpeed = 2f;                  // 마우스 회전 속도(추후 UI세팅에서 감도설정 넣을수도 있을듯)          
     private float xRotate = 0.0f;                   // 내부 사용할 X축 회전량은 별도 정의 ( 카메라 위 아래 방향 )
     private float throwGage = 0f;                   // 훅 던질때 사용할 게이지변수
     public bool inventoryOn = false;                // 인벤토리가 켜져있는지 확인할 변수
@@ -529,7 +532,8 @@ public class PlayerCtrl : MonoBehaviour {
                     if (
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 9 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 10 ||
-                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13
                         ) // 기능있는 물건들만 손에 들게하기(계속 추가), 이것도 레이어번호 매기는게 나을듯
                     {
                         //rightHandleSave = Instantiate(stuffs[0], rightHandle.transform);    // 손에 드는 물건 Photon동기화 시키려면 추후에 넘버링해서 Resource폴더에서 찾는 방법 있어야함...(ㅈ대따...)
@@ -568,7 +572,8 @@ public class PlayerCtrl : MonoBehaviour {
                 if (
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 9 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 10 ||
-                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13
                         ) // 기능있는 물건들만 손에 들게하기(계속 추가), 이것도 레이어번호 매기는게 나을듯
                 {
                     //rightHandleSave = Instantiate(stuffs[0], rightHandle.transform);    // 손에 드는 물건 Photon동기화 시키려면 추후에 넘버링해서 Resource폴더에서 찾는 방법 있어야함...(ㅈ대따...)

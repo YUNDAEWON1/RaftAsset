@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7169415713360707460}
-  - component: {fileID: 3672030440300493916}
   - component: {fileID: 2859560441861478840}
   - component: {fileID: 8374027885499362970}
   - component: {fileID: 2462457381299352931}
   - component: {fileID: 4704109679284574615}
+  - component: {fileID: 5929308452484901797}
   m_Layer: 12
-  m_Name: Foundation
-  m_TagString: Foundation
+  m_Name: WoodenStair
+  m_TagString: WoodenStair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3672030440300493916
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3390702719595082227}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.6, y: 0.5, z: 1.6}
-  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!114 &2859560441861478840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b1f7064a27de94b8a01aaca26b1a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectNum: 4
+  objectNum: 8
 --- !u!33 &2462457381299352931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -95,7 +82,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3390702719595082227}
-  m_Mesh: {fileID: 1477102478687195780, guid: 6f04321c6480a11419a914c9e380e0ca, type: 3}
+  m_Mesh: {fileID: 4300000, guid: f5db37bd56cbcf640855b490252b5b33, type: 2}
 --- !u!23 &4704109679284574615
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -135,3 +122,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &5929308452484901797
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390702719595082227}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: f5db37bd56cbcf640855b490252b5b33, type: 2}
