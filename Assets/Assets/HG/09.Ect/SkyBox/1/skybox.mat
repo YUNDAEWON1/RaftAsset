@@ -8,27 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: skybox
-  m_Shader: {fileID: 4800000, guid: d1b928c1678247d7ba7e5e810deac9b1, type: 3}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
-  m_LightmapFlags: 1
+  m_Shader: {fileID: 103, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlbedoTex1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _AlbedoTex2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: b05ff4592d8a4b047bd8a643416f54ee, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -48,22 +40,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9a3d7e31ff7bb7d45a989b84161005e5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 566cada353cad2441ba7b045c8ea1a79, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MirrorReflectionTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -75,109 +55,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ReflectionCube:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Tex:
         m_Texture: {fileID: 8900000, guid: 0adc33f2ff62529499756659f5de0e56, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Texture1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Albedo2Flow: 1
-    - _Albedo2Tiling: 1
-    - _AlbedoContrast: 1
-    - _AlbedoIntensity: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Exposure: 1
-    - _Fluffiness: 0.75
-    - _FoamAmplitude: 15
-    - _FoamFlow: 10
-    - _FoamFrequency: 4
-    - _FoamGain: 0.6
-    - _FoamLacunarity: 5
-    - _FoamScale: 0.1
-    - _GlossMapScale: 1
     - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _IntensityInput: 1.6
-    - _IntensityOutput: 1
-    - _IntensityT1: 1.5
-    - _IntensityT2: 1.5
-    - _IntensityT3: -0.5
-    - _Level0: 0
-    - _Level1: 10
     - _Metallic: 0
-    - _MicrowaveScale: 1
-    - _MicrowaveStrength: 0.5
-    - _MirrorContrast: 1
-    - _MirrorFPOW: 5
-    - _MirrorR0: 0.01
-    - _MirrorSaturation: 1
-    - _MirrorStrength: 1
-    - _MirrorWaveFlow: 5
-    - _MirrorWavePow: 1
-    - _MirrorWaveScale: 1
     - _Mode: 0
-    - _NormalMap1Strength: 1
-    - _NormalMap2Flow: 0.5
-    - _NormalMap2Strength: 1
-    - _NormalMap2Tiling: 0.7
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ParallaxAmount: 0.1
-    - _ParallaxFlow: 40
-    - _ParallaxNoiseAmplitude: 3
-    - _ParallaxNoiseFrequency: 1
-    - _ParallaxNoiseGain: 0.3
-    - _ParallaxNoiseLacunarity: 4
-    - _ParallaxNoiseScale: 1
-    - _ParallaxNormal2Offset: 1
-    - _ReflectionContrast: 1
-    - _ReflectionSaturation: 1
-    - _ReflectionStrength: 0.15
     - _Rotation: 0
-    - _Shininess: 0.15
-    - _SmoothnessTextureChannel: 0
-    - _SoftFactor: 0.5
-    - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TextureUv1: 1
-    - _TextureUv2: 1
-    - _TextureUv3: 1
     - _UVSec: 0
-    - _VectorX1: 0.9
-    - _VectorX2: 1.3
-    - _VectorX3: -1
-    - _VectorY1: 1
-    - _VectorY2: 1.2
-    - _VectorY3: -1
     - _ZWrite: 1
     m_Colors:
-    - _AlbedoColor: {r: 0.15, g: 0.161, b: 0.16, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FoamSoft: {r: 0.25, g: 0.6, b: 1, a: 0}
-    - _Level0Color: {r: 0.37, g: 0.78, b: 0.92, a: 1}
-    - _Level1Color: {r: 0.65, g: 0.86, b: 0.63, a: 1}
-    - _MirrorColor: {r: 1, g: 1, b: 1, a: 0.5}
-    - _MirrorDepthColor: {r: 0, g: 0, b: 0, a: 0.5}
-    - _ReflectionColor: {r: 0.28, g: 0.29, b: 0.25, a: 0.5}
-    - _SpecColor: {r: 0.086, g: 0.086, b: 0.086, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

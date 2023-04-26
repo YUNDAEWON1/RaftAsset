@@ -11,8 +11,20 @@ public class StageManager : MonoBehaviour
     //접속된 플레이어 수를 표시할 Text UI 항목 연결 레퍼런스 (Text 컴포넌트 연결 레퍼런스)
     //public Text txtConnect;
 
+
+
     //접속 로그를 표시할 Text UI 항목 연결 레퍼런스 선언
     public Text txtLogMsg;
+
+    //채팅을 입력할 인풋필드
+    public InputField chatField;
+
+    public GameObject chatUI; // 채팅UI 게임 오브젝트
+    public float chatTimeout = 5f; // 채팅 입력이 없을 때 UI가 자동으로 꺼지는 시간
+
+    private bool isChatting = false; // 채팅 중인지 여부를 저장하는 변수
+
+    private float chatTimer; // 채팅 입력 타이머
 
     //RPC 호출을 위한 PhotonView 연결 레퍼런스
     PhotonView pv;
@@ -93,7 +105,7 @@ public class StageManager : MonoBehaviour
          */
 
         // 로그 메시지에 출력할 문자열 생성
-        string msg = "\n\t<color=#00ff00>[" + PhotonNetwork.player.NickName + "] Connected</color>";
+        string msg = "\n\t<color=#ffffff>[" + PhotonNetwork.player.NickName + "] 님이 입장하셨습니다.</color>";
 
         //RPC 함수 호출
         //(CF) 플레이어 접속,종료 시 호출되는 콜백 함수에서 메시지를 표시하는 루틴을 추가하여도
@@ -107,17 +119,9 @@ public class StageManager : MonoBehaviour
         StartCoroutine(SetConnectPlayerScore());
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // 5초뒤 베이스 지킴이 스타트
-        //yield return new WaitForSeconds(5f);
-
-        //// 베이스 지킴이 시작
-        //baseStart.StartBase();
-
-        if (PhotonNetwork.isMasterClient)
-        {
-            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-135f, 10.2f, 76f), Quaternion.identity, 0, null);
-            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-135f, 9.6f, 80f), Quaternion.identity, 0, null);
-        }
+        // 채팅 UI를 비활성화
+        chatUI.SetActive(false);
+        chatTimer = 0f;
 
         yield return null;
     }
@@ -261,8 +265,8 @@ public class StageManager : MonoBehaviour
     [PunRPC]
     public void LogMsg(string msg)
     {
-        //로그 메시지 Text UI에 텍스트를 누적시켜 표시
-        txtLogMsg.text = txtLogMsg.text + msg;
+       //로그 메시지 Text UI에 텍스트를 누적시켜 표시
+       txtLogMsg.text = txtLogMsg.text + msg;
     }
 
     // 포톤 추가
@@ -273,7 +277,7 @@ public class StageManager : MonoBehaviour
         // 로그 메시지에 출력할 문자열 생성
         string msg = "\n\t<color=#ff0000>["
                     + PhotonNetwork.player.NickName
-                    + "] Disconnected</color>";
+                    + "] 님이 퇴장하셨습니다.</color>";
 
         //RPC 함수 호출
         pv.RPC("LogMsg", PhotonTargets.AllBuffered, msg);
@@ -284,6 +288,7 @@ public class StageManager : MonoBehaviour
         //(!) 서버에 통보한 후 룸에서 나가려는 클라이언트가 생성한 모든 네트워크 객체및 RPC를 제거하는 과정 진행(포톤 서버에서 진행)
     }
 
+   
     // 포톤 추가
     //룸에서 접속 종료됐을 때 호출되는 콜백 함수 ( (!) 과정 후 포톤이 호출 )
     void OnLeftRoom()
@@ -293,7 +298,61 @@ public class StageManager : MonoBehaviour
     }
 
     /////////////////////////////////////////////////////////////////////////////
+
+// Enter 키를 눌렀을 때 호출되는 함수
+public void OnChatInputEnter()
+{   
+    // 채팅 입력 필드의 텍스트를 가져옴
+    string msg = chatField.text;
+
+    if (!string.IsNullOrWhiteSpace(msg)) // 채팅 내용이 비어있지 않은 경우에만 로그 메시지 전송
+    {
+        // 채팅 입력 필드를 초기화
+        chatField.text = null;
+
+        // RPC 함수 호출
+        pv.RPC("LogChatMessage", PhotonTargets.All, PhotonNetwork.playerName, msg);
+
+        // 채팅 UI를 일정 시간 동안 활성화
+        chatTimer = chatTimeout;
+    }
 }
+
+// RPC 함수
+[PunRPC]
+public void LogChatMessage(string playerName, string message)
+{
+    // 채팅 로그 메시지 출력
+    txtLogMsg.text += string.Format("\n\t<color=#ffffff>[<color=#ffffff>{0}</color>]:</color> <color=#ffffff>{1}</color>", PhotonNetwork.player.NickName, message);
+}
+
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Return))
+    {
+        // 엔터 키를 눌렀을 때 채팅 UI를 활성화하고, 채팅 입력 필드에 포커스를 줌
+        chatUI.SetActive(true);
+        chatField.Select();
+        chatField.ActivateInputField();
+        isChatting=true;
+        Debug.Log(isChatting);
+    }
+
+    // 일정 시간이 지났을 때 채팅 UI를 자동으로 비활성화
+    if (chatTimer > 0f)
+    {
+        chatTimer -= Time.deltaTime;
+        if (chatTimer <= 0f)
+        {
+            chatUI.SetActive(false);
+            isChatting=false;
+            Debug.Log(isChatting);
+        }
+    }
+}
+}
+
+
 
 /* RPC(Remote Procedure Call)함수의 네트웍 전달 대상 설정인 PhotonTargets 열거형 인자 옵션 설정
  *  옵션                      설명

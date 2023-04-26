@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -55,6 +53,7 @@ public class InventoryManager : MonoBehaviour
         if(isNumber&&number>0&&number<10){
             ChangeSelectedSLot(number-1);}
         }
+
 
 
         //if(Input.GetKeyDown(KeyCode.E))
@@ -111,6 +110,7 @@ public class InventoryManager : MonoBehaviour
         return false;
 }
 
+
  public bool AddItem(int itemId)
     {
         // Item 리스트에서 ID와 일치하는 아이템 찾기
@@ -148,6 +148,36 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+    public bool RemoveItem(int itemId)
+{
+    // Item 리스트에서 ID와 일치하는 아이템 찾기
+    Item item = itemList.Find(x => x.ID == itemId);
+
+    if (item != null)
+    {
+        for(int i=0;i<inventorySlots.Length;i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+            if(itemInSlot != null && itemInSlot.item == item)
+            {
+                if (itemInSlot.count > 1) // 아이템이 여러 개일 경우
+                {
+                    itemInSlot.count--;
+                    itemInSlot.RefreshCount();
+                    return true;
+                }
+                else // 아이템이 하나일 경우
+                {
+                    Destroy(itemInSlot.gameObject);
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
     public Item GetSelectedItem(bool use)
     {
         InventorySlot slot=inventorySlots[selectdeSlot];
@@ -168,5 +198,5 @@ public class InventoryManager : MonoBehaviour
      return null;
     }
 
-    
+
 }

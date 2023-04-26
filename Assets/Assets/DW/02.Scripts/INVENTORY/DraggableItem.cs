@@ -10,7 +10,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
     [HideInInspector] public Transform parentAfterDrag;
     [HideInInspector] public int count=1;
     [HideInInspector] public Item item;
-
     
 
 
@@ -38,6 +37,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
        parentAfterDrag=transform.parent;
        transform.SetParent(transform.root);
        //transform.SetAsLastSibling();
+
        
     }
 
@@ -54,16 +54,17 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
 
-       if (!IsOverUI())
+      if (!IsOverUI())
     {
-       Debug.Log("아이템 버리기");
         count--;
         if(count<=0){
-        Destroy(this.gameObject);
+         Destroy(gameObject);
         } else{
-            RefreshCount();
-        }
-      
+        RefreshCount();
+                    }
+        
     }
+
+  
     }
 }

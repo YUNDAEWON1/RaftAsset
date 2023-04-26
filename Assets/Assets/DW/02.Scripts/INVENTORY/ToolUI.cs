@@ -15,6 +15,8 @@ public class ToolUI : MonoBehaviour
     public GameObject btn_Navigation;
     public GameObject btn_Decoration;
 
+    public GameObject btn_Cup;
+
     public GameObject foodwaterUI;
     public GameObject otherUI;
     public GameObject utilitiesUI;
@@ -23,6 +25,8 @@ public class ToolUI : MonoBehaviour
     public GameObject materialsUI;
     public GameObject navigationUI;
     public GameObject decorationUI;
+
+    public GameObject craft_cup;
 
     private GameObject currentUI;
 
@@ -36,17 +40,36 @@ public class ToolUI : MonoBehaviour
         btn_Materials.GetComponent<Button>().onClick.AddListener(() => ToggleUI(materialsUI));
         btn_Navigation.GetComponent<Button>().onClick.AddListener(() => ToggleUI(navigationUI));
         btn_Decoration.GetComponent<Button>().onClick.AddListener(() => ToggleUI(decorationUI));
+        btn_Cup.GetComponent<Button>().onClick.AddListener(ToggleCupUI);
     }
 
-    public void ToggleUI(GameObject ui)
+   public void ToggleUI(GameObject ui)
+{
+    if (currentUI != null && currentUI != ui) // 현재 열려있는 UI가 있으면 닫아줌
     {
-        if (currentUI != null && currentUI != ui) // 현재 열려있는 UI가 있으면 닫아줌
-        {
-            currentUI.SetActive(false);
-        }
+        currentUI.SetActive(false);
+    }
 
+    if (currentUI != ui) // 현재 UI와 새로운 UI가 같은 경우는 무시함
+    {
         ui.SetActive(!ui.activeSelf);
         currentUI = ui;
+    }
+
+    Debug.Log(ui.name + " is " + (ui.activeSelf ? "opened" : "closed"));
+}
+
+ public void ToggleCupUI()
+    {
+        // foodwaterUI가 켜져 있는지 확인
+        bool isFoodwaterActive = foodwaterUI.activeSelf;
+
+        // craft_cup을 foodwaterUI의 자식으로 만듭니다.
+        craft_cup.transform.SetParent(foodwaterUI.transform);
+
+        // craft_cup UI를 활성화하고 foodwaterUI를 다시 활성화합니다.
+        craft_cup.SetActive(true);
+        foodwaterUI.SetActive(isFoodwaterActive);
     }
 }
 

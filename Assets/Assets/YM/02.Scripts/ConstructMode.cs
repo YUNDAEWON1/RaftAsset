@@ -12,6 +12,8 @@ public class ConstructMode : MonoBehaviour
 
     public Transform constructShadow;
 
+    public GameObject testPrefab;
+
     private RaycastHit hitData;
 
     public int rotation = 0;
@@ -43,18 +45,12 @@ public class ConstructMode : MonoBehaviour
                     hitData = hits[j];
 
                     constructShadow.GetComponent<MeshFilter>().mesh = Resources.Load<GameObject>(photonMapping[playerCtrl.stuffs.transform.GetChild(playerCtrl.swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).GetComponent<MeshFilter>().sharedMesh;
-                    Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hitData.distance;
-                    constructShadow.position = new Vector3(shadowPos.x, shadowPos.y - 0.2f, shadowPos.z);
+                    constructShadow.position = firePos.transform.position + Camera.main.transform.forward * hitData.distance;
                     
                     if(Input.GetKeyDown("r"))
                     {
-                        constructShadow.Rotate(0f, 90f, 0f);
+                        constructShadow.Rotate(0f, 45f, 0f);
                     }
-                    break;
-                }
-                else
-                {
-                    constructShadow.GetComponent<MeshFilter>().mesh = null;
                 }
             }
         }
@@ -66,7 +62,7 @@ public class ConstructMode : MonoBehaviour
 
     public void ConstructClick(int ID)
     {
-        pv.RPC("ConstructClickMaster", PhotonTargets.AllBuffered, photonMapping[ID], constructShadow.position, constructShadow.rotation);
+        pv.RPC("ConstructClickMaster", PhotonTargets.AllBuffered, photonMapping[ID], firePos.transform.position + Camera.main.transform.forward * hitData.distance, constructShadow.rotation);
     }
 
     [PunRPC]
@@ -96,14 +92,12 @@ public class ConstructMode : MonoBehaviour
                     Gizmos.DrawRay(firePos.transform.position, Camera.main.transform.forward * hits[i].distance);
 
                     // Hit된 지점에 Sphere를 그려준다.
-                    Gizmos.DrawWireSphere(constructShadow.position, sphereScale / 5f);
-                    break;
+                    Gizmos.DrawWireSphere(firePos.transform.position + Camera.main.transform.forward * hits[i].distance, sphereScale / 5f);
                 }
                 else
                 {
                     // Hit가 되지 않았으면 최대 검출 거리로 ray를 그려준다.
                     Gizmos.DrawRay(firePos.transform.position, Camera.main.transform.forward * 3f);
-                    //test
                 }
             }
         }
