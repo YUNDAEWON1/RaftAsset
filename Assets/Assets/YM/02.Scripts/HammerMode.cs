@@ -120,9 +120,38 @@ public class HammerMode : MonoBehaviour
                                 {
                                     if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
                                     {
-                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y + 0.25f, hitInfo.collider.bounds.center.z);
-                                        hammerShadow.position = newPosition;
-                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                                        switch (rotation)
+                                        {
+                                            case 0:
+                                                {
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z + 0.75f);
+                                                    hammerShadow.position = newPosition;
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                                                    break;
+                                                }
+                                            case 1:
+                                                {
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
+                                                    hammerShadow.position = newPosition;
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 90));
+                                                    break;
+                                                }
+                                            case 2:
+                                                {
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z - 0.75f);
+                                                    hammerShadow.position = newPosition;
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 90));
+                                                    break;
+                                                }
+
+                                            case 3:
+                                                {
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
+                                                    hammerShadow.position = newPosition;
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 90));
+                                                    break;
+                                                }
+                                        }
                                     }
                                     else
                                     {
@@ -222,27 +251,25 @@ public class HammerMode : MonoBehaviour
                                 {
                                     if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
                                     {
-                                        
-
                                         switch (rotation)
                                         {
                                             case 0:
                                                 {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z + 0.75f);
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z + 0.75f);
                                                     hammerShadow.position = newPosition;
                                                     hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                                                     break;
                                                 }
                                             case 1:
                                                 {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z);
                                                     hammerShadow.position = newPosition;
                                                     hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                                                     break;
                                                 }
                                             case 2:
                                                 {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z - 0.75f);
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z - 0.75f);
                                                     hammerShadow.position = newPosition;
                                                     hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                                                     break;
@@ -250,7 +277,7 @@ public class HammerMode : MonoBehaviour
                                                 
                                             case 3:
                                                 {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
+                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z);
                                                     hammerShadow.position = newPosition;
                                                     hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 0));
                                                     break;
@@ -268,11 +295,6 @@ public class HammerMode : MonoBehaviour
 
 
                     }
-
-                    //if (Input.GetKeyDown("r"))
-                    //{
-                    //    hammerShadow.Rotate(0f, 90f, 0f);
-                    //}
                     break;
                 }
                 else
