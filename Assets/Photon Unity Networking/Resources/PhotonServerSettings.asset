@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AppID: 81c98a95-0f50-44e2-9935-30f06d02224d
   VoiceAppID: 
-  ChatAppID: 81c98a95-0f50-44e2-9935-30f06d02224d
+  ChatAppID: 
   HostType: 1
   PreferredRegion: 0
   EnabledRegions: -1
@@ -22,7 +22,7 @@ MonoBehaviour:
   ServerAddress: 
   ServerPort: 5055
   VoiceServerPort: 5055
-  JoinLobby: 1
+  JoinLobby: 0
   EnableLobbyStatistics: 0
   PunLogging: 0
   NetworkLogging: 1
@@ -30,11 +30,16 @@ MonoBehaviour:
   RpcList:
   - Chat
   - ColorRpc
+  - ConstructClickMaster
   - DestroyRpc
   - DoJump
   - Flash
+  - HammerClickMaster
   - InstantiateRpc
+  - LogChatMessage
+  - LogMsg
   - Marco
+  - PhotonObjectDestroyMaster
   - PickupItemInit
   - Polo
   - PunPickup
@@ -43,9 +48,4 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - TaggedPlayer
-  - LogMsg
-  - ConstructClickMaster
-  - HammerClickMaster
-  - PhotonObjectDestroyMaster
-  - LogChatMessage
   DisableAutoOpenWizard: 1

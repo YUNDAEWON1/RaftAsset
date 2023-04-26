@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: febfeea78f64ac748a66deedb04ff770, type: 3}
-  m_Name: Potato
+  m_Name: 14. Grill
   m_EditorClassIdentifier: 
-  _id: 5
-  _name: "\uC0DD \uAC10\uC790"
-  _tooltip: "\uB531\uB531\uD558\uACE0 \uB9DB \uC5C6\uC9C0\uB9CC \uC0B4\uB824\uBA74
-    \uBA39\uC790."
+  _id: 14
+  _name: "\uB2E8\uC21C \uADF8\uB9B4"
+  _tooltip: "\uADF8\uB9B4 \uC785\uB2C8\uB2E4"
   itemPrefab: {fileID: 0}
-  type: 2
+  type: 0
   actionType: 0
   range: {x: 5, y: 4}
-  stackable: 1
-  image: {fileID: 21300000, guid: 2822aa622d208704e87b55d122d44155, type: 3}
+  stackable: 0
+  image: {fileID: 21300000, guid: ad69ca24491383447a4020c4d09d5722, type: 3}

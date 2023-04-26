@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a418beacfb4b8a34d8b7e6d0460dca84, type: 3}
-  m_Name: Cup
+  m_Name: CropPlot
   m_EditorClassIdentifier: 
   Materials:
-  - item: {fileID: 11400000, guid: 25646215b9033284ab86957dfc1c3fad, type: 2}
-    Amount: 4
+  - item: {fileID: 11400000, guid: a228fb21a3a63b34287639db5d7d0241, type: 2}
+    Amount: 6
+  - item: {fileID: 11400000, guid: b31ed4b9a355c5a46b2ffc0e368d3354, type: 2}
+    Amount: 3
   Results:
-  - item: {fileID: 11400000, guid: b1114a9621c30ae4a8243351c2a3d1e5, type: 2}
+  - item: {fileID: 11400000, guid: f9be2f6bbeb6f834296665111c200d0d, type: 2}
     Amount: 1
+  canCraft: 0

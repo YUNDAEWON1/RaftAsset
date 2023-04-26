@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+
+
+    [SerializeField] private List<CraftingRecipe> craftingRecipes=new List<CraftingRecipe>();
     public static InventoryManager instance;
     public Item[] startItems;
 
@@ -15,9 +19,12 @@ public class InventoryManager : MonoBehaviour
 
     public List<Item> itemList = new List<Item>();
 
-    private void Awkae()
+    public CraftingUI craftUI;
+
+    private void Awake()
     {
         instance=this;
+        craftUI=GetComponent<CraftingUI>();
     }
 
     private void Start()
@@ -55,11 +62,12 @@ public class InventoryManager : MonoBehaviour
         }
 
 
-
-        //if(Input.GetKeyDown(KeyCode.E))
-        //{
-        //    AddItem(Random.Range(0,5));
-        //}
+    CheckCraft(craftingRecipes[0]);
+    CheckCraft1(craftingRecipes[1]);
+    CheckCraft2(craftingRecipes[2]);
+    CheckCraft3(craftingRecipes[3]);
+        
+        
     }
 
     void ChangeSelectedSLot(int newValue)
@@ -148,6 +156,8 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+
+
     public bool RemoveItem(int itemId)
 {
     // Item 리스트에서 ID와 일치하는 아이템 찾기
@@ -198,5 +208,209 @@ public class InventoryManager : MonoBehaviour
      return null;
     }
 
+//////////////////Crafting 관련 함수들 ////////////////////////////////////////////////////
+
+    // 아이템을 갖고 있는지 확인하는 함수
+   public bool HasItem(Item item, int amount)
+{
+    int foundAmount = 0;
+
+    for(int i = 0; i < inventorySlots.Length; i++)
+    {
+        InventorySlot slot = inventorySlots[i];
+        DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+        if(itemInSlot != null && itemInSlot.item == item)
+        {
+            foundAmount += itemInSlot.count;
+            if(foundAmount >= amount)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+    // 아이템을 제거하는 함수
+public void RemoveItem(Item item, int amount)
+{
+    for(int i = 0; i < inventorySlots.Length; i++)
+    {
+        InventorySlot slot = inventorySlots[i];
+        DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+        if(itemInSlot != null && itemInSlot.item == item)
+        {
+            if(itemInSlot.count > amount)
+            {
+                itemInSlot.count -= amount;
+                itemInSlot.RefreshCount();
+                return;
+            }
+            else
+            {
+                Destroy(itemInSlot.gameObject);
+                return;
+            }
+        }
+    }
+}
+     // 아이템을 추가하는 함수
+public bool AddItem(Item item, int amount)
+{
+    // stackable 변수가 false이면 무조건 새로운 아이템을 생성합니다.
+    if (!item.stackable)
+    {
+        // 빈 슬롯을 검색하여 아이템을 추가합니다.
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+            if (itemInSlot == null)
+            {
+                // 빈 슬롯을 찾았을 경우 새로운 아이템을 추가합니다.
+                GameObject newItemObject = Instantiate(DraggableItemPrefab, slot.transform);
+                DraggableItem newItem = newItemObject.GetComponent<DraggableItem>();
+                newItem.InitialiseItem(item);
+                newItem.count = amount;
+                newItem.RefreshCount();
+                
+
+                return true;
+            }
+        }
+
+        // 빈 슬롯도 없을 경우 아이템을 추가할 수 없습니다.
+        return false;
+    }
+
+    // 아이템 슬롯을 검색하여 아이템이 이미 있는지 확인합니다.
+    for (int i = 0; i < inventorySlots.Length; i++)
+    {
+        InventorySlot slot = inventorySlots[i];
+        DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+        if (itemInSlot != null && itemInSlot.item == item)
+        {
+            // stackable 변수가 true이고 슬롯에 이미 해당 아이템이 있을 경우 수량을 늘립니다.
+            itemInSlot.count += amount;
+            itemInSlot.RefreshCount();
+
+            return true;
+        }
+    }
+
+    // stackable 변수가 true이고 슬롯에 해당 아이템이 없을 경우 빈 슬롯을 검색하여 아이템을 추가합니다.
+    for (int i = 0; i < inventorySlots.Length; i++)
+    {
+        InventorySlot slot = inventorySlots[i];
+        DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+        if (itemInSlot == null)
+        {
+            // 빈 슬롯을 찾았을 경우 새로운 아이템을 추가합니다.
+            GameObject newItemObject = Instantiate(DraggableItemPrefab, slot.transform);
+            DraggableItem newItem = newItemObject.GetComponent<DraggableItem>();
+            newItem.InitialiseItem(item);
+            newItem.count = amount;
+            newItem.RefreshCount();
+            return true;
+        }
+    }
+
+    // 빈 슬롯도 없을 경우 아이템을 추가할 수 없습니다.
+    return false;
+}
+ 
+
+
+private void Craft(CraftingRecipe reicpe)
+    {
+        if(reicpe.CanCraft(this))
+        {
+            Debug.Log("조합가능");
+            reicpe.Craft(this);
+        }
+        else
+        {
+            Debug.Log("재료 없음");
+        }
+    }
+
+private void CheckCraft(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO();
+     
+    }
+}
+
+private void CheckCraft1(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK1();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO1();
+     
+    }
+}
+
+private void CheckCraft2(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK2();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO2();
+    }
+}
+
+private void CheckCraft3(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK3();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO3();
+     
+    }
+}
+
+public void btnCup()
+{
+    Craft(craftingRecipes[0]);
+}
+public void btnFilter()
+{
+    Craft(craftingRecipes[1]);
+}
+
+public void btnGrill()
+{
+    Craft(craftingRecipes[2]);
+}
+public void btnCropPlot()
+{
+    Craft(craftingRecipes[3]);
+}
 
 }

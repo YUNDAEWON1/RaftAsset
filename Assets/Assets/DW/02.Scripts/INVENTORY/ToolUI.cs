@@ -15,8 +15,8 @@ public class ToolUI : MonoBehaviour
     public GameObject btn_Navigation;
     public GameObject btn_Decoration;
 
-    public GameObject btn_Cup;
 
+    private GameObject currentUI;
     public GameObject foodwaterUI;
     public GameObject otherUI;
     public GameObject utilitiesUI;
@@ -26,9 +26,23 @@ public class ToolUI : MonoBehaviour
     public GameObject navigationUI;
     public GameObject decorationUI;
 
-    public GameObject craft_cup;
 
-    private GameObject currentUI;
+//////////////////////////Craft 관련 UI /////////////////////////////////////
+
+
+    public GameObject craft_cup;
+    public GameObject craft_filter;
+    public GameObject craft_grill;
+    public GameObject craft_cropplot;
+    public GameObject btn_Cup;
+    public GameObject btn_Filter;
+    public GameObject btn_Grill;
+    public GameObject btn_CropPlot;
+
+   
+
+
+  
 
     void Start()
     {
@@ -41,7 +55,13 @@ public class ToolUI : MonoBehaviour
         btn_Navigation.GetComponent<Button>().onClick.AddListener(() => ToggleUI(navigationUI));
         btn_Decoration.GetComponent<Button>().onClick.AddListener(() => ToggleUI(decorationUI));
         btn_Cup.GetComponent<Button>().onClick.AddListener(ToggleCupUI);
+        btn_Filter.GetComponent<Button>().onClick.AddListener(ToggleFilterUI);
+        btn_Grill.GetComponent<Button>().onClick.AddListener(ToggleGrillUI);
+        btn_CropPlot.GetComponent<Button>().onClick.AddListener(ToggleCropPlotUI);
+
     }
+
+   
 
    public void ToggleUI(GameObject ui)
 {
@@ -59,17 +79,60 @@ public class ToolUI : MonoBehaviour
     Debug.Log(ui.name + " is " + (ui.activeSelf ? "opened" : "closed"));
 }
 
- public void ToggleCupUI()
+public void ToggleCupUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if(currentUI != null && currentUI != foodwaterUI)
     {
-        // foodwaterUI가 켜져 있는지 확인
-        bool isFoodwaterActive = foodwaterUI.activeSelf;
-
-        // craft_cup을 foodwaterUI의 자식으로 만듭니다.
-        craft_cup.transform.SetParent(foodwaterUI.transform);
-
-        // craft_cup UI를 활성화하고 foodwaterUI를 다시 활성화합니다.
-        craft_cup.SetActive(true);
-        foodwaterUI.SetActive(isFoodwaterActive);
+        currentUI.SetActive(false);
     }
+
+    // craft_cup을 foodwaterUI의 자식으로 만듭니다.
+    craft_cup.transform.SetParent(foodwaterUI.transform);
+
+    // craft_cup UI를 활성화하고 currentUI를 craft_cup으로 변경합니다.
+    craft_cup.SetActive(true);
+    currentUI = craft_cup;
+}
+   public void ToggleFilterUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != foodwaterUI)
+    {
+        currentUI.SetActive(false);
+    }
+
+    // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
+    craft_filter.SetActive(true);
+    currentUI = craft_filter;
+}
+
+public void ToggleGrillUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+   if (currentUI != null && currentUI != foodwaterUI)
+    {
+        currentUI.SetActive(false);
+    }
+
+    // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
+    craft_grill.SetActive(true);
+    currentUI = craft_grill;
+}
+
+public void ToggleCropPlotUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null)
+    {
+        currentUI.SetActive(false);
+    }
+
+    // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
+    craft_cropplot.SetActive(true);
+    currentUI = craft_cropplot;
+}
+
+ 
 }
 
