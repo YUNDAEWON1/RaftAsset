@@ -223,7 +223,7 @@ public class PlayerCtrl : MonoBehaviour {
                 {
                     if(constructMode)   // 건축모드일때
                     { 
-                        if(Input.GetMouseButtonDown(0))     // 마우스 왼쪽버튼이 눌리면
+                        if(Input.GetMouseButtonDown(0) && constructScript.constuctPossibility)     // 마우스 왼쪽버튼이 눌리고 건설가능일때
                         {
 
                             StartCoroutine(ConstructClick(stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID));
@@ -403,7 +403,7 @@ public class PlayerCtrl : MonoBehaviour {
         float xRotateSize = -Input.GetAxis("Mouse Y") * turnSpeed;
         // 위아래 회전량을 더해주지만 -45도 ~ 80도로 제한 (-60:하늘방향, 40:바닥방향)
         // Clamp 는 값의 범위를 제한하는 함수
-        xRotate = Mathf.Clamp(xRotate + xRotateSize, -70, 65);
+        xRotate = Mathf.Clamp(xRotate + xRotateSize, -70, 70);
 
         // 카메라 회전량을 카메라에 반영(X, Y축만 회전)
         transform.eulerAngles = new Vector3(0, yRotate, 0);

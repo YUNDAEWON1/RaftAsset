@@ -271,7 +271,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePos: {fileID: 2359601795302359479}
   constructShadow: {fileID: 1751337598596513508}
-  rotation: 0
+  shadowMat:
+  - {fileID: 2100000, guid: 19f90d6b378b57d42b148b998ff767af, type: 2}
+  - {fileID: 2100000, guid: 5355b6b3190157745b16a6ff4b1b446d, type: 2}
 --- !u!114 &1909385029958009726
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -115,6 +115,11 @@ public class StageManager : MonoBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-135f, 10f, 76f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-135f, 10f, 74.5f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-133.5f, 10f, 76f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-133.5f, 10f, 74.5f), Quaternion.identity, 0, null);
+
             PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-135f, 10.2f, 76f), Quaternion.identity, 0, null);
             PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-135f, 9.6f, 80f), Quaternion.identity, 0, null);
         }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5808085049487526641}
   - component: {fileID: 3816769343846437015}
   - component: {fileID: 493558081810089306}
+  - component: {fileID: 7894835504967061133}
   m_Layer: 8
   m_Name: Purifier1
   m_TagString: Untagged
@@ -121,3 +122,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectNum: 6
+--- !u!65 &7894835504967061133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313968440287832573}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.67129517, y: 1.1515428, z: 1.0564439}
+  m_Center: {x: 0.005683273, y: 0.5627112, z: -0.05264789}

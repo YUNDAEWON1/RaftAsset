@@ -12,9 +12,13 @@ public class ConstructMode : MonoBehaviour
 
     public Transform constructShadow;
 
-    private RaycastHit hitData;
+    private RaycastHit hitInfo;
 
-    public int rotation = 0;
+    public Material[] shadowMat;
+
+    public bool constuctPossibility = true;
+
+    //public int rotation = 0;
 
     void Awake()
     {
@@ -39,11 +43,20 @@ public class ConstructMode : MonoBehaviour
             {
                 if (hits[j].collider.tag == "HammerObject")
                 {
-                    //StartCoroutine(testConstruct(hits[j]));
-                    hitData = hits[j];
+                    Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo,3f);
+                    if (hitInfo.transform.gameObject.layer == 8)
+                    {
+                        constructShadow.GetComponent<MeshRenderer>().material = shadowMat[1];
+                        constuctPossibility = false;
+                    }
+                    else
+                    {
+                        constructShadow.GetComponent<MeshRenderer>().material = shadowMat[0];
+                        constuctPossibility = true;
+                    }
 
                     constructShadow.GetComponent<MeshFilter>().mesh = Resources.Load<GameObject>(photonMapping[playerCtrl.stuffs.transform.GetChild(playerCtrl.swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).GetComponent<MeshFilter>().sharedMesh;
-                    Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hitData.distance;
+                    Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hits[j].distance;
                     constructShadow.position = new Vector3(shadowPos.x, shadowPos.y - 0.2f, shadowPos.z);
                     
                     if(Input.GetKeyDown("r"))
