@@ -212,10 +212,23 @@ public class InventoryManager : MonoBehaviour
      return null;
     }
 
-//////////////////Crafting 관련 함수들 ////////////////////////////////////////////////////
+    public void UseSelectedItem()
+    {
+        Item receiveItem = GetSelectedItem(true);
+        if (receiveItem != null)
+        {
+            Debug.Log("Use item: " + receiveItem);
+        }
+        else
+        {
+            Debug.Log("No item Used!");
+        }
+    }
+
+    //////////////////Crafting 관련 함수들 ////////////////////////////////////////////////////
 
     // 아이템을 갖고 있는지 확인하는 함수
-   public bool HasItem(Item item, int amount)
+    public bool HasItem(Item item, int amount)
 {
     int foundAmount = 0;
 
@@ -440,10 +453,7 @@ private void CheckCraft6(CraftingRecipe recipe)
      
     }
 }
-
-
-
-public void btnCup()
+    public void btnCup()
 {
     Craft(craftingRecipes[0]);
 }

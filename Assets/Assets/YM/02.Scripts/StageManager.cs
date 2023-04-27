@@ -91,8 +91,12 @@ public class StageManager : MonoBehaviour
         //플레이어를 생성하는 함수 호출
         StartCoroutine(this.CreatePlayer());
 
-        // HG
-        StartCoroutine(this.CreateObject());
+        if(PhotonNetwork.isMasterClient)
+        {
+            // HG
+            StartCoroutine(this.CreateObject());
+        }
+        
 
         //포톤 클라우드로부터 네트워크 메세지 수신을 다시 연결 이 씨이이이이이이이발
         PhotonNetwork.isMessageQueueRunning = true;
@@ -133,10 +137,26 @@ public class StageManager : MonoBehaviour
         chatUI.SetActive(false);
         chatTimer = 0f;
 
+        if(PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-150f, 10f, 100), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-151.5f, 10f, 100), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-150f, 10f, 101.5f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-151.5f, 10f, 101.5f), Quaternion.identity, 0, null);
+        }
+
         yield return null;
     }
 
-    
+    public void OnMasterClientSwitched()
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            // HG
+            StartCoroutine(this.CreateObject());
+        }
+    }
+
     //public void OnSubmit(InputField input)
     //{
     //    pv.RPC("LogMsg", PhotonTargets.AllBuffered, "\n\t" + PhotonNetwork.player.NickName + " : " + input.text);
@@ -244,11 +264,11 @@ public class StageManager : MonoBehaviour
     {
         while(true)
         {
-            GameObject plank = PhotonNetwork.Instantiate("Plank", objectPos.position, objectPos.rotation, 0);
+            GameObject plank = PhotonNetwork.InstantiateSceneObject("Plank", objectPos.position, objectPos.rotation, 0, null);
             Vector3 newPosition_1 = objectPos.position + new Vector3(0f, 0f, 50f);
-            GameObject plastic = PhotonNetwork.Instantiate("Plastic", newPosition_1, objectPos.rotation, 0);
+            GameObject plastic = PhotonNetwork.InstantiateSceneObject("Plastic", newPosition_1, objectPos.rotation, 0, null);
             Vector3 newPosition_2 = objectPos.position + new Vector3(0f, -2f, 100f);
-            GameObject leaf = PhotonNetwork.Instantiate("Leaf", newPosition_2, objectPos.rotation, 0);
+            GameObject leaf = PhotonNetwork.InstantiateSceneObject("Leaf", newPosition_2, objectPos.rotation, 0, null);
             yield return new WaitForSeconds(10f);
         }
     }

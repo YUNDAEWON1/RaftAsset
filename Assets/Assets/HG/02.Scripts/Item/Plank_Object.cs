@@ -7,6 +7,12 @@ public class Plank_Object : MonoBehaviour
     public int plank = 1;
     public Transform target;
     public float speed = 0.01f;
+    private PhotonView pv;
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
 
     private void Start()
     {
@@ -23,11 +29,25 @@ public class Plank_Object : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Land"))
+        //if (other.gameObject.CompareTag("Land"))
+        //{
+        //    Destroy(gameObject);
+        //}
+        pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, transform.GetComponent<PhotonView>().viewID);
+    }
+
+    [PunRPC]
+    void PhotonObjectDestroyMaster(int viewID)
+    {
+        // ID를 사용하여 게임 오브젝트 찾기
+        GameObject obj = PhotonView.Find(viewID).gameObject;
+
+        if (PhotonNetwork.isMasterClient)
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(obj);
         }
     }
 }

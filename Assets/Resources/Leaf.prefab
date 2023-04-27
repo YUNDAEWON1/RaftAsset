@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 1680537985}
   m_Layer: 8
   m_Name: Leaf
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,12 +133,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 1
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 4730730088132752698}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -157,9 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectNum: 7
-  plank_object: {fileID: 0}
-  plastic_object: {fileID: 0}
-  leaf_object: {fileID: 0}
 --- !u!54 &8827912438534311942
 Rigidbody:
   m_ObjectHideFlags: 0

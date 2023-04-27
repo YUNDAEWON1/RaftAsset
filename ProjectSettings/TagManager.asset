@@ -17,9 +17,17 @@ TagManager:
   - R
   - Up
   - Down
+<<<<<<< HEAD
+  - CraftUI
+  - WoodenFloor
+  - WoodenPole
+  - WoodenStair
+  - Foundation
+=======
   - L
   - Ground
   - Land
+>>>>>>> master
   layers:
   - Default
   - TransparentFX
@@ -33,7 +41,7 @@ TagManager:
   - EatObject
   - Hook
   - Hammer
-  - 
+  - HammerObject
   - 
   - 
   - 

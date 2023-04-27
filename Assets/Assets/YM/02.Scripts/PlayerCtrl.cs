@@ -11,16 +11,29 @@ public class PlayerCtrl : MonoBehaviour {
         {1, "Hook"},
         {2, "Spear_wood"},
         {3, "Plastic"},
+        {4, "Plank"},
         {5, "Potato"},
-        {6, "Purifier1"}
-
-
+        {6, "Purifier1"},
+        {7, "Leaf" },
+        {8, "Axe"},
+        {9, "Bed" },
+        //{10, "FireCamp" },
+        {11, "Cup" },
+        {12, "Scrap" },
+        {13, "Rope"},
+        {14, "Grill" },
+        {15, "CropPlot" },
+        {16, "WoodenStair"},
+        {17, "WoodenWall"},
+        {18, "WoodenPole"},
+        {19, "WoodenFloor"},
+        {20, "Foundation" }
     };
 
     private float speed;                             // 캐릭터 움직임 스피드.
     private float jumpSpeed;                         // 캐릭터 점프 힘.
     public float gravity;                           // 캐릭터에게 작용하는 중력.
-    public float turnSpeed = 4.0f;                  // 마우스 회전 속도(추후 UI세팅에서 감도설정 넣을수도 있을듯)          
+    public float turnSpeed = 2f;                  // 마우스 회전 속도(추후 UI세팅에서 감도설정 넣을수도 있을듯)          
     private float xRotate = 0.0f;                   // 내부 사용할 X축 회전량은 별도 정의 ( 카메라 위 아래 방향 )
     private float throwGage = 0f;                   // 훅 던질때 사용할 게이지변수
     public bool inventoryOn = false;                // 인벤토리가 켜져있는지 확인할 변수
@@ -69,6 +82,7 @@ public class PlayerCtrl : MonoBehaviour {
     public Transform camTrans;
 
     private ConstructMode constructScript;
+    private HammerMode hammerScript;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
 
@@ -76,6 +90,7 @@ public class PlayerCtrl : MonoBehaviour {
     void Awake()
     {
         constructScript = GetComponent<ConstructMode>();
+        hammerScript = GetComponent<HammerMode>();
         ani = gameObject.GetComponentInChildren<Animator>();
         rightHandle = GameObject.FindGameObjectWithTag("RightHandle");
         controller = this.GetComponent<CharacterController>();
@@ -210,16 +225,22 @@ public class PlayerCtrl : MonoBehaviour {
                             ani.SetTrigger("Throw");
                             StartCoroutine(HookThrowGage());
                         }
+                        else if(hammerMode && swimMode == false && hookThrow == false)
+                        {
+                            hammerScript.HammerClick();
+                        }
                     }
                 }
                 else  // 손에 아무것도 들고있지 않고
                 {
                     if(constructMode)   // 건축모드일때
                     { 
-                        if(Input.GetMouseButtonDown(0))     // 마우스 왼쪽버튼이 눌리면
+                        if(Input.GetMouseButtonDown(0) && constructScript.constuctPossibility)     // 마우스 왼쪽버튼이 눌리고 건설가능일때
                         {
 
                             StartCoroutine(ConstructClick(stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID));
+                            inventoryManager.UseSelectedItem();
+                            constructMode = false;
                             // 건축가능한 애들은 겹쳐서 소지품창에 넣을 수 없음. 건축하고나면 빈칸이 될거임(건축모드 끄는게 맞음)
                         }
                     }
@@ -396,7 +417,7 @@ public class PlayerCtrl : MonoBehaviour {
         float xRotateSize = -Input.GetAxis("Mouse Y") * turnSpeed;
         // 위아래 회전량을 더해주지만 -45도 ~ 80도로 제한 (-60:하늘방향, 40:바닥방향)
         // Clamp 는 값의 범위를 제한하는 함수
-        xRotate = Mathf.Clamp(xRotate + xRotateSize, -70, 65);
+        xRotate = Mathf.Clamp(xRotate + xRotateSize, -70, 70);
 
         // 카메라 회전량을 카메라에 반영(X, Y축만 회전)
         transform.eulerAngles = new Vector3(0, yRotate, 0);
@@ -522,7 +543,8 @@ public class PlayerCtrl : MonoBehaviour {
                     if (
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 9 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 10 ||
-                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13
                         ) // 기능있는 물건들만 손에 들게하기(계속 추가), 이것도 레이어번호 매기는게 나을듯
                     {
                         //rightHandleSave = Instantiate(stuffs[0], rightHandle.transform);    // 손에 드는 물건 Photon동기화 시키려면 추후에 넘버링해서 Resource폴더에서 찾는 방법 있어야함...(ㅈ대따...)
@@ -561,7 +583,8 @@ public class PlayerCtrl : MonoBehaviour {
                 if (
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 9 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 10 ||
-                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13
                         ) // 기능있는 물건들만 손에 들게하기(계속 추가), 이것도 레이어번호 매기는게 나을듯
                 {
                     //rightHandleSave = Instantiate(stuffs[0], rightHandle.transform);    // 손에 드는 물건 Photon동기화 시키려면 추후에 넘버링해서 Resource폴더에서 찾는 방법 있어야함...(ㅈ대따...)
