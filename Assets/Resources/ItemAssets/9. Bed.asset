@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: 9. Bed
   m_EditorClassIdentifier: 
   _id: 9
-  _name: "\uCE68\uB370"
+  _name: "\uCE68\uB300"
   _tooltip: "\uCE68\uB300"
   itemPrefab: {fileID: 0}
   type: 1
   actionType: 0
   range: {x: 5, y: 4}
-  stackable: 1
+  stackable: 0
   image: {fileID: 21300000, guid: 4d68926e31714784f9f53d4cb17d496a, type: 3}
