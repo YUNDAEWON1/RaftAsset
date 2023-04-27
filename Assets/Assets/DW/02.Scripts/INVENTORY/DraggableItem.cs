@@ -43,7 +43,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("Dragging");
         transform.position=Input.mousePosition;
     }
 
@@ -62,9 +61,14 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
         } else{
         RefreshCount();
                     }
+
+        DropItem(this.item.ID);
         
     }
+    }
 
-  
+    void DropItem(int itemID)
+    {
+        Debug.Log("ItemID : "+itemID);
     }
 }
