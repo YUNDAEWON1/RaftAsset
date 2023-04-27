@@ -62,10 +62,14 @@ public class InventoryManager : MonoBehaviour
         }
 
 
-    CheckCraft(craftingRecipes[0]);
-    CheckCraft1(craftingRecipes[1]);
-    CheckCraft2(craftingRecipes[2]);
-    CheckCraft3(craftingRecipes[3]);
+    CheckCraft(craftingRecipes[0]);    //컵제작
+    CheckCraft1(craftingRecipes[1]);   //정수기제작
+    CheckCraft2(craftingRecipes[2]);   //그릴 제작
+    CheckCraft3(craftingRecipes[3]);   //작은 작물 밭
+    CheckCraft4(craftingRecipes[4]);   //해머
+    CheckCraft5(craftingRecipes[5]);   //훅
+    CheckCraft6(craftingRecipes[6]);   //나무 창
+
         
         
     }
@@ -395,6 +399,50 @@ private void CheckCraft3(CraftingRecipe recipe)
     }
 }
 
+private void CheckCraft4(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK4();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO4();
+     
+    }
+}
+
+private void CheckCraft5(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK5();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO5();
+     
+    }
+}
+
+private void CheckCraft6(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK6();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO6();
+     
+    }
+}
+
+
+
 public void btnCup()
 {
     Craft(craftingRecipes[0]);
@@ -411,6 +459,19 @@ public void btnGrill()
 public void btnCropPlot()
 {
     Craft(craftingRecipes[3]);
+}
+public void btnHameer()
+{
+    Craft(craftingRecipes[4]);
+}
+public void btnHook()
+{
+    Craft(craftingRecipes[5]);
+}
+
+public void btnSpear()
+{
+    Craft(craftingRecipes[6]);
 }
 
 }

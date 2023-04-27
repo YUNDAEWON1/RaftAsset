@@ -34,10 +34,17 @@ public class ToolUI : MonoBehaviour
     public GameObject craft_filter;
     public GameObject craft_grill;
     public GameObject craft_cropplot;
+    public GameObject craft_hammer;
+    public GameObject craft_hook;
+    public GameObject craft_spear;
     public GameObject btn_Cup;
     public GameObject btn_Filter;
     public GameObject btn_Grill;
     public GameObject btn_CropPlot;
+    public GameObject btn_hammer;
+    public GameObject btn_hook;
+    public GameObject btn_spear;
+
 
    
 
@@ -58,6 +65,10 @@ public class ToolUI : MonoBehaviour
         btn_Filter.GetComponent<Button>().onClick.AddListener(ToggleFilterUI);
         btn_Grill.GetComponent<Button>().onClick.AddListener(ToggleGrillUI);
         btn_CropPlot.GetComponent<Button>().onClick.AddListener(ToggleCropPlotUI);
+        btn_hammer.GetComponent<Button>().onClick.AddListener(ToggleHammerUI);
+        btn_hook.GetComponent<Button>().onClick.AddListener(ToggleHookUI);
+        btn_spear.GetComponent<Button>().onClick.AddListener(ToggleSpearUI);
+        
 
     }
 
@@ -127,16 +138,61 @@ public void ToggleGrillUI()
 public void ToggleCropPlotUI()
 {
     // 현재 열려있는 UI가 있으면 닫아줌
-    if (currentUI != null)
+    if (currentUI != null&& currentUI != foodwaterUI)
     {
         currentUI.SetActive(false);
     }
 
     craft_cropplot.transform.SetParent(foodwaterUI.transform);
 
-    // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
     craft_cropplot.SetActive(true);
     currentUI = craft_cropplot;
+}
+
+public void ToggleHammerUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != utilitiesUI)
+    {
+        currentUI.SetActive(false);
+    }
+
+    // craft_hammer을 utilitiesUI의 자식으로 만듭니다.
+    craft_hammer.transform.SetParent(utilitiesUI.transform);
+
+    // craft_hammer UI를 활성화하고 currentUI를 craft_hammer로 변경합니다.
+    craft_hammer.SetActive(true);
+    currentUI = craft_hammer;
+}
+
+public void ToggleHookUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != utilitiesUI)
+    {
+        currentUI.SetActive(false);
+    }
+
+    craft_hook.transform.SetParent(utilitiesUI.transform);
+
+  
+    craft_hook.SetActive(true);
+    currentUI = craft_hook;
+}
+
+public void ToggleSpearUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != weaponsUI)
+    {
+        currentUI.SetActive(false);
+    }
+
+    craft_spear.transform.SetParent(utilitiesUI.transform);
+
+  
+    craft_spear.SetActive(true);
+    currentUI = craft_spear;
 }
 
  

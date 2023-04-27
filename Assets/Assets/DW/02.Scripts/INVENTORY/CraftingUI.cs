@@ -19,6 +19,13 @@ public class CraftingUI : MonoBehaviour
     public GameObject Grill_NO;
     public GameObject CropPlot_OK;
     public GameObject CropPlot_NO;
+    public GameObject hammer_OK;
+    public GameObject hammer_NO;
+    public GameObject hook_OK;
+    public GameObject hook_NO;
+
+    public GameObject spear_OK;
+    public GameObject spear_NO;
 
     public void OnbtnOK()
     {
@@ -60,6 +67,39 @@ public class CraftingUI : MonoBehaviour
     {
         CropPlot_OK.SetActive(false);
         CropPlot_NO.SetActive(true);
+    }
+
+     public void OnbtnOK4()
+    {
+        hammer_OK.SetActive(true);
+        hammer_NO.SetActive(false);
+    }
+    public void OnbtnNO4()
+    {
+        hammer_OK.SetActive(false);
+        hammer_NO.SetActive(true);
+    }
+
+      public void OnbtnOK5()
+    {
+        hook_OK.SetActive(true);
+        hook_NO.SetActive(false);
+    }
+    public void OnbtnNO5()
+    {
+        hook_OK.SetActive(false);
+        hook_NO.SetActive(true);
+    }
+
+       public void OnbtnOK6()
+    {
+        spear_OK.SetActive(true);
+        spear_NO.SetActive(false);
+    }
+    public void OnbtnNO6()
+    {
+        spear_OK.SetActive(false);
+        spear_NO.SetActive(true);
     }
 
 
