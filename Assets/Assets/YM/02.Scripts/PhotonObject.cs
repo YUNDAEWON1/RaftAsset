@@ -14,6 +14,12 @@ public class PhotonObject : MonoBehaviour
 
     public int objectNum = 0;    // 바껴야되는데...
 
+    // HG 작성
+    //private Plank_Object plank_object;
+    //private Plastic_Object plastic_object;
+    //private Leaf_Object leaf_object;
+    //private Tree_Object tree_object;
+
     void Awake()
     {
         pv = this.GetComponent<PhotonView>();
@@ -29,6 +35,17 @@ public class PhotonObject : MonoBehaviour
     {
         currPos = transform.position;
         currRot = transform.rotation;
+
+        // HG 작성
+        //plank_object = GetComponentInChildren<Plank_Object>();
+        //if (plank_object != null) plank_object.enabled = pv.isMine;
+        //plastic_object = GetComponentInChildren<Plastic_Object>();
+        //if (plastic_object != null) plastic_object.enabled = pv.isMine;
+        //leaf_object = GetComponentInChildren<Leaf_Object>();
+        //if (leaf_object != null) leaf_object.enabled = pv.isMine;
+        //tree_object = GetComponentInChildren<Tree_Object>();
+        //if (tree_object != null) tree_object.enabled = pv.isMine;
+
     }
 
     // Update is called once per frame
@@ -51,12 +68,28 @@ public class PhotonObject : MonoBehaviour
             //박싱
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
+
+            ////HG 작성
+            //stream.SendNext(plank_object.target.position);
+            //stream.SendNext(plastic_object.target.position);
+            //stream.SendNext(leaf_object.target.position);
+            //stream.SendNext(tree_object.transform.position);
+
         }
         else //원격 플레이어의 위치 정보를 수신
         {
             //언박싱
             currPos = (Vector3)stream.ReceiveNext();
             currRot = (Quaternion)stream.ReceiveNext();
+
+            // HG 작성
+            //Vector3 plankTargetPos = (Vector3)stream.ReceiveNext();
+            //if (!pv.isMine)
+            //{
+            //    plank_object.target.position = plankTargetPos;
+            //    plastic_object.target.position = plankTargetPos;
+            //    leaf_object.target.position = plankTargetPos;
+            //}
         }
     }
 }

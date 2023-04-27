@@ -21,7 +21,7 @@ public class PlayerCtrl : MonoBehaviour {
         {11, "Cup" },
         {12, "Scrap" },
         {13, "Rope"},
-        {14, "FireCamp" },
+        {14, "Grill" },
         {15, "CropPlot" },
         {16, "WoodenStair"},
         {17, "WoodenWall"},
@@ -239,6 +239,8 @@ public class PlayerCtrl : MonoBehaviour {
                         {
 
                             StartCoroutine(ConstructClick(stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID));
+                            inventoryManager.UseSelectedItem();
+                            constructMode = false;
                             // 건축가능한 애들은 겹쳐서 소지품창에 넣을 수 없음. 건축하고나면 빈칸이 될거임(건축모드 끄는게 맞음)
                         }
                     }

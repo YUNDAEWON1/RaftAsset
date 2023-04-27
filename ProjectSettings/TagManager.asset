@@ -14,15 +14,20 @@ TagManager:
   - ROOM_ITEM
   - Hook
   - InventoryManager
-  - L
   - R
   - Up
   - Down
+<<<<<<< HEAD
   - CraftUI
   - WoodenFloor
   - WoodenPole
   - WoodenStair
   - Foundation
+=======
+  - L
+  - Ground
+  - Land
+>>>>>>> master
   layers:
   - Default
   - TransparentFX

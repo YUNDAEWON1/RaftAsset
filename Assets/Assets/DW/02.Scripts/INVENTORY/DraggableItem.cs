@@ -54,17 +54,28 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
 
-      if (!IsOverUI())
-    {
-        count--;
-        if(count<=0){
-         Destroy(gameObject);
-        } else{
-        RefreshCount();
-                    }
-        
+        if (!IsOverUI())
+        {
+            count--;
+            if (count <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                RefreshCount();
+            }
+
+            DropItem(this.item.ID);
+
+        }
     }
 
-  
+    void DropItem(int itemID)
+    {
+        Debug.Log(itemID);
     }
+
+
 }
+
