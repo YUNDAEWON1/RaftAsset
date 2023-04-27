@@ -78,9 +78,9 @@ Material:
     - _GlossyReflections: 1
     - _IntensityInput: 0.98
     - _IntensityOutput: 1.49
-    - _IntensityT1: 2
+    - _IntensityT1: 1.4
     - _IntensityT2: 2
-    - _IntensityT3: -0.72
+    - _IntensityT3: -1
     - _Level0: 0
     - _Level1: 10
     - _Metallic: 0
@@ -90,14 +90,14 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TextureUv1: 4
+    - _TextureUv1: 0.1
     - _TextureUv2: 4
     - _TextureUv3: 1.7
     - _UVSec: 0
     - _VectorX1: 0.5
     - _VectorX2: 1
     - _VectorX3: -0.7
-    - _VectorY1: 1.2
+    - _VectorY1: 3
     - _VectorY2: 0.5
     - _VectorY3: -0.7
     - _ZWrite: 1
