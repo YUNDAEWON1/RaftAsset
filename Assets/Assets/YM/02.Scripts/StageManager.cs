@@ -148,7 +148,15 @@ public class StageManager : MonoBehaviour
         yield return null;
     }
 
-    
+    public void OnMasterClientSwitched()
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            // HG
+            StartCoroutine(this.CreateObject());
+        }
+    }
+
     //public void OnSubmit(InputField input)
     //{
     //    pv.RPC("LogMsg", PhotonTargets.AllBuffered, "\n\t" + PhotonNetwork.player.NickName + " : " + input.text);
