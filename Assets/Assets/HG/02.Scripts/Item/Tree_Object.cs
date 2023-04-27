@@ -5,21 +5,23 @@ using UnityEngine;
 public class Tree_Object : MonoBehaviour
 {
     public int hp = 5;
+    public GameObject woods;
+
+    private void Start()
+    {
+    }
 
     private void Update()
     {
-        if(hp == 0)
-        {
-            //나무 개수 늘리기
-            Destroy(this);
-        }
+       
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision col)
     {
-        if(collision.gameObject.CompareTag("Axe"))
+        if(col.gameObject.CompareTag("Hook"))
         {
-            hp--;
+            Destroy(gameObject);
+            Instantiate(woods, transform.position, Quaternion.identity);
         }
-    }
+    }   
 }
