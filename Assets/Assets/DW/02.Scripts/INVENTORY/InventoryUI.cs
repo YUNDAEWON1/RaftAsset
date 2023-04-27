@@ -15,6 +15,8 @@ public class InventoryUI : MonoBehaviour
 
     private bool activeInventory = false;
 
+
+
     private bool isAiming = false;
     private float aimTime = 0f;
     private float maxAimTime = 2f; // aim 게이지가 모두 채워지는 데 걸리는 시간
