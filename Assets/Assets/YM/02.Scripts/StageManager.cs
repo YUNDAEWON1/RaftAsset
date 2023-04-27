@@ -123,6 +123,17 @@ public class StageManager : MonoBehaviour
         chatUI.SetActive(false);
         chatTimer = 0f;
 
+        if(PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(0, 10f, 0), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(7, 9.8f, 0), Quaternion.identity, 0, null);
+
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(0, 10f, 0), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(1.5f, 10f, 0), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(0, 10f, 1.5f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(1.5f, 10f, 1.5f), Quaternion.identity, 0, null);
+        }
+
         yield return null;
     }
 

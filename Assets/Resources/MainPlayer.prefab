@@ -303,7 +303,7 @@ MonoBehaviour:
   firePos: {fileID: 2359601795302359479}
   hammerShadow: {fileID: 2534763006767726885}
   hammerObject:
-  - {fileID: 3390702719595082227, guid: 1e5312efc4b3d524697a9ef941c3e9fc, type: 3}
+  - {fileID: 3390702719595082227, guid: 29ab8d4c9e79d0f4a8e6a919209d11b4, type: 3}
   - {fileID: 3390702719595082227, guid: 79de1bdd1c0aa3741ac02ec4f927f6d7, type: 3}
   - {fileID: 3390702719595082227, guid: ffb01091b72042b429096458ae3e9eef, type: 3}
   - {fileID: 3390702719595082227, guid: 6e46d041fc8a18b45a293a6ffaf78ae8, type: 3}

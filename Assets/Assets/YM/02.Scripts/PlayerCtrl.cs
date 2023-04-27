@@ -11,13 +11,23 @@ public class PlayerCtrl : MonoBehaviour {
         {1, "Hook"},
         {2, "Spear_wood"},
         {3, "Plastic"},
+        {4, "Plank"},
         {5, "Potato"},
         {6, "Purifier1"},
-        {7, "WoodenPole"},
+        {7, "Leaf" },
         {8, "Axe"},
-        {9, "WoodenFloor"},
-        {10, "WoodenStair"},
-        {11, "WoodenWall"}
+        {9, "Bed" },
+        {10, "FireCamp" },
+        {11, "Cup" },
+        {12, "Scrap" },
+        {13, "Rope"},
+        {14, "Grill" },
+        {15, "CropPlot" },
+        {16, "WoodenStair"},
+        {17, "WoodenWall"},
+        {18, "WoodenPole"},
+        {19, "WoodenFloor"},
+        {20, "Foundation" }
     };
 
     private float speed;                             // 캐릭터 움직임 스피드.
@@ -72,6 +82,7 @@ public class PlayerCtrl : MonoBehaviour {
     public Transform camTrans;
 
     private ConstructMode constructScript;
+    private HammerMode hammerScript;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
 
@@ -79,6 +90,7 @@ public class PlayerCtrl : MonoBehaviour {
     void Awake()
     {
         constructScript = GetComponent<ConstructMode>();
+        hammerScript = GetComponent<HammerMode>();
         ani = gameObject.GetComponentInChildren<Animator>();
         rightHandle = GameObject.FindGameObjectWithTag("RightHandle");
         controller = this.GetComponent<CharacterController>();
@@ -212,6 +224,10 @@ public class PlayerCtrl : MonoBehaviour {
                         {
                             ani.SetTrigger("Throw");
                             StartCoroutine(HookThrowGage());
+                        }
+                        else if(hammerMode && swimMode == false && hookThrow == false)
+                        {
+                            hammerScript.HammerClick();
                         }
                     }
                 }
