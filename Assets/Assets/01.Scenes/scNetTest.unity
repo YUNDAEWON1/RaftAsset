@@ -11789,7 +11789,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dbdf257eae04ce54586f43b8816586d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13741eb1b7d169c41b1978bdacf56431, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12784,7 +12784,7 @@ GameObject:
   - component: {fileID: 1000617450}
   m_Layer: 5
   m_Name: Pnl_craft_cup
-  m_TagString: Untagged
+  m_TagString: CraftUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13101,7 +13101,7 @@ GameObject:
   - component: {fileID: 1008864431}
   m_Layer: 5
   m_Name: Pnl_craft_cropplot
-  m_TagString: Untagged
+  m_TagString: CraftUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14518,7 +14518,7 @@ GameObject:
   - component: {fileID: 1153193921}
   m_Layer: 5
   m_Name: Pnl_craft_grill
-  m_TagString: Untagged
+  m_TagString: CraftUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21476,7 +21476,7 @@ GameObject:
   - component: {fileID: 1740581410}
   m_Layer: 5
   m_Name: Pnl_craft_filter
-  m_TagString: Untagged
+  m_TagString: CraftUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

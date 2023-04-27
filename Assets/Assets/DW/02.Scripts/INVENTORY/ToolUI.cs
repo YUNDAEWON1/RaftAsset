@@ -102,6 +102,8 @@ public void ToggleCupUI()
         currentUI.SetActive(false);
     }
 
+    craft_filter.transform.SetParent(foodwaterUI.transform);
+
     // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
     craft_filter.SetActive(true);
     currentUI = craft_filter;
@@ -115,6 +117,8 @@ public void ToggleGrillUI()
         currentUI.SetActive(false);
     }
 
+    craft_grill.transform.SetParent(foodwaterUI.transform);
+
     // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
     craft_grill.SetActive(true);
     currentUI = craft_grill;
@@ -127,6 +131,8 @@ public void ToggleCropPlotUI()
     {
         currentUI.SetActive(false);
     }
+
+    craft_cropplot.transform.SetParent(foodwaterUI.transform);
 
     // craft_filter UI를 활성화하고 currentUI를 craft_filter로 변경합니다.
     craft_cropplot.SetActive(true);
