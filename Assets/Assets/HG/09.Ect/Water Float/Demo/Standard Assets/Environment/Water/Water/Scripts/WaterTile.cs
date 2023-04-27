@@ -45,10 +45,10 @@ namespace UnityStandardAssets.Water
 
 
 #if UNITY_EDITOR
-        public void Update()
-        {
-            AcquireComponents();
-        }
+        // public void Update()
+        // {
+        //     AcquireComponents();
+        // }
 #endif
 
 

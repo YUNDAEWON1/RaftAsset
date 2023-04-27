@@ -3,31 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Sea
-  - Tree
-  - QuickSlot
-  - HammerObject
-  - Stuffs
-  - Object
-  - RightHandle
-  - ROOM_ITEM
-  - Hook
-  - InventoryManager
-  - R
-  - Up
-  - Down
-<<<<<<< HEAD
-  - CraftUI
-  - WoodenFloor
-  - WoodenPole
-  - WoodenStair
-  - Foundation
-=======
-  - L
-  - Ground
-  - Land
->>>>>>> master
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -37,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - ConstructObject
-  - EatObject
-  - Hook
-  - Hammer
-  - HammerObject
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
