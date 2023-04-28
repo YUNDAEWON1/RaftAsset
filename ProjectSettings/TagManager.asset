@@ -3,7 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ROOM_ITEM
+  - Object
+  - Undefined
+  - Foundation
+  - Enemy
+  - Ground
+  - Land
+  - Sea
+  - Hook
+  - WoodenFloor
+  - WoodenPole
+  - InventoryManager
+  - CraftUI
+  - QuickSlot
+  - RightHandle
+  - Stuffs
   layers:
   - Default
   - TransparentFX
@@ -13,12 +29,12 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - ConstructObject
+  - EatObject
+  - Hook
+  - Hammer
+  - HammerObject
+  - Axe
   - 
   - 
   - 
