@@ -31,11 +31,11 @@ public class Leaf_Object : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.gameObject.CompareTag("Land"))
-        //{
-        //    Destroy(gameObject);
-        //}
-        pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, transform.GetComponent<PhotonView>().viewID);
+        if (other.gameObject.CompareTag("Land"))
+        {
+            //Destroy(gameObject);
+            pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, transform.GetComponent<PhotonView>().viewID);
+        }
     }
 
     [PunRPC]
