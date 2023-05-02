@@ -237,9 +237,10 @@ public class PlayerCtrl : MonoBehaviour {
                             ani.SetTrigger("Throw");
                             StartCoroutine(HookThrowGage());
                         }
-                        else if(hammerMode && swimMode == false && hookThrow == false)
+                        else if(hammerMode && swimMode == false && hookThrow == false && inventoryManager.buildingRecipes[hammerScript.selectObject].CanBuild(inventoryManager))
                         {
-                            hammerScript.HammerClick();
+                                hammerScript.HammerClick();
+                                inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
                         }
                     }
                 }
@@ -559,7 +560,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     void ChangeRightHand(int swapNum)
     {
-        Debug.Log(stuffs.transform.GetChild(swapNum).childCount);
+        //Debug.Log(stuffs.transform.GetChild(swapNum).childCount);
 
         if (stuffs.transform.GetChild(swapNum).childCount > 0)                            // 여기 UI화(비어있는지)
         {

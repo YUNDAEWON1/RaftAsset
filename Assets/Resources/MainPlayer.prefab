@@ -200,6 +200,7 @@ MonoBehaviour:
   gravity: 0
   turnSpeed: 2
   inventoryOn: 0
+  EscapeOn: 0
   constructMode: 0
   hammerMode: 0
   swapNum: 0
@@ -208,6 +209,7 @@ MonoBehaviour:
   thirsty: 100
   swimMode: 0
   hookThrow: 0
+  rightHandle: {fileID: 0}
   firePos: {fileID: 2359601795302359479}
   stuffs: {fileID: 0}
   hudCanvas: {fileID: 4085350893840722956}
@@ -302,6 +304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePos: {fileID: 2359601795302359479}
   hammerShadow: {fileID: 2534763006767726885}
+  ShadowMat:
+  - {fileID: 2100000, guid: 19f90d6b378b57d42b148b998ff767af, type: 2}
+  - {fileID: 2100000, guid: 5355b6b3190157745b16a6ff4b1b446d, type: 2}
   hammerObject:
   - {fileID: 3390702719595082227, guid: 29ab8d4c9e79d0f4a8e6a919209d11b4, type: 3}
   - {fileID: 3390702719595082227, guid: 79de1bdd1c0aa3741ac02ec4f927f6d7, type: 3}
