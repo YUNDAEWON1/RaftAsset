@@ -6,19 +6,20 @@ using UnityEngine.UI;
 public class Potato_Object : MonoBehaviour
 {
     public GameManager gm;
+    public InventoryManager ivenmanager;
 
-    private void Start()
+    private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
+        ivenmanager = FindObjectOfType<InventoryManager>();
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.F))
         {
-            gm.hungry += 0.5f;
-            Destroy(this);
-            // 인벤토리에서 제거하는 기능도 추가해야함
+            gm.hungry += 0.5f;            
+            ivenmanager.UseSelectedItem();
         }
     }
 }
