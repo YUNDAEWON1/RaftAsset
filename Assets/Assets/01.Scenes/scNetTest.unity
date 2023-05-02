@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5065,7 +5065,6 @@ GameObject:
   - component: {fileID: 333267095}
   - component: {fileID: 333267094}
   - component: {fileID: 333267093}
-  - component: {fileID: 333267096}
   m_Layer: 5
   m_Name: EscMenu
   m_TagString: Untagged
@@ -5156,23 +5155,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333267091}
   m_CullTransparentMesh: 0
---- !u!114 &333267096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333267091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2583d0b811fdb1043a7d4398e9bcd4ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btnSetting: {fileID: 0}
-  btnReturn: {fileID: 0}
-  EscUI: {fileID: 0}
-  setWindow: {fileID: 0}
-  Quickslot: {fileID: 0}
 --- !u!1 &337695398
 GameObject:
   m_ObjectHideFlags: 0
