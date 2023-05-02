@@ -336,6 +336,11 @@ public class HammerMode : MonoBehaviour
         else
         {
             hammerShadow.GetComponent<MeshFilter>().mesh = null;
+
+            for (int i = 0; i < buildingUI.Length; i++)
+            {
+                buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
+            }
         }
     }
 

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: febfeea78f64ac748a66deedb04ff770, type: 3}
-  m_Name: 4. Plank
+  m_Name: 16. Cooked_Potato
   m_EditorClassIdentifier: 
-  _id: 4
-  _name: "\uB098\uBB34\uD310\uC790"
-  _tooltip: "\uB098\uBB34\uD310\uC790."
-  itemPrefab: {fileID: 3800248319634951258, guid: 80d8db8c664dac941a9f6cdf7dc86f14,
+  _id: 21
+  _name: "\uAD6C\uC6B4 \uAC10\uC790"
+  _tooltip: "\uC870\uB9AC\uB41C \uAC10\uC790"
+  itemPrefab: {fileID: 4594266295149965049, guid: c5076c7d670e4664d81c7945aa63be6e,
     type: 3}
-  type: 0
+  type: 2
   actionType: 0
   range: {x: 5, y: 4}
   stackable: 1
-  image: {fileID: 21300000, guid: e26d3c7f52f36054daf614e74b491a4f, type: 3}
+  image: {fileID: 21300000, guid: c60993173e863024599f10f04121b0ed, type: 3}

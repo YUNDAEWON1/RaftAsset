@@ -11,17 +11,12 @@ public class Tree_Object : MonoBehaviour
     {
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-       
-    }
-
-    private void OnCollisionStay(Collision col)
-    {
-        if(col.gameObject.CompareTag("Hook"))
+        if(Input.GetMouseButtonDown(0) && other.CompareTag("Axe"))
         {
-            Destroy(gameObject);
+            Destroy(this);
             Instantiate(woods, transform.position, Quaternion.identity);
         }
-    }   
+    }
 }

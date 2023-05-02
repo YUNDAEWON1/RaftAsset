@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class FireCamp : MonoBehaviour
 {
-    public float hungry = 0.3f;
+    public InventoryManager ivenManger;
+
+    private void Start()
+    {
+        ivenManger = FindObjectOfType<InventoryManager>();
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.F) && other.gameObject.CompareTag("Potato"))
         {
-            if (other.gameObject.CompareTag("player"))
-            {
-                // 헝그리 게이지 올라감
-            }
-
+            ivenManger.Craft(ivenManger.craftingRecipes[7]);
+            PhotonNetwork.Destroy(other.gameObject);
         }
     }
 }

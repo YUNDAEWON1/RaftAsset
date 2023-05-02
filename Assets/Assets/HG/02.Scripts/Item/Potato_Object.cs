@@ -1,17 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Potato_Object : MonoBehaviour
 {
-    public float hungry = 0.3f;
+    public GameManager gm;
+    public InventoryManager ivenmanager;
 
+    private void Awake()
+    {
+        gm = FindObjectOfType<GameManager>();
+        ivenmanager = FindObjectOfType<InventoryManager>();
+    }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetMouseButtonDown(0))
         {
-            // hungry 게이지 추가
+            gm.hungry += 0.5f;            
+            ivenmanager.UseSelectedItem();
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
 }

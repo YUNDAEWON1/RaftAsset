@@ -10,16 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a418beacfb4b8a34d8b7e6d0460dca84, type: 3}
-  m_Name: Purifier
+  m_Name: Cooked_Potato
   m_EditorClassIdentifier: 
   Materials:
-  - item: {fileID: 11400000, guid: a228fb21a3a63b34287639db5d7d0241, type: 2}
-    Amount: 4
-  - item: {fileID: 11400000, guid: 098e49e7fd30f394ba55b95cf4252ea8, type: 2}
-    Amount: 4
-  - item: {fileID: 11400000, guid: 25646215b9033284ab86957dfc1c3fad, type: 2}
-    Amount: 4
+  - item: {fileID: 11400000, guid: c2a743225ba069142b806d2d52fc7a85, type: 2}
+    Amount: 1
   Results:
-  - item: {fileID: 11400000, guid: 296b03b0a61ed614e8fab6954e67d02f, type: 2}
+  - item: {fileID: 11400000, guid: b8571f7c882fb8846abb6f1f1d014fc0, type: 2}
     Amount: 1
   canCraft: 0
