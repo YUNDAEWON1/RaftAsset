@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
 
 
-    [SerializeField] private List<CraftingRecipe> craftingRecipes=new List<CraftingRecipe>();
+    [SerializeField] public List<CraftingRecipe> craftingRecipes=new List<CraftingRecipe>();
     public static InventoryManager instance;
     public Item[] startItems;
 
@@ -344,7 +344,7 @@ public bool AddItem(Item item, int amount)
  
 
 
-private void Craft(CraftingRecipe reicpe)
+public void Craft(CraftingRecipe reicpe)
     {
         if(reicpe.CanCraft(this))
         {
@@ -483,5 +483,7 @@ public void btnSpear()
 {
     Craft(craftingRecipes[6]);
 }
+
+
 
 }
