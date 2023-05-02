@@ -20,7 +20,18 @@ public class Tree_Object : MonoBehaviour
     {
         if(interObj.interaction)
         {
-            PhotonNetwork.Instantiate("Plank", transform.position, Quaternion.identity, 0, null);
+            GameObject createObj =  PhotonNetwork.Instantiate("Plank", transform.position, Quaternion.identity, 0, null);
+
+            if (createObj.transform.GetComponent<WaterMoveObject>() != null)
+            {
+                createObj.transform.GetComponent<WaterMoveObject>().enabled = false;
+            }
+
+            if (createObj.transform.GetComponent<WaterObject>() != null)
+            {
+                createObj.transform.GetComponent<WaterObject>().enabled = false;
+            }
+
             PhotonNetwork.Destroy(this.gameObject);
             interObj.interaction = !interObj.interaction;
             return;
