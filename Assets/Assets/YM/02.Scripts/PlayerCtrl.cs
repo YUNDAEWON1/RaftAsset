@@ -13,7 +13,7 @@ public class PlayerCtrl : MonoBehaviour {
         {3, "Plastic"},
         {4, "Plank"},
         {5, "Potato"},
-        {6, "Purifier1"},
+        {6, "Purifier"},
         {7, "Leaf" },
         {8, "Axe"},
         {9, "Bed" },
