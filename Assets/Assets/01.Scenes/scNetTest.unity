@@ -7816,7 +7816,7 @@ MonoBehaviour:
   hpGage: {fileID: 262765524}
   hungry: 1
   thirsty: 1
-  hp: 100
+  hp: 1
 --- !u!4 &500687609
 Transform:
   m_ObjectHideFlags: 0

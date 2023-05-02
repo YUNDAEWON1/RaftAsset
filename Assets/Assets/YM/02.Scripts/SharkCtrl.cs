@@ -22,6 +22,8 @@ public class SharkCtrl : MonoBehaviour
 
     private Animator ani;
 
+    private GameManager gameMgr;
+
     private enum State
     {
         Idle,
@@ -40,6 +42,7 @@ public class SharkCtrl : MonoBehaviour
         // 로밍 위치 얻기
         roamingCheckPoints = GameObject.Find("RoamingPoint").GetComponentsInChildren<Transform>();
         rigid = GetComponent<Rigidbody>();
+        gameMgr = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     private void Start()
@@ -134,6 +137,9 @@ public class SharkCtrl : MonoBehaviour
         // 추적 중인 플레이어를 공격하는 로직 구현
         // 일정 시간이 지나면 상태를 IDLE로 변경
         // 공격이 끝나면 targetPlayer를 null로 초기화
+        gameMgr.hp -= 0.1f;
+        gameMgr.Hp();
+
         currentState = State.Idle;
         ani.SetBool("Chase", false);
         ani.SetBool("Attack", false);

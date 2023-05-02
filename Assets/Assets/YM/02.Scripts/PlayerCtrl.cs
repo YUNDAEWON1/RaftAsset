@@ -302,6 +302,11 @@ public class PlayerCtrl : MonoBehaviour {
                                     hits[j].transform.GetComponent<WaterMoveObject>().enabled = false;
                                 }
 
+                                if (hits[j].transform.GetComponent<WaterObject>() != null)
+                                {
+                                    hits[j].transform.GetComponent<WaterObject>().enabled = false;
+                                }
+
                                 // 해당오브젝트의 ID따서 UI쪽 함수에 전달
                                 inventoryManager.AddItem(hits[j].transform.GetComponent<PhotonObject>().objectNum);
 
@@ -715,6 +720,10 @@ public class PlayerCtrl : MonoBehaviour {
             if (createObject.GetComponent<WaterMoveObject>() != null)
             {
                 createObject.GetComponent<WaterMoveObject>().enabled = false;
+            }
+            if (createObject.GetComponent<WaterObject>() != null)
+            {
+                createObject.GetComponent<WaterObject>().enabled = false;
             }
         }
     }
