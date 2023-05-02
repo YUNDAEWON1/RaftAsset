@@ -88,7 +88,7 @@ public class ConstructMode : MonoBehaviour
         if(PhotonNetwork.isMasterClient)
         {
             GameObject constructObject = PhotonNetwork.InstantiateSceneObject(ID, pos, rot, 0, null);
-            constructObject.tag = "Untagged";   // 건설한 오브젝트의 태그를 없애서 건설한 애들은 주울 수 없게끔 한다
+            constructObject.tag = "InteractionObject";   // 건설한 오브젝트의 태그를 없애서 건설한 애들은 주울 수 없게끔 하고 상호작용 가능하게 만든다
             constructObject.GetComponent<Rigidbody>().isKinematic = true;
         }
     }

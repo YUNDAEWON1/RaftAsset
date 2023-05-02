@@ -23,6 +23,15 @@ TagManager:
   - WoodenStair
   - RoamingPoint
   - BuildingUI
+  - Potato
+  - Cup
+  - Axe
+  - HammerObject
+  - R
+  - Up
+  - Down
+  - L
+  - InteractionObject
   layers:
   - Default
   - TransparentFX
@@ -38,7 +47,7 @@ TagManager:
   - Hammer
   - HammerObject
   - Axe
-  - 
+  - Spear_wood
   - 
   - 
   - 

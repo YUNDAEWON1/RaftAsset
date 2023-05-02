@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2035405497521351004}
+  - component: {fileID: -2919222297030976268}
   - component: {fileID: 2850881485308802551}
   - component: {fileID: 2035405497520580988}
   - component: {fileID: 2035405497519451068}
@@ -17,7 +18,7 @@ GameObject:
   - component: {fileID: 1278071738224179115}
   m_Layer: 0
   m_Name: Tree_2
-  m_TagString: Untagged
+  m_TagString: InteractionObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +37,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2919222297030976268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035405497521452412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1e30eeb45f9b04eb8e90f3fcf376b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: 0
 --- !u!114 &2850881485308802551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,7 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 348939f3c95295f4398df6f920010e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  plankPrefab: {fileID: 6637302415784610745, guid: 3feee6787f92af04cb3d1c27343ec2d6,
+    type: 3}
 --- !u!33 &2035405497520580988
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -145,7 +160,8 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
