@@ -290,13 +290,18 @@ public class PlayerCtrl : MonoBehaviour {
                 {
                     if (hits[j].collider.tag != "Ground"&& hits[j].collider.tag != "Player")  // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
                     {
-                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato" || hits[j].collider.tag == "Potato")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
+                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
                         {
                             //Debug.Log("Potato");
                             // 여기에 상호작용 UI띄우는 부분 넣으면 될듯
 
                             if (Input.GetKeyDown("e"))
                             {
+                                if (hits[j].transform.GetComponent<WaterMoveObject>() != null)
+                                {
+                                    hits[j].transform.GetComponent<WaterMoveObject>().enabled = false;
+                                }
+
                                 // 해당오브젝트의 ID따서 UI쪽 함수에 전달
                                 inventoryManager.AddItem(hits[j].transform.GetComponent<PhotonObject>().objectNum);
 
