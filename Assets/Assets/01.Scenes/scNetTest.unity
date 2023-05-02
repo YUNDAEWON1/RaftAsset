@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8054,10 +8054,10 @@ MonoBehaviour:
   hook_NO: {fileID: 1550958746}
   spear_OK: {fileID: 450159729}
   spear_NO: {fileID: 1089305233}
-  bed_OK: {fileID: 0}
-  bed_NO: {fileID: 0}
-  axe_OK: {fileID: 0}
-  axe_NO: {fileID: 0}
+  bed_OK: {fileID: 234971554}
+  bed_NO: {fileID: 1043925697}
+  axe_OK: {fileID: 1222103322}
+  axe_NO: {fileID: 1447372921}
 --- !u!1 &421786928
 GameObject:
   m_ObjectHideFlags: 0
