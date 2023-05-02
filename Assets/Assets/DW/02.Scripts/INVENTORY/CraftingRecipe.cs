@@ -42,20 +42,20 @@ public bool CanCraft(InventoryManager inventory)
     return true;
 }
 
-public void Craft(InventoryManager inventory)
-{
-    // 재료 아이템 제거
-    foreach (ItemAmount itemAmount in Materials)
-    {
-        inventory.RemoveItem(itemAmount.item, itemAmount.Amount);
-    }
 
-    // 결과 아이템 추가
-    foreach (ItemAmount itemAmount in Results)
+    public void Craft(InventoryManager inventory)
     {
-        inventory.AddItem(itemAmount.item, itemAmount.Amount);
-    }
-}
+        // 재료 아이템 제거
+        foreach (ItemAmount itemAmount in Materials)
+        {
+            inventory.RemoveItem(itemAmount.item, itemAmount.Amount);
+        }
 
+        // 결과 아이템 추가
+        foreach (ItemAmount itemAmount in Results)
+        {
+            inventory.AddItem(itemAmount.item, itemAmount.Amount);
+        }
+    }
 
 }

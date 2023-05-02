@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
 
 
-    [SerializeField] private List<CraftingRecipe> craftingRecipes=new List<CraftingRecipe>();
+    [SerializeField] public List<CraftingRecipe> craftingRecipes=new List<CraftingRecipe>();
     public static InventoryManager instance;
     public Item[] startItems;
 
@@ -344,7 +344,7 @@ public bool AddItem(Item item, int amount)
  
 
 
-private void Craft(CraftingRecipe reicpe)
+public void Craft(CraftingRecipe reicpe)
     {
         if(reicpe.CanCraft(this))
         {
@@ -454,34 +454,34 @@ private void CheckCraft6(CraftingRecipe recipe)
     }
 }
     public void btnCup()
-{
-    Craft(craftingRecipes[0]);
-}
-public void btnFilter()
-{
-    Craft(craftingRecipes[1]);
-}
+    {
+        Craft(craftingRecipes[0]);
 
-public void btnGrill()
-{
-    Craft(craftingRecipes[2]);
-}
-public void btnCropPlot()
-{
-    Craft(craftingRecipes[3]);
-}
-public void btnHameer()
-{
-    Craft(craftingRecipes[4]);
-}
-public void btnHook()
-{
-    Craft(craftingRecipes[5]);
-}
+    }
+    public void btnFilter()
+    {
+        Craft(craftingRecipes[1]);
+    }
 
-public void btnSpear()
-{
-    Craft(craftingRecipes[6]);
-}
+    public void btnGrill()
+    {
+        Craft(craftingRecipes[2]);
+    }
+    public void btnCropPlot()
+    {
+        Craft(craftingRecipes[3]);
+    }
+    public void btnHameer()
+    {
+        Craft(craftingRecipes[4]);
+    }
+    public void btnHook()
+    {
+        Craft(craftingRecipes[5]);
+    }
 
+    public void btnSpear()
+    {
+        Craft(craftingRecipes[6]);
+    }
 }

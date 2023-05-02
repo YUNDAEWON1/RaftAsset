@@ -20,6 +20,8 @@ TagManager:
   - QuickSlot
   - RightHandle
   - Stuffs
+  - Grill
+  - Potato
   layers:
   - Default
   - TransparentFX

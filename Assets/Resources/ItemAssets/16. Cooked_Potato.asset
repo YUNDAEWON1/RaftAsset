@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: febfeea78f64ac748a66deedb04ff770, type: 3}
-  m_Name: 11. Cup
+  m_Name: 16. Cooked_Potato
   m_EditorClassIdentifier: 
-  _id: 11
-  _name: "\uBE48 \uCEF5"
-  _tooltip: "\uBB3C\uC744 \uB2F4\uC744 \uC218 \uC788\uB294 \uCEF5\uC785\uB2C8\uB2E4."
-  itemPrefab: {fileID: 1891337919465718313, guid: a481c917517376945a457a742cb63dd2,
+  _id: 21
+  _name: "\uAD6C\uC6B4 \uAC10\uC790"
+  _tooltip: "\uC870\uB9AC\uB41C \uAC10\uC790"
+  itemPrefab: {fileID: 4594266295149965049, guid: c5076c7d670e4664d81c7945aa63be6e,
     type: 3}
-  type: 1
+  type: 2
   actionType: 0
   range: {x: 5, y: 4}
-  stackable: 0
-  image: {fileID: 21300000, guid: b6127bd7134487e4c906cdd8b6d631f3, type: 3}
+  stackable: 1
+  image: {fileID: 21300000, guid: c60993173e863024599f10f04121b0ed, type: 3}
