@@ -11,6 +11,8 @@ public class EscControl : MonoBehaviour
 
     public Transform setWindow;
 
+    public GameObject Quickslot;
+
     InventoryUI invenUI;
 
     private bool activeEsc=false;
@@ -25,7 +27,7 @@ public class EscControl : MonoBehaviour
 private void Update() {
     if(Input.GetKeyDown(KeyCode.Escape))
     {
-        Debug.Log(123123);
+    Quickslot.SetActive(false);
        activeEsc=!activeEsc;
        EscUI.SetActive(activeEsc);
 
@@ -40,6 +42,7 @@ private void Update() {
         invenUI.aim.enabled=true;
         Cursor.lockState=CursorLockMode.Locked;
         Cursor.visible=false;
+        Quickslot.SetActive(true);
        }
     }
 }
@@ -55,6 +58,7 @@ public void OnClickSetting()
 public void OnClickReturn()
 {
     EscUI.SetActive(false);
+    Quickslot.SetActive(true);
     invenUI.aim.enabled=true;
         Cursor.lockState=CursorLockMode.Locked;
         Cursor.visible=false;

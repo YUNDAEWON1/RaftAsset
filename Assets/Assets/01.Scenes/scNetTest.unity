@@ -5172,6 +5172,7 @@ MonoBehaviour:
   btnReturn: {fileID: 0}
   EscUI: {fileID: 0}
   setWindow: {fileID: 0}
+  Quickslot: {fileID: 0}
 --- !u!1 &337695398
 GameObject:
   m_ObjectHideFlags: 0
@@ -15902,6 +15903,7 @@ MonoBehaviour:
   aim: {fileID: 2034650712}
   aimSlider: {fileID: 152445776}
   cursorLockMode: 1
+  activeInventory: 0
 --- !u!114 &1004088296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15960,6 +15962,7 @@ MonoBehaviour:
   btnReturn: {fileID: 350842593}
   EscUI: {fileID: 333267091}
   setWindow: {fileID: 0}
+  Quickslot: {fileID: 1948320555}
 --- !u!1 &1007736352
 GameObject:
   m_ObjectHideFlags: 0

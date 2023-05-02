@@ -13,7 +13,7 @@ public class InventoryUI : MonoBehaviour
     public Image aimSlider;
     public CursorLockMode cursorLockMode = CursorLockMode.Locked; // 마우스 커서 상태
 
-    private bool activeInventory = false;
+    public bool activeInventory = false;
 
 
 

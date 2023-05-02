@@ -7,6 +7,8 @@ public class InventorySlot : MonoBehaviour,IDropHandler,IPointerEnterHandler,IPo
     public Image image;
     public Sprite selectedSprite,notSelectedSprite;
 
+
+
     public void Awake()
     {
         Deselect();
@@ -37,15 +39,20 @@ public class InventorySlot : MonoBehaviour,IDropHandler,IPointerEnterHandler,IPo
     if (draggableItem != null)
     {
         Item item = draggableItem.item;
+      
+
         ToolTIP toolTip = FindObjectOfType<ToolTIP>();
         toolTip.SetInfo(item.image, item.Name, item.Tooltip);
+       
     }
 }
 
 public void OnPointerExit(PointerEventData eventData)
 {
+   
     ToolTIP toolTip = FindObjectOfType<ToolTIP>();
     toolTip.ResetInfo();
+    
 }
 
 
