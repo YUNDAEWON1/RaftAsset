@@ -16,7 +16,7 @@ public class FireCamp : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F) && other.gameObject.CompareTag("Potato"))
         {
             ivenManger.Craft(ivenManger.craftingRecipes[7]);
-            //PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
+            PhotonNetwork.Destroy(other.gameObject);
         }
     }
 }

@@ -16,10 +16,11 @@ public class Potato_Object : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetMouseButtonDown(0))
         {
             gm.hungry += 0.5f;            
             ivenmanager.UseSelectedItem();
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
 }
