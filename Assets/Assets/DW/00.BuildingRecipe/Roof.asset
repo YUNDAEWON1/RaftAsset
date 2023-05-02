@@ -17,6 +17,4 @@ MonoBehaviour:
     Amount: 6
   - item: {fileID: 11400000, guid: b31ed4b9a355c5a46b2ffc0e368d3354, type: 2}
     Amount: 3
-  - item: {fileID: 0}
-    Amount: 0
   canBuild: 0

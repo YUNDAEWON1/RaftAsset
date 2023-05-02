@@ -75,10 +75,10 @@ public class InventoryManager : MonoBehaviour
     //////////////////////빌드 관련//////////////////////
 
     CheckBuildFloor(buildingRecipes[0]);
-    // CheckBuildFound(buildingRecipes[1]);
-    // CheckBuildPill(buildingRecipes[2]);
-    // CheckBuildRoof(buildingRecipes[3]);
-    // CheckBuildStairs(buildingRecipes[4]);
+    CheckBuildFound(buildingRecipes[1]);
+    CheckBuildPill(buildingRecipes[2]);
+    CheckBuildRoof(buildingRecipes[3]);
+    CheckBuildStairs(buildingRecipes[4]);
 
         
         
