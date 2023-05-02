@@ -5168,6 +5168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2583d0b811fdb1043a7d4398e9bcd4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnSetting: {fileID: 0}
+  btnReturn: {fileID: 0}
+  EscUI: {fileID: 0}
+  setWindow: {fileID: 0}
 --- !u!1 &337695398
 GameObject:
   m_ObjectHideFlags: 0
@@ -5483,7 +5487,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 350842596}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1004088297}
+        m_MethodName: OnClickReturn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &350842596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9826,7 +9841,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 642868820}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1004088297}
+        m_MethodName: OnClickSetting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &642868820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15763,6 +15789,7 @@ GameObject:
   - component: {fileID: 1004088291}
   - component: {fileID: 1004088295}
   - component: {fileID: 1004088296}
+  - component: {fileID: 1004088297}
   m_Layer: 5
   m_Name: INGAME_UI_CANVAS
   m_TagString: Untagged
@@ -15917,6 +15944,22 @@ MonoBehaviour:
   btn_hammer: {fileID: 1258394163}
   btn_hook: {fileID: 928924283}
   btn_spear: {fileID: 118204372}
+--- !u!114 &1004088297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004088290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2583d0b811fdb1043a7d4398e9bcd4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnSetting: {fileID: 642868817}
+  btnReturn: {fileID: 350842593}
+  EscUI: {fileID: 333267091}
+  setWindow: {fileID: 0}
 --- !u!1 &1007736352
 GameObject:
   m_ObjectHideFlags: 0

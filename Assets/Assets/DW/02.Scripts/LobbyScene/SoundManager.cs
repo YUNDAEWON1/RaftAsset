@@ -53,6 +53,11 @@ public class SoundManager : MonoBehaviour
         audio.mute=isSoundMute;
     }
 
+    public void SoundUiClose()
+    {
+        Sound.SetActive(false);
+    }
+
 
     //스테이지 시작시 호출되는 함수
     public void PlayBackground(int stage)

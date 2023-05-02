@@ -10,11 +10,13 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
     [HideInInspector] public Transform parentAfterDrag;
     [HideInInspector] public int count=1;
     [HideInInspector] public Item item;
-    
+
+        
 
 
     private void Start()
     {
+        
         InitialiseItem(item);
        
     }
@@ -67,7 +69,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
             }
 
             DropItem(this.item.ID);
-
+            
         }
 
     }
@@ -77,6 +79,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
     {
 
         Debug.Log("ItemID : "+itemID);
+        PlayerCtrl playerctrl= GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+        Debug.Log(playerctrl);
+        playerctrl.ThrowItem(itemID);
 
 
 
