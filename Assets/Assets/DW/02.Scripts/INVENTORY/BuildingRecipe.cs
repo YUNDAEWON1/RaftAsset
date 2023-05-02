@@ -5,8 +5,8 @@ using System;
 using System.Linq;
 
 
-
-public class BildingRecipe : ScriptableObject
+[CreateAssetMenu]
+public class BuildingRecipe : ScriptableObject
 {
    public List<ItemAmount> Materials;
 
@@ -30,5 +30,13 @@ public class BildingRecipe : ScriptableObject
       }
 
       return true;
+   }
+
+   public void Build(InventoryManager inventory)
+   {
+      foreach(ItemAmount itemAmount in Materials)
+      {
+         inventory.RemoveItem(itemAmount.item,itemAmount.Amount);
+      }
    }
 }
