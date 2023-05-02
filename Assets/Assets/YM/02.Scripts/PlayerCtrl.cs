@@ -712,6 +712,10 @@ public class PlayerCtrl : MonoBehaviour {
             GameObject createObject = PhotonNetwork.InstantiateSceneObject(name, pos, rot, 0, null);
             createObject.GetComponent<Rigidbody>().isKinematic = false;
             createObject.GetComponent<Rigidbody>().useGravity = true;
+            if (createObject.GetComponent<WaterMoveObject>() != null)
+            {
+                createObject.GetComponent<WaterMoveObject>().enabled = false;
+            }
         }
     }
 
