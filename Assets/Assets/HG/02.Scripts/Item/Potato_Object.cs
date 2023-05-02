@@ -7,6 +7,7 @@ public class Potato_Object : MonoBehaviour
 {
     public GameManager gm;
     public InventoryManager ivenmanager;
+    public float hungry = 0.3f;
 
     private void Awake()
     {
@@ -18,7 +19,7 @@ public class Potato_Object : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            gm.hungry += 0.5f;            
+            gm.hungry += hungry;            
             ivenmanager.UseSelectedItem();
             PhotonNetwork.Destroy(this.gameObject);
         }

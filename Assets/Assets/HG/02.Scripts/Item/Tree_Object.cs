@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Tree_Object : MonoBehaviour
 {
-    public int hp = 5;
-    public GameObject woods;
+    private PhotonView pv;
 
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
     private void Start()
     {
     }
@@ -15,8 +18,9 @@ public class Tree_Object : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && other.CompareTag("Axe"))
         {
-            Destroy(this);
-            Instantiate(woods, transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("Plank", transform.position, Quaternion.identity, 0, null);
+            PhotonNetwork.Destroy(this.pv);
+            
         }
     }
 }

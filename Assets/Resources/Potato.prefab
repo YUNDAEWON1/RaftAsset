@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
+  ivenmanager: {fileID: 0}
+  hungry: 0.2
 --- !u!33 &8041195221168044999
 MeshFilter:
   m_ObjectHideFlags: 0
