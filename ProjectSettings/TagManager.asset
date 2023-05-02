@@ -20,6 +20,8 @@ TagManager:
   - QuickSlot
   - RightHandle
   - Stuffs
+  - WoodenStair
+  - RoamingPoint
   layers:
   - Default
   - TransparentFX
@@ -41,7 +43,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Player
   - 
   - 
   - 
