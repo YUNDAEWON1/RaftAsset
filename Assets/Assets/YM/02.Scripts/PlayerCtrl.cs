@@ -13,7 +13,7 @@ public class PlayerCtrl : MonoBehaviour {
         {3, "Plastic"},
         {4, "Plank"},
         {5, "Potato"},
-        {6, "Purifier1"},
+        {6, "Purifier"},
         {7, "Leaf" },
         {8, "Axe"},
         {9, "Bed" },
@@ -27,7 +27,8 @@ public class PlayerCtrl : MonoBehaviour {
         {17, "WoodenWall"},
         {18, "WoodenPole"},
         {19, "WoodenFloor"},
-        {20, "Foundation" }
+        {20, "Foundation" },
+        {21, "Cooked_Potato"}
     };
 
     private float speed;                             // 캐릭터 움직임 스피드.

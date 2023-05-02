@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 5
-  woods: {fileID: 8941583053588353955, guid: facbe48f9cb184e45bfece1f2cf6147d, type: 3}
+  woods: {fileID: 6637302415784610745, guid: 3feee6787f92af04cb3d1c27343ec2d6, type: 3}
 --- !u!33 &8758888183435907163
 MeshFilter:
   m_ObjectHideFlags: 0

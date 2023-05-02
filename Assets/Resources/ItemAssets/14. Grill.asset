@@ -15,7 +15,8 @@ MonoBehaviour:
   _id: 14
   _name: "\uB2E8\uC21C \uADF8\uB9B4"
   _tooltip: "\uADF8\uB9B4 \uC785\uB2C8\uB2E4"
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 7996703592551186742, guid: e3ce3289063547947882f46e5404facf,
+    type: 3}
   type: 0
   actionType: 0
   range: {x: 5, y: 4}

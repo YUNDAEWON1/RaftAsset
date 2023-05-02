@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5961696753198681949}
   m_Layer: 9
   m_Name: Potato
-  m_TagString: Object
+  m_TagString: Potato
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83039c746475973458de9163b6c7fdd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungry: 0.3
+  gm: {fileID: 0}
 --- !u!33 &8041195221168044999
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8041195221168045019}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.029862339
   m_Height: 0.060704514
