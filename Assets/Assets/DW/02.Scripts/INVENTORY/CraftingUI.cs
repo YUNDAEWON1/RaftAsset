@@ -27,10 +27,10 @@ public class CraftingUI : MonoBehaviour
     public GameObject spear_OK;
     public GameObject spear_NO;
 
-    public GameObject bed_OK;
-    public GameObject bed_NO;
-    public GameObject axe_OK;
-    public GameObject axe_NO;
+    // public GameObject bed_OK;
+    // public GameObject bed_NO;
+    // public GameObject axe_OK;
+    // public GameObject axe_NO;
 
     public void OnbtnOK()
     {
@@ -107,27 +107,27 @@ public class CraftingUI : MonoBehaviour
         spear_NO.SetActive(true);
     }
 
-         public void OnbtnOK7()
-    {
-        axe_OK.SetActive(true);
-        axe_NO.SetActive(false);
-    }
-    public void OnbtnNO7()
-    {
-        axe_OK.SetActive(false);
-        axe_NO.SetActive(true);
-    }
+    //      public void OnbtnOK7()
+    // {
+    //     axe_OK.SetActive(true);
+    //     axe_NO.SetActive(false);
+    // }
+    // public void OnbtnNO7()
+    // {
+    //     axe_OK.SetActive(false);
+    //     axe_NO.SetActive(true);
+    // }
 
-    public void OnbtnOK8()
-    {
-        bed_OK.SetActive(true);
-        bed_NO.SetActive(false);
-    }
-    public void OnbtnNO8()
-    {
-        bed_OK.SetActive(false);
-        bed_NO.SetActive(true);
-    }
+    // public void OnbtnOK8()
+    // {
+    //     bed_OK.SetActive(true);
+    //     bed_NO.SetActive(false);
+    // }
+    // public void OnbtnNO8()
+    // {
+    //     bed_OK.SetActive(false);
+    //     bed_NO.SetActive(true);
+    // }
 
 
 }
