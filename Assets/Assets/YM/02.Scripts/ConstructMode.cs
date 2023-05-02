@@ -89,6 +89,7 @@ public class ConstructMode : MonoBehaviour
         {
             GameObject constructObject = PhotonNetwork.InstantiateSceneObject(ID, pos, rot, 0, null);
             constructObject.tag = "Untagged";   // 건설한 오브젝트의 태그를 없애서 건설한 애들은 주울 수 없게끔 한다
+            constructObject.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 

@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour
 
 
     [SerializeField] public List<CraftingRecipe> craftingRecipes=new List<CraftingRecipe>();
+    [SerializeField] public List<BuildingRecipe> buildingRecipes=new List<BuildingRecipe>();
     public static InventoryManager instance;
     public Item[] startItems;
 
@@ -20,6 +21,7 @@ public class InventoryManager : MonoBehaviour
     public List<Item> itemList = new List<Item>();
 
     public CraftingUI craftUI;
+    public BuildingUI buildingUI;
 
     private void Awake()
     {
@@ -69,6 +71,15 @@ public class InventoryManager : MonoBehaviour
     CheckCraft4(craftingRecipes[4]);   //해머
     CheckCraft5(craftingRecipes[5]);   //훅
     CheckCraft6(craftingRecipes[6]);   //나무 창
+
+    //////////////////////빌드 관련//////////////////////
+
+    CheckBuildFound(buildingRecipes[0]);
+    CheckBuildPill(buildingRecipes[1]);
+    CheckBuildStairs(buildingRecipes[2]);
+    CheckBuildFloor(buildingRecipes[3]);
+    CheckBuildRoof(buildingRecipes[4]);
+    
 
         
         
@@ -357,6 +368,8 @@ public void Craft(CraftingRecipe reicpe)
         }
     }
 
+
+
 private void CheckCraft(CraftingRecipe recipe)
 {
     if(recipe.CanCraft(this))
@@ -484,6 +497,80 @@ public void btnSpear()
     Craft(craftingRecipes[6]);
 }
 
+////////////////////Building 관련 함수들///////////////////
 
+public void Build(BuildingRecipe _recipe)
+{
+    if(_recipe.CanBuild(this))
+    {
+        _recipe.Build(this);
+    }
+    else
+    {
+        Debug.Log("재료부족");
+    }
+}
+
+public void CheckBuildFound(BuildingRecipe _recipe)
+{
+    if(_recipe.CanBuild(this))
+    {
+        buildingUI.OnFoundOK();
+    }
+    else
+    {
+        buildingUI.OnFoundNO();
+    }
+}
+
+public void CheckBuildFloor(BuildingRecipe _recipe)
+{
+    if(_recipe.CanBuild(this))
+    {
+        buildingUI.OnFloorOK();
+    }
+    else
+    {
+       buildingUI.OnFloorNO();
+    }
+}
+
+public void CheckBuildPill(BuildingRecipe _recipe)
+{
+    if(_recipe.CanBuild(this))
+    {
+        buildingUI.OnPillOK();
+    }
+    else
+    {
+        buildingUI.OnPillNO();
+    }
+}
+
+public void CheckBuildRoof(BuildingRecipe _recipe)
+{
+    if(_recipe.CanBuild(this))
+    {
+        buildingUI.OnRoofOK();
+    }
+    else
+    {
+        buildingUI.OnRoofNO();
+    }
+
+}
+
+public void CheckBuildStairs(BuildingRecipe _recipe)
+{
+    if(_recipe.CanBuild(this))
+    {
+        buildingUI.OnStairsOK();
+    }
+    else
+    {
+        buildingUI.OnStairsNO();
+    }
+
+}
 
 }

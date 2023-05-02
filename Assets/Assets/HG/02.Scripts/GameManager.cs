@@ -73,17 +73,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Hp()
+    public void Hp()
     {
-        if (hungry <= 0 || thirsty <= 0)
-        {
+        //if (hungry <= 0 || thirsty <= 0)
+        //{
             hp -= Time.deltaTime * 0.05f;
 
             if (hp < 0)
             {
                 hp = 0;
             }
-        }
+        //}
 
         if (hp <= 0.0f)
         {

@@ -28,8 +28,12 @@ TagManager:
   - Down
   - L
   - RoamingPoint
+<<<<<<< HEAD
   - Cup
   - Axe
+=======
+  - BuildingUI
+>>>>>>> master
   layers:
   - Default
   - TransparentFX
