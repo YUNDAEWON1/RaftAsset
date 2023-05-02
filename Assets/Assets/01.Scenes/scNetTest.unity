@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3277,11 +3277,11 @@ GameObject:
   - component: {fileID: 180670205}
   m_Layer: 5
   m_Name: Found
-  m_TagString: Untagged
+  m_TagString: BuildingUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &180670205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6520,10 +6520,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 180670205}
-  - {fileID: 889868898}
   - {fileID: 2099944881}
-  - {fileID: 792652977}
   - {fileID: 1766361896}
+  - {fileID: 889868898}
+  - {fileID: 792652977}
   m_Father: {fileID: 1004088294}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7973,11 +7973,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4371609823d88494996a83b61f398574, type: 2}
   - {fileID: 11400000, guid: 25bda85eed5256a4f9a4f2450bb54d3a, type: 2}
   buildingRecipes:
-  - {fileID: 11400000, guid: f8bdbdcaf0012fd4a89635662dc9de3a, type: 2}
   - {fileID: 11400000, guid: b7857bc023eaf3240926cd4c56bc40dd, type: 2}
   - {fileID: 11400000, guid: c5b132d071b2ebc49aba425516576695, type: 2}
-  - {fileID: 11400000, guid: c3dbde16b6d664f4d8f5466d8361b3e6, type: 2}
   - {fileID: 11400000, guid: 6086eca7216e8154a8adb43317fac696, type: 2}
+  - {fileID: 11400000, guid: f8bdbdcaf0012fd4a89635662dc9de3a, type: 2}
+  - {fileID: 11400000, guid: c3dbde16b6d664f4d8f5466d8361b3e6, type: 2}
   startItems:
   - {fileID: 11400000, guid: f726fdd7e72ac69498b9a67fed259e84, type: 2}
   - {fileID: 11400000, guid: 9f46acd04cd4a6b4ab6aec4bf16601fd, type: 2}
@@ -14956,7 +14956,7 @@ GameObject:
   - component: {fileID: 792652977}
   m_Layer: 5
   m_Name: Roof
-  m_TagString: Untagged
+  m_TagString: BuildingUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14977,7 +14977,7 @@ RectTransform:
   - {fileID: 1543309524}
   - {fileID: 1746658986}
   m_Father: {fileID: 349271886}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16353,11 +16353,11 @@ GameObject:
   - component: {fileID: 889868898}
   m_Layer: 5
   m_Name: floor
-  m_TagString: Untagged
+  m_TagString: BuildingUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &889868898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16373,7 +16373,7 @@ RectTransform:
   - {fileID: 2022180621}
   - {fileID: 292620129}
   m_Father: {fileID: 349271886}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -32197,11 +32197,11 @@ GameObject:
   - component: {fileID: 1766361896}
   m_Layer: 5
   m_Name: Stairs
-  m_TagString: Untagged
+  m_TagString: BuildingUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1766361896
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32218,7 +32218,7 @@ RectTransform:
   - {fileID: 421786929}
   - {fileID: 316292471}
   m_Father: {fileID: 349271886}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -38221,11 +38221,11 @@ GameObject:
   - component: {fileID: 2099944881}
   m_Layer: 5
   m_Name: Pill
-  m_TagString: Untagged
+  m_TagString: BuildingUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2099944881
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38242,7 +38242,7 @@ RectTransform:
   - {fileID: 1724388689}
   - {fileID: 1543752219}
   m_Father: {fileID: 349271886}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

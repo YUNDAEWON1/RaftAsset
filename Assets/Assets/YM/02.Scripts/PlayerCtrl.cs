@@ -237,9 +237,10 @@ public class PlayerCtrl : MonoBehaviour {
                             ani.SetTrigger("Throw");
                             StartCoroutine(HookThrowGage());
                         }
-                        else if(hammerMode && swimMode == false && hookThrow == false)
+                        else if(hammerMode && swimMode == false && hookThrow == false && inventoryManager.buildingRecipes[hammerScript.selectObject].CanBuild(inventoryManager))
                         {
-                            hammerScript.HammerClick();
+                                hammerScript.HammerClick();
+                                inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
                         }
                     }
                 }
@@ -300,6 +301,11 @@ public class PlayerCtrl : MonoBehaviour {
                                 if (hits[j].transform.GetComponent<WaterMoveObject>() != null)
                                 {
                                     hits[j].transform.GetComponent<WaterMoveObject>().enabled = false;
+                                }
+
+                                if (hits[j].transform.GetComponent<WaterObject>() != null)
+                                {
+                                    hits[j].transform.GetComponent<WaterObject>().enabled = false;
                                 }
 
                                 // 해당오브젝트의 ID따서 UI쪽 함수에 전달
@@ -554,7 +560,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     void ChangeRightHand(int swapNum)
     {
-        Debug.Log(stuffs.transform.GetChild(swapNum).childCount);
+        //Debug.Log(stuffs.transform.GetChild(swapNum).childCount);
 
         if (stuffs.transform.GetChild(swapNum).childCount > 0)                            // 여기 UI화(비어있는지)
         {
@@ -715,6 +721,10 @@ public class PlayerCtrl : MonoBehaviour {
             if (createObject.GetComponent<WaterMoveObject>() != null)
             {
                 createObject.GetComponent<WaterMoveObject>().enabled = false;
+            }
+            if (createObject.GetComponent<WaterObject>() != null)
+            {
+                createObject.GetComponent<WaterObject>().enabled = false;
             }
         }
     }

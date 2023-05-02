@@ -12,6 +12,8 @@ public class HammerMode : MonoBehaviour
 
     public Transform hammerShadow;
 
+    public Material[] ShadowMat;
+
     private RaycastHit hitInfo;
 
     public GameObject[] hammerObject;
@@ -19,10 +21,16 @@ public class HammerMode : MonoBehaviour
 
     public int rotation = 0;
 
+    private GameObject[] buildingUI;
+    private InventoryManager inventoryManager;
+
     void Awake()
     {
         pv = GetComponent<PhotonView>();
         playerCtrl = GetComponent<PlayerCtrl>();
+        buildingUI = GameObject.FindGameObjectsWithTag("BuildingUI");
+        inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
+
     }
 
     // Start is called before the first frame update
@@ -31,6 +39,11 @@ public class HammerMode : MonoBehaviour
         this.photonMapping = playerCtrl.photonMapping;
         hammerShadow.position = Vector3.zero;
         hammerShadow.rotation = Quaternion.identity;
+
+        for (int i = 0; i < buildingUI.Length; i++)
+        {
+            buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
+        }
     }
 
     void Update()
@@ -53,6 +66,14 @@ public class HammerMode : MonoBehaviour
                     selectObject = 0;
                 }
             }
+
+            //Debug.Log(buildingUI.Length);
+            for(int i = 0; i < buildingUI.Length; i++)
+            {
+                buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
+            }
+            buildingUI[selectObject].gameObject.SetActive(true);
+
             if (Input.GetKeyDown("r"))
             {
                 rotation++;
@@ -67,6 +88,15 @@ public class HammerMode : MonoBehaviour
             {
                 if (hits[j].collider.gameObject.layer == 12)
                 {
+                    if(inventoryManager.buildingRecipes[selectObject].CanBuild(inventoryManager))
+                    {
+                        hammerShadow.GetComponent<MeshRenderer>().material = ShadowMat[0];
+                    }
+                    else
+                    {
+                        hammerShadow.GetComponent<MeshRenderer>().material = ShadowMat[1];
+                    }
+
                     hammerShadow.GetComponent<MeshFilter>().mesh = hammerObject[selectObject].GetComponent<MeshFilter>().sharedMesh;
                     Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hits[j].distance;          // 레이케스트 충돌지점(모든 hammerobject감지)
 
