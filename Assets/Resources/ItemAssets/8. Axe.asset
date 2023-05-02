@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 8. Axe
   m_EditorClassIdentifier: 
   _id: 8
-  _name: "\uB098\uBB34 \uB3C4\uB07C"
-  _tooltip: "\uB098\uBB34 \uB3C4\uB07C"
+  _name: "\uC2A4\uD06C\uB7A9 \uB3C4\uB07C"
+  _tooltip: "\uC2A4\uD06C\uB7A9 \uB3C4\uB07C"
   itemPrefab: {fileID: 8604526434368542308, guid: add842a08600d34408febee5a6d121a8,
     type: 3}
   type: 1
   actionType: 0
   range: {x: 5, y: 4}
   stackable: 0
-  image: {fileID: 21300000, guid: afbab21d403e59040bcd7233826f561a, type: 3}
+  image: {fileID: 21300000, guid: 535ae4956bd9f8f4baf77e5cd739a022, type: 3}
