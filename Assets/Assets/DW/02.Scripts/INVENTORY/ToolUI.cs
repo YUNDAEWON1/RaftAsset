@@ -47,11 +47,11 @@ public class ToolUI : MonoBehaviour
     public GameObject btn_hook;
     public GameObject btn_spear;
 
-    // public GameObject craft_axe;
-    // public GameObject btn_Axe;
+    public GameObject craft_axe;
+    public GameObject btn_Axe;
 
-    // public GameObject craft_bed;
-    // public GameObject btn_bed;
+    public GameObject craft_bed;
+    public GameObject btn_bed;
 
 
    
@@ -76,8 +76,8 @@ public class ToolUI : MonoBehaviour
         btn_hammer.GetComponent<Button>().onClick.AddListener(ToggleHammerUI);
         btn_hook.GetComponent<Button>().onClick.AddListener(ToggleHookUI);
         btn_spear.GetComponent<Button>().onClick.AddListener(ToggleSpearUI);
-        // btn_Axe.GetComponent<Button>().onClick.AddListener(ToggleAxeUI);
-        // btn_bed.GetComponent<Button>().onClick.AddListener(ToggleBedUI);
+        btn_Axe.GetComponent<Button>().onClick.AddListener(ToggleAxeUI);
+        btn_bed.GetComponent<Button>().onClick.AddListener(ToggleBedUI);
 
     }
 
@@ -188,20 +188,20 @@ public void ToggleHookUI()
     craft_hook.SetActive(true);
     currentUI = craft_hook;
 }
-// public void ToggleAxeUI()
-// {
-//     // 현재 열려있는 UI가 있으면 닫아줌
-//     if (currentUI != null && currentUI != utilitiesUI)
-//     {
-//         currentUI.SetActive(false);
-//     }
+public void ToggleAxeUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != utilitiesUI)
+    {
+        currentUI.SetActive(false);
+    }
 
-//     craft_axe.transform.SetParent(utilitiesUI.transform);
+    craft_axe.transform.SetParent(utilitiesUI.transform);
 
   
-//     craft_axe.SetActive(true);
-//     currentUI = craft_axe;
-// }
+    craft_axe.SetActive(true);
+    currentUI = craft_axe;
+}
 
 public void ToggleSpearUI()
 {
@@ -218,20 +218,20 @@ public void ToggleSpearUI()
     currentUI = craft_spear;
 }
 
-// public void ToggleBedUI()
-// {
-//     // 현재 열려있는 UI가 있으면 닫아줌
-//     if (currentUI != null && currentUI != otherUI)
-//     {
-//         currentUI.SetActive(false);
-//     }
+public void ToggleBedUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != otherUI)
+    {
+        currentUI.SetActive(false);
+    }
 
-//     craft_bed.transform.SetParent(otherUI.transform);
+    craft_bed.transform.SetParent(otherUI.transform);
 
   
-//     craft_bed.SetActive(true);
-//     currentUI = craft_bed;
-// }
+    craft_bed.SetActive(true);
+    currentUI = craft_bed;
+}
 
  
 }
