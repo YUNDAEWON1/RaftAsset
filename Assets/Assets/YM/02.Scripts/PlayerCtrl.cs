@@ -349,6 +349,17 @@ public class PlayerCtrl : MonoBehaviour {
                                 //}
                             }
                         }
+
+                        if(rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
+                        {
+                            if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].collider.tag == "InteractionObject")
+                            {
+                                if (Input.GetMouseButtonDown(0))
+                                {
+                                    hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                }
+                            }
+                        }
                     }
                 }
                 
@@ -585,7 +596,8 @@ public class PlayerCtrl : MonoBehaviour {
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 9 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 10 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11 ||
-                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 14
                         ) // 기능있는 물건들만 손에 들게하기(계속 추가), 이것도 레이어번호 매기는게 나을듯
                     {
                         //rightHandleSave = Instantiate(stuffs[0], rightHandle.transform);    // 손에 드는 물건 Photon동기화 시키려면 추후에 넘버링해서 Resource폴더에서 찾는 방법 있어야함...(ㅈ대따...)
@@ -625,7 +637,8 @@ public class PlayerCtrl : MonoBehaviour {
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 9 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 10 ||
                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11 ||
-                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 14
                         ) // 기능있는 물건들만 손에 들게하기(계속 추가), 이것도 레이어번호 매기는게 나을듯
                 {
                     //rightHandleSave = Instantiate(stuffs[0], rightHandle.transform);    // 손에 드는 물건 Photon동기화 시키려면 추후에 넘버링해서 Resource폴더에서 찾는 방법 있어야함...(ㅈ대따...)

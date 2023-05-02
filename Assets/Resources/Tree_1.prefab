@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8758888183437201531}
+  - component: {fileID: -7069324306492413129}
   - component: {fileID: 5804491846229396836}
   - component: {fileID: 8758888183435907163}
   - component: {fileID: 8758888183434908315}
@@ -18,7 +19,7 @@ GameObject:
   - component: {fileID: -8244166377474551329}
   m_Layer: 0
   m_Name: Tree_1
-  m_TagString: Untagged
+  m_TagString: InteractionObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +38,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7069324306492413129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758888183437167707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1e30eeb45f9b04eb8e90f3fcf376b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: 0
 --- !u!114 &5804491846229396836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,8 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 348939f3c95295f4398df6f920010e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
-  woods: {fileID: 3800248319634951258, guid: 80d8db8c664dac941a9f6cdf7dc86f14, type: 3}
+  plankPrefab: {fileID: 6637302415784610745, guid: 3feee6787f92af04cb3d1c27343ec2d6,
+    type: 3}
 --- !u!33 &8758888183435907163
 MeshFilter:
   m_ObjectHideFlags: 0
