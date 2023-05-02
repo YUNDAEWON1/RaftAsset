@@ -454,34 +454,36 @@ private void CheckCraft6(CraftingRecipe recipe)
     }
 }
     public void btnCup()
-    {
-        Craft(craftingRecipes[0]);
+{
+    Craft(craftingRecipes[0]);
+}
+public void btnFilter()
+{
+    Craft(craftingRecipes[1]);
+}
 
-    }
-    public void btnFilter()
-    {
-        Craft(craftingRecipes[1]);
-    }
+public void btnGrill()
+{
+    Craft(craftingRecipes[2]);
+}
+public void btnCropPlot()
+{
+    Craft(craftingRecipes[3]);
+}
+public void btnHameer()
+{
+    Craft(craftingRecipes[4]);
+}
+public void btnHook()
+{
+    Craft(craftingRecipes[5]);
+}
 
-    public void btnGrill()
-    {
-        Craft(craftingRecipes[2]);
-    }
-    public void btnCropPlot()
-    {
-        Craft(craftingRecipes[3]);
-    }
-    public void btnHameer()
-    {
-        Craft(craftingRecipes[4]);
-    }
-    public void btnHook()
-    {
-        Craft(craftingRecipes[5]);
-    }
+public void btnSpear()
+{
+    Craft(craftingRecipes[6]);
+}
 
-    public void btnSpear()
-    {
-        Craft(craftingRecipes[6]);
-    }
+
+
 }

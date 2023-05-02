@@ -48,4 +48,5 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - TaggedPlayer
+  - PhotonObjectCreateMaster
   DisableAutoOpenWizard: 1

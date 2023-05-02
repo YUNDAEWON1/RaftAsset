@@ -38,6 +38,7 @@ public class PlayerCtrl : MonoBehaviour {
     private float xRotate = 0.0f;                   // 내부 사용할 X축 회전량은 별도 정의 ( 카메라 위 아래 방향 )
     private float throwGage = 0f;                   // 훅 던질때 사용할 게이지변수
     public bool inventoryOn = false;                // 인벤토리가 켜져있는지 확인할 변수
+    public bool EscapeOn = false;                   // esc메뉴가 켜져있는지 확인할 변수
     public bool constructMode = false;              // 건축모드인지 확인할 변수
     public bool hammerMode = false;              // 해머모드인지 확인할 변수
 
@@ -55,7 +56,8 @@ public class PlayerCtrl : MonoBehaviour {
     private Vector3 MoveDir;                        // 캐릭터의 움직이는 방향.
     private Animator ani;                           // 애니메이터 연결
 
-    private GameObject rightHandle;                 // 오른손 핸들러오브젝트 연결
+    [HideInInspector]
+    public GameObject rightHandle;                 // 오른손 핸들러오브젝트 연결
     private GameObject rightHandleSave;             // 오른손에 쥔 오브젝트 저장용 변수
 
     public Transform firePos;
@@ -140,7 +142,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(pv.isMine)
         {
-            if (!inventoryOn)
+            if (!inventoryOn && !EscapeOn)
             {
                 #region 캐릭터이동
                 // 캐릭터 이동 //
@@ -218,6 +220,16 @@ public class PlayerCtrl : MonoBehaviour {
                 // 기능있는 물건만 태그달아서 구현하면 될듯
                 if (rightHandle.transform.childCount > 0)                       // 손에 무언가를 들고있다면
                 {
+                    if(Input.GetKeyDown("g") && rightHandle.transform.GetChild(0).gameObject.tag != "Hook")       // 버리기(훅은 못버리게 콜라이더 2개라서 2배이벤트됨;;)
+                    {
+                        PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
+                        inventoryManager.UseSelectedItem();
+                        ThrowItem(stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID);
+                        hammerMode = false;
+                        constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
+                        ani.SetBool("ConstructMode", false);
+                    }
+
                     if (Input.GetMouseButtonDown(0))                            // 마우스 왼쪽버튼 다운시
                     {
                         // 손에 들고있는 물건이 Hook이고 수영모드가 아니라면
@@ -234,11 +246,22 @@ public class PlayerCtrl : MonoBehaviour {
                 }
                 else  // 손에 아무것도 들고있지 않고
                 {
-                    if(constructMode)   // 건축모드일때
+                    if (stuffs.transform.GetChild(swapNum).childCount > 0)     // 건설 오브젝트들 못버리게
+                    {
+                        if (Input.GetKeyDown("g"))       // 버리기
+                        {
+                            inventoryManager.UseSelectedItem();
+                            ThrowItem(stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID);
+                            hammerMode = false;
+                            constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
+                            ani.SetBool("ConstructMode", false);
+                        }
+                    }
+
+                    if (constructMode)   // 건축모드일때
                     { 
                         if(Input.GetMouseButtonDown(0) && constructScript.constuctPossibility)     // 마우스 왼쪽버튼이 눌리고 건설가능일때
                         {
-
                             StartCoroutine(ConstructClick(stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID));
                             inventoryManager.UseSelectedItem();
                             constructMode = false;
@@ -268,13 +291,18 @@ public class PlayerCtrl : MonoBehaviour {
                 {
                     if (hits[j].collider.tag != "Ground"&& hits[j].collider.tag != "Player")  // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
                     {
-                        if (hits[j].collider.tag == "Object")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
+                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
                         {
                             //Debug.Log("Potato");
                             // 여기에 상호작용 UI띄우는 부분 넣으면 될듯
 
                             if (Input.GetKeyDown("e"))
                             {
+                                if (hits[j].transform.GetComponent<WaterMoveObject>() != null)
+                                {
+                                    hits[j].transform.GetComponent<WaterMoveObject>().enabled = false;
+                                }
+
                                 // 해당오브젝트의 ID따서 UI쪽 함수에 전달
                                 inventoryManager.AddItem(hits[j].transform.GetComponent<PhotonObject>().objectNum);
 
@@ -395,6 +423,11 @@ public class PlayerCtrl : MonoBehaviour {
             {
                 inventoryOn = !inventoryOn;
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                EscapeOn = !EscapeOn;
+            }
         }
         else  // 아바타
         {
@@ -442,6 +475,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(other.tag == "Sea")
         {
+            
             ani.SetBool("Swimming", false);
             swimMode = false;
             ani.SetBool("Swim", false);
@@ -661,6 +695,28 @@ public class PlayerCtrl : MonoBehaviour {
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.Destroy(obj);
+        }
+    }
+
+    // 아이템 버리기
+    public void ThrowItem(int id)
+    {
+        Vector3 createPos = transform.position + new Vector3(this.transform.forward.x, this.transform.forward.y + 1.5f, this.transform.forward.z);
+        pv.RPC("PhotonObjectCreateMaster", PhotonTargets.AllBuffered, photonMapping[id], createPos, transform.rotation);
+    }
+
+    [PunRPC]
+    void PhotonObjectCreateMaster(string name, Vector3 pos, Quaternion rot)
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            GameObject createObject = PhotonNetwork.InstantiateSceneObject(name, pos, rot, 0, null);
+            createObject.GetComponent<Rigidbody>().isKinematic = false;
+            createObject.GetComponent<Rigidbody>().useGravity = true;
+            if (createObject.GetComponent<WaterMoveObject>() != null)
+            {
+                createObject.GetComponent<WaterMoveObject>().enabled = false;
+            }
         }
     }
 

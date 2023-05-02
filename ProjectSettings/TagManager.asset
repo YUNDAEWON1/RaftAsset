@@ -20,8 +20,13 @@ TagManager:
   - QuickSlot
   - RightHandle
   - Stuffs
+<<<<<<< HEAD
   - Grill
   - Potato
+=======
+  - WoodenStair
+  - RoamingPoint
+>>>>>>> master
   layers:
   - Default
   - TransparentFX
@@ -43,7 +48,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Player
   - 
   - 
   - 
