@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 493558081810089306}
   m_Layer: 8
   m_Name: Purifier
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d995fd0e4909a940baff76630b9c06b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  water: {fileID: 0}
   coolTime: 5
 --- !u!33 &4430108620250980290
 MeshFilter:
