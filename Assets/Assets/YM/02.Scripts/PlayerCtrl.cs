@@ -37,6 +37,7 @@ public class PlayerCtrl : MonoBehaviour {
     private float xRotate = 0.0f;                   // 내부 사용할 X축 회전량은 별도 정의 ( 카메라 위 아래 방향 )
     private float throwGage = 0f;                   // 훅 던질때 사용할 게이지변수
     public bool inventoryOn = false;                // 인벤토리가 켜져있는지 확인할 변수
+    public bool EscapeOn = false;                   // esc메뉴가 켜져있는지 확인할 변수
     public bool constructMode = false;              // 건축모드인지 확인할 변수
     public bool hammerMode = false;              // 해머모드인지 확인할 변수
 
@@ -54,7 +55,8 @@ public class PlayerCtrl : MonoBehaviour {
     private Vector3 MoveDir;                        // 캐릭터의 움직이는 방향.
     private Animator ani;                           // 애니메이터 연결
 
-    private GameObject rightHandle;                 // 오른손 핸들러오브젝트 연결
+    [HideInInspector]
+    public GameObject rightHandle;                 // 오른손 핸들러오브젝트 연결
     private GameObject rightHandleSave;             // 오른손에 쥔 오브젝트 저장용 변수
 
     public Transform firePos;
@@ -139,7 +141,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(pv.isMine)
         {
-            if (!inventoryOn)
+            if (!inventoryOn && !EscapeOn)
             {
                 #region 캐릭터이동
                 // 캐릭터 이동 //
@@ -288,7 +290,7 @@ public class PlayerCtrl : MonoBehaviour {
                 {
                     if (hits[j].collider.tag != "Ground"&& hits[j].collider.tag != "Player")  // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
                     {
-                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Hook")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
+                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato" || hits[j].collider.tag == "Potato")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
                         {
                             //Debug.Log("Potato");
                             // 여기에 상호작용 UI띄우는 부분 넣으면 될듯
@@ -414,6 +416,11 @@ public class PlayerCtrl : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryOn = !inventoryOn;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                EscapeOn = !EscapeOn;
             }
         }
         else  // 아바타
