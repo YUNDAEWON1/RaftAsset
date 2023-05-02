@@ -462,6 +462,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(other.tag == "Sea")
         {
+            
             ani.SetBool("Swimming", false);
             swimMode = false;
             ani.SetBool("Swim", false);
