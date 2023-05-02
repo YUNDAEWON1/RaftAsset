@@ -137,8 +137,8 @@ public class SharkCtrl : MonoBehaviour
         // 추적 중인 플레이어를 공격하는 로직 구현
         // 일정 시간이 지나면 상태를 IDLE로 변경
         // 공격이 끝나면 targetPlayer를 null로 초기화
-        gameMgr.hp -= 0.1f;
-        gameMgr.Hp();
+        //gameMgr.hp -= 0.1f;
+        //gameMgr.Hp();
 
         currentState = State.Idle;
         ani.SetBool("Chase", false);
