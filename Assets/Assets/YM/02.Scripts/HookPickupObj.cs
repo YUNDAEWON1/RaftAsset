@@ -23,6 +23,10 @@ public class HookPickupObj : MonoBehaviour
     {
         if (playerCtrl.hookThrow && other.transform.tag == "Object")    // 추후 갈고리로 습득가능한 애들한테 Object 태그 붙여주기
         {
+            if (other.GetComponent<WaterMoveObject>() != null)
+            {
+                other.GetComponent<WaterMoveObject>().enabled = false;
+            }
             other.transform.position = Vector3.MoveTowards(other.transform.position, transform.position, 0.5f);          // 트리거 이벤트가 발생한 오브젝트의 Tag가 'Object'이면 끌고오기
 
             if (Vector3.Distance(playerCtrl.transform.position, other.transform.position) < 1)                           // 끌고오는 물체와 캐릭터의 거리가 1 미만이면
