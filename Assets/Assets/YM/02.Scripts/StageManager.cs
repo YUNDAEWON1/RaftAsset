@@ -357,7 +357,7 @@ public void OnChatInputEnter()
         chatField.text = null;
 
         // RPC 함수 호출
-        pv.RPC("LogChatMessage", PhotonTargets.All, PhotonNetwork.playerName, msg);
+        pv.RPC("LogChatMessage", PhotonTargets.All, PhotonNetwork.player.NickName, msg);
 
         // 채팅 UI를 일정 시간 동안 활성화
         chatTimer = chatTimeout;
@@ -369,7 +369,7 @@ public void OnChatInputEnter()
 public void LogChatMessage(string playerName, string message)
 {
     // 채팅 로그 메시지 출력
-    txtLogMsg.text += string.Format("\n\t<color=#ffffff>[<color=#ffffff>{0}</color>]:</color> <color=#ffffff>{1}</color>", PhotonNetwork.player.NickName, message);
+    txtLogMsg.text += string.Format("\n\t<color=#ffffff>[<color=#ffffff>{0}</color>]:</color> <color=#ffffff>{1}</color>", playerName, message);
 }
 
 void Update()
