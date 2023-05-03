@@ -27,13 +27,14 @@ public class GameManager : MonoBehaviour
     {
         Hungry();
         Thirsty();
+        Hp();
     }
 
     void Hungry()
     {
         if (hungry > 0)
         {
-            hungry -= Time.deltaTime * 0.05f;
+            hungry -= Time.deltaTime * 0.01f;
 
             if (hungry < 0)
             {
@@ -41,21 +42,23 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (hungry <= 0.0f)
-        {
-            Hp();
-        }
-        else
-        {
-            hungryGageImage.fillAmount = hungry;
-        }
+        hungryGageImage.fillAmount = hungry;
+        
+        //if (hungry <= 0.0f)
+        //{
+        //    Hp();
+        //}
+        //else
+        //{
+        //    hungryGageImage.fillAmount = hungry;
+        //}
     }
 
     void Thirsty()
     {
         if (thirsty > 0)
         {
-            thirsty -= Time.deltaTime * 0.05f;
+            thirsty -= Time.deltaTime * 0.01f;
 
             if (thirsty < 0)
             {
@@ -63,27 +66,29 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (thirsty<= 0.0f)
-        {
-            Hp();
-        }
-        else
-        {
-            thirstyGageImage.fillAmount = thirsty;
-        }
+        thirstyGageImage.fillAmount = thirsty;
+
+        //if (thirsty<= 0.0f)
+        //{
+        //    Hp();
+        //}
+        //else
+        //{
+        //    thirstyGageImage.fillAmount = thirsty;
+        //}
     }
 
     public void Hp()
     {
-        //if (hungry <= 0 || thirsty <= 0)
-        //{
-            hp -= Time.deltaTime * 0.05f;
+        if (hungry <= 0 || thirsty <= 0)
+        {
+            hp -= Time.deltaTime * 0.01f;
 
             if (hp < 0)
             {
                 hp = 0;
             }
-        //}
+        }
 
         if (hp <= 0.0f)
         {

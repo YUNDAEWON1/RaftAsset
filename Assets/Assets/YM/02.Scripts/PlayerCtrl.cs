@@ -30,7 +30,8 @@ public class PlayerCtrl : MonoBehaviour {
         {20, "Foundation" },
         {21, "Cooked_Potato"}
     };
-
+    [HideInInspector]
+    public bool isAnimating = false;               // 애니메이션 실행중 중복 실행을 막기위한 변수
     private float speed;                             // 캐릭터 움직임 스피드.
     private float jumpSpeed;                         // 캐릭터 점프 힘.
     public float gravity;                           // 캐릭터에게 작용하는 중력.
@@ -86,6 +87,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     private ConstructMode constructScript;
     private HammerMode hammerScript;
+    private SharkCtrl sharkCtrl;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
 
@@ -131,6 +133,8 @@ public class PlayerCtrl : MonoBehaviour {
 
     void Start()
     {
+        sharkCtrl = GameObject.FindGameObjectWithTag("Enemy").GetComponent<SharkCtrl>();
+
         speed = 3.0f;
         jumpSpeed = 6.0f;
         gravity = 20.0f;
@@ -288,15 +292,40 @@ public class PlayerCtrl : MonoBehaviour {
                 #region 전방 일정거리 물체감지 및 상호작용
                 //if (Physics.SphereCastAll(firePos.transform.position, transform.lossyScale.x / 1f, Camera.main.transform.forward, out hitInfo, 3f))  
                 RaycastHit[] hits = Physics.SphereCastAll(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward ,3f); // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
-                for (int j = 0; j < hits.Length; j++)
+
+
+                // 레이케스트에 감지된것이 없어도 작동
+                if (rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
+                {
+                    if (rightHandle.transform.GetChild(0).gameObject.tag == "Spear_wood")
+                    {
+                        if (!isAnimating)
+                        {
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                isAnimating = true;
+                                ani.SetTrigger("SpearAttack");
+
+                                for (int i = 0; i < hits.Length; i++)   // 여기만 레이케스트에 감지된것이 있으면 작동
+                                {
+                                    if (hits[i].collider.tag == "Enemy")
+                                    {
+                                        // 상어한테 데미지주는 소스
+                                        sharkCtrl.Damaged();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                    
+
+                for (int j = 0; j < hits.Length; j++)   // 레이케스트에 감지된것이 있을때만 작동함
                 {
                     if (hits[j].collider.tag != "Ground"&& hits[j].collider.tag != "Player")  // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
                     {
                         if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
                         {
-                            //Debug.Log("Potato");
-                            // 여기에 상호작용 UI띄우는 부분 넣으면 될듯
-
                             if (Input.GetKeyDown("e"))
                             {
                                 if (hits[j].transform.GetComponent<WaterMoveObject>() != null)
@@ -314,49 +343,48 @@ public class PlayerCtrl : MonoBehaviour {
 
                                 //PhotonNetwork.Destroy(hits[j].collider.gameObject);   // 추후에는 포톤디스트로이 해야한다
                                 pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, hits[j].transform.GetComponent<PhotonView>().viewID);
-
-
-                                //for (int i = 0; i < stuffs.transform.childCount; i++)  // 먼저 소지품배열을 전부 돌면서 주우려는 것과 같은 물건이 있는지 확인
-                                //{
-                                //    if (stuffs.transform.GetChild(i).childCount == 0)               // 빈칸이면 패스(UI 소지품 자식 확인으로 바꿔야함)
-                                //    { continue; }
-                                //    else                                // 빈칸이 아니고
-                                //    {
-                                //        if (stuffs.transform.GetChild(i).tag == hits[j].collider.tag)   // 주으려는 물건의 태그와 소지품에 있는 태그가 같다면(태그로 하면 안될거 같은데...오브젝트 객체마다도 넘버링?)
-                                //        {
-                                //            stuffsCount[i]++;           // 해당하는 소지품 카운트 ++
-                                //            Destroy(hits[j].transform.gameObject);
-                                //            Debug.Log(stuffsCount[i]);
-                                //            return;
-                                //        }
-                                //    }
-                                //}
-                                //// 소지품 배열에 주으려는 물건과 같은물건이 없다면 여기까지 온다
-                                //for (int i = 0; i < stuffs.Length; i++)
-                                //{
-                                //    if (stuffs[i] == null)   // 빈 슬롯에
-                                //    {
-                                //        stuffs[i] = hits[j].collider.gameObject;                                                                             // 추후에는 오브젝트가 아니라 넘버가 들어가게끔?
-                                //        //stuffs[i].transform.parent = GameObject.FindGameObjectWithTag("Stuffs").transform;                                   // UI 소지품창 생기면 굳이 이 오브젝트가 필요없을듯?
-                                //        stuffsCount[i] = 1;
-
-                                //        hits[j].collider.GetComponent<Rigidbody>().isKinematic = true;                                                       // 물리 off
-                                //        hits[j].collider.transform.localPosition = Vector3.zero;                                                             //Transform 초기화
-                                //        hits[j].collider.transform.localRotation = Quaternion.identity;
-                                //        //hitInfo.collider.transform.localScale = new Vector3(1f, 1f, 1f);
-                                //        return;
-                                //    }
-                                //}
                             }
                         }
 
+                        // 상호작용 가능한 오브젝트들 UI띄우기
+                        // InteractionObject를 제외하고는 바로 위에 if문 조건 따라가야함
+                        if (hits[j].collider.tag == "InteractionObject" || hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato") 
+                        {
+                            for(int i = 0; i < inventoryManager.itemList.Count; i++)
+                            {
+                                if(inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                                {
+                                    Debug.Log(inventoryManager.itemList[i].Name);
+                                }
+                            }
+                        }
+
+                        // 도끼 관련 상호작용
                         if(rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
                         {
-                            if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].collider.tag == "InteractionObject")
+                            if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].collider.tag == "InteractionObject" && !swimMode)  // 도끼는 물에 있을때는 못쓰게
                             {
-                                if (Input.GetMouseButtonDown(0))
+                                if (!isAnimating)
                                 {
-                                    hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                    if (Input.GetMouseButtonDown(0))
+                                    {
+                                        isAnimating = true;
+                                        ani.SetTrigger("AxeAttack");
+                                        hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                    }
+                                }
+                                    
+                            }
+                            else if(rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].transform.gameObject.layer == 12 && !swimMode)  // 해머오브젝트일때
+                            {
+                                if (!isAnimating)
+                                {
+                                    if (Input.GetMouseButtonDown(0))
+                                    {
+                                        isAnimating = true;
+                                        ani.SetTrigger("AxeAttack");
+                                        pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, hits[j].transform.GetComponent<PhotonView>().viewID);    // 일단은 바로 부숴지게
+                                    }
                                 }
                             }
                         }
@@ -607,9 +635,18 @@ public class PlayerCtrl : MonoBehaviour {
                         rightHandleSave.transform.localPosition = Vector3.zero;
                         rightHandleSave.transform.localRotation = Quaternion.identity;
 
-                        if(Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11)
+                        if(Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11)     // 해머   // 특정애들 걸러내보기
                         {
                             hammerMode = true;
+                        }
+                        if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13)    // 도끼
+                        {
+                            rightHandleSave.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
+                        }
+                        if(Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).tag == "Cup")    // 컵
+                        {
+                            rightHandleSave.transform.localPosition = new Vector3(-0.05f, 0, 0);
+                            rightHandleSave.transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
                         }
 
 
@@ -648,9 +685,18 @@ public class PlayerCtrl : MonoBehaviour {
                     rightHandleSave.transform.localPosition = Vector3.zero;
                     rightHandleSave.transform.localRotation = Quaternion.identity;
 
-                    if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11)
+                    if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 11)   // 해머   // 특정애들 걸러내보기
                     {
                         hammerMode = true;
+                    }
+                    if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 13)   // 도끼
+                    {
+                        rightHandleSave.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
+                    }
+                    if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).tag == "Cup")    // 컵
+                    {
+                        rightHandleSave.transform.localPosition = new Vector3(-0.05f, 0, 0);
+                        rightHandleSave.transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
                     }
 
 

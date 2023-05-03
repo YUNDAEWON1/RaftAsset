@@ -22,7 +22,7 @@ public class SharkCtrl : MonoBehaviour
 
     private Animator ani;
 
-    private GameManager gameMgr;
+    private GameManager gm;
 
     private enum State
     {
@@ -36,40 +36,47 @@ public class SharkCtrl : MonoBehaviour
     private GameObject[] players = new GameObject[3];
     public Transform targetPlayer;
 
+    public bool run = false;
+    private bool deadBool = false;
+
     private void Awake()
     {
         ani = GetComponent<Animator>();
         // 로밍 위치 얻기
         roamingCheckPoints = GameObject.Find("RoamingPoint").GetComponentsInChildren<Transform>();
         rigid = GetComponent<Rigidbody>();
-        gameMgr = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
     }
 
     private void Start()
     {
+        gm = FindObjectOfType<GameManager>();
         currentState = State.Idle;
         RoamingCheckStart();
     }
 
     private void Update()
     {
-
-        players = GameObject.FindGameObjectsWithTag("Player");
-
-        foreach(GameObject player in players)
+        if(!run)
         {
-            if(player.GetComponent<PlayerCtrl>().swimMode)
+            players = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject player in players)
             {
-                targetPlayer = player.transform;
-                currentState = State.Chase;
-                ani.SetBool("Chase", true);
-                break;
+                if (player.GetComponent<PlayerCtrl>().swimMode)
+                {
+                    targetPlayer = player.transform;
+                    currentState = State.Chase;
+                    ani.SetBool("Chase", true);
+                    break;
+                }
+                else
+                {
+                    targetPlayer = null;
+                }
             }
-            else
-            {
-                targetPlayer = null;
-            }
-        } 
+        }
+         
 
         switch (currentState)
         {
@@ -79,11 +86,14 @@ public class SharkCtrl : MonoBehaviour
             case State.Chase:
                 Chase();
                 break;
-            case State.Attack:
-                Attack();
-                break;
+            //case State.Attack:
+            //    Attack();
+            //    break;
             case State.Dead:
-                Dead();
+                if(!deadBool)
+                {
+                    StartCoroutine(Dead());
+                }
                 break;
         }
 
@@ -127,28 +137,60 @@ public class SharkCtrl : MonoBehaviour
         // 일정 거리 이내에 있으면 상태를 Attack로 변경
         if (Vector3.Distance(transform.position, targetPlayer.position) <= attackDistance)
         {
-            currentState = State.Attack;
+            StartCoroutine(Attack());
             ani.SetBool("Attack", true);
         }
     }
 
-    private void Attack()
+    IEnumerator Attack()
     {
         // 추적 중인 플레이어를 공격하는 로직 구현
-        // 일정 시간이 지나면 상태를 IDLE로 변경
         // 공격이 끝나면 targetPlayer를 null로 초기화
-        //gameMgr.hp -= 0.1f;
-        //gameMgr.Hp();
+        if(targetPlayer.tag == "Player")
+        {
+            gm.hp -= 0.005f;
+            yield return new WaitForSeconds(0.5f);
 
-        currentState = State.Idle;
-        ani.SetBool("Chase", false);
-        ani.SetBool("Attack", false);
-        targetPlayer = null;
+            run = true;
+            targetPlayer = roamingTarget;
+
+            ani.SetBool("Attack", false);
+
+            currentState = State.Chase;
+            ani.SetBool("Chase", true);
+
+            //targetPlayer = null;
+        }
+
     }
 
-    private void Dead()
+    public void Damaged()
     {
+        HP -= 25;
 
+        if(HP <= 50)
+        {
+            run = true;
+            targetPlayer = roamingTarget;
+
+            ani.SetBool("Attack", false);
+
+            currentState = State.Chase;
+            ani.SetBool("Chase", true);
+        }
+    }
+
+    IEnumerator Dead()
+    {
+        deadBool = true;
+        ani.SetBool("Dead", true);
+
+        yield return new WaitForSeconds(30f);
+        HP = 100;
+        currentState = State.Idle;
+        ani.SetBool("Dead", false);
+        deadBool = false;
+        run = false;
     }
 
     public void RoamingCheckStart()
