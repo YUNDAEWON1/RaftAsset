@@ -35,7 +35,10 @@ public class WaterMoveObject : MonoBehaviour
         if (other.gameObject.CompareTag("Land"))
         {
             //Destroy(gameObject);
-            pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, transform.GetComponent<PhotonView>().viewID);
+            //pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, transform.GetComponent<PhotonView>().viewID);
+            GameObject obj = gameObject;
+            obj.SetActive(false);
+            ObjetPool.instance.InsertQueue(obj);
         }
     }
 
@@ -47,7 +50,7 @@ public class WaterMoveObject : MonoBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
-            PhotonNetwork.Destroy(obj);
+            //PhotonNetwork.Destroy(obj);
         }
     }
 }

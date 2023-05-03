@@ -11,8 +11,6 @@ public class StageManager : MonoBehaviour
     //접속된 플레이어 수를 표시할 Text UI 항목 연결 레퍼런스 (Text 컴포넌트 연결 레퍼런스)
     //public Text txtConnect;
 
-
-
     //접속 로그를 표시할 Text UI 항목 연결 레퍼런스 선언
     public Text txtLogMsg;
 
@@ -35,25 +33,11 @@ public class StageManager : MonoBehaviour
 
     // HG
     private Transform objectPos;
-
-    //스폰장소
-    //private Transform[] EnemySpawnPoints;
-
-    // (네트워크 UI 버전에서 ...)
-    //Enemy 프리팹을 위한 레퍼런스
-    //public GameObject Enemy;
+    public ObjetPool op;
 
     // 게임끝
     private bool gameEnd;
 
-    // 스테이지 Enemy들을 위한 레퍼런스
-    //private GameObject[] Enemys;
-
-    //// 베이스 스타트를 위한 변수
-    //public BaseCtrl baseStart;
-
-    //채팅을 위한 인풋필드
-    //public InputField inputField;
 
     void Awake()
     {
@@ -65,21 +49,12 @@ public class StageManager : MonoBehaviour
 
         // HG
         objectPos = GameObject.Find("Spawn_Object").transform;
-
+        op = FindObjectOfType<ObjetPool>();
 
         //룸에 입장한 후 기존 접속자 정보를 출력
         GetConnectPlayerCount();
         ////////////////////////////////////////////////////////////////////////////////////
 
-        // 스폰 위치 얻기
-        //EnemySpawnPoints = GameObject.Find("SpawnPoint").GetComponentsInChildren<Transform>();
-
-        ////포톤추가
-        //if(PhotonNetwork.connected && PhotonNetwork.isMasterClient)
-        //{
-        //    // 몬스터 스폰 코루틴 호출
-        //    StartCoroutine(this.CreateEnemy());
-        //}
     }
 
     // Start is called before the first frame update
@@ -93,30 +68,14 @@ public class StageManager : MonoBehaviour
 
         if(PhotonNetwork.isMasterClient)
         {
-            // HG
+            // HG            
+            op.CreateQueue();
             StartCoroutine(this.CreateObject());
         }
         
 
         //포톤 클라우드로부터 네트워크 메세지 수신을 다시 연결 이 씨이이이이이이이발
         PhotonNetwork.isMessageQueueRunning = true;
-        /*
-         * 유니티 마크업 태그
-         * 글자크기 => <size="글자크기"> 표시할 내용 </size>
-         * 글자색 => <color="컬러"> 표시할 내용 </color>
-         * 진하게 => <b> 표시할 내용 </b>
-         * 이탤릭 => <i> 표시할 내용 </i>
-         * 
-         *  EX)
-         *  string sHp = "<color=yellow><b>HP: ##</b></color>";
-         *  string sScore = "<color=#00ff00><b>SCORE: ##</b></color>";
-         *  
-         *  GUI.Lable ( new Rect(10, 10, 120, 50), sHp.Replace("##", 생명력.ToString() ) );
-         *  GUI.Lable ( new Rect(50, 10, 120, 50), sScore.Replace("##", "" + score ) );
-         *  
-         *  Text에 색을 넣어서 사용해야 할때가 있는데 아래 처럼 사용하면 됨. (rgp색 16진수로 조합해서 사용)
-         *  
-         */
 
         // 로그 메시지에 출력할 문자열 생성
         string msg = "\n\t<color=#ffffff>[" + PhotonNetwork.player.NickName + "] 님이 입장하셨습니다.</color>";
@@ -159,21 +118,10 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    //public void OnSubmit(InputField input)
-    //{
-    //    pv.RPC("LogMsg", PhotonTargets.AllBuffered, "\n\t" + PhotonNetwork.player.NickName + " : " + input.text);
-    //    input.text = "";
-    //}
-
-    //포톤추가
     //모든 네트워크 플레이어의 스코어UI에 점수를 표시하는 함수를 호출
     IEnumerator SetConnectPlayerScore()
     {
-        /*
-         * PhotonNetwork.playerList 속성은 같은 룸에 입장한 모든 플레이어의 정보를 반환한다. 따라서
-         * 차후, 이 속성은 현재 입장한 플레이어 목록을 UI로 표시할 때 유용하게 활용할 수 있다.
-         */
-
+ 
         // 현재 입장한 룸에 접속한 모든 네트워크 플레이어의 정보를 저장 
         PhotonPlayer[] players = PhotonNetwork.playerList;
 
@@ -194,41 +142,11 @@ public class StageManager : MonoBehaviour
 
             //각 베이스(플레이어)별 스코어를 조회
             int currKillCount = _player.GetComponent<PhotonView>().owner.GetScore();
-
-            ////해당 베이스의 주인인 플레이어의 UI에 스코어 표시
-            //_player.GetComponent<PlayerCtrl>().txtKillCount.text = currKillCount.ToString();
-
         }
 
         yield return null;
     }
 
-    //IEnumerator CreateEnemy()
-    //{
-    //    // 게임중 일정시간마다 계속 호출됨
-    //    while(!gameEnd)
-    //    {
-    //        // 리스폰타임 5초
-    //        yield return new WaitForSeconds(5f);
-
-    //        // 스테이지 총 몬스터 갯수 제한
-    //        Enemys = GameObject.FindGameObjectsWithTag("Enemy");
-
-    //        if(Enemys.Length < 20)
-    //        {
-    //            //루트 생성위치는 필요하지 않다.그래서 1 번째 인덱스부터 돌리자
-    //            for (int i = 1; i<EnemySpawnPoints.Length; i++)
-    //            {
-    //                // (포톤 추가)
-    //                // 네트워크 플레이어를 Scene 에 귀속하여 생성
-    //                PhotonNetwork.InstantiateSceneObject("Enemy", EnemySpawnPoints[i].localPosition, EnemySpawnPoints[i].localRotation, 0, null);
-    //            }
-    //        }
-
-    //    }
-    //}
-
-    //포톤추가
     //플레이어생성함수
     IEnumerator CreatePlayer()
     {
@@ -245,18 +163,9 @@ public class StageManager : MonoBehaviour
         ex[1] = 4;
         ex[2] = 5;
 
-        //float pos = Random.Range(-100.0f, 100.0f);
-        //포톤네트워크를 이용한 동적 네트워크 객체는 다음과 같이 Resources 폴더 안에 애셋의 이름을 인자로 전달 해야한다. 
-        //PhotonNetwork.Instantiate( "MainPlayer", new Vector3(pos, 20.0f, pos), Quaternion.identity, 0 );
         GameObject player = PhotonNetwork.Instantiate("MainPlayer", playerPos[currRoom.PlayerCount].position, playerPos[currRoom.PlayerCount].rotation, 0, ex);
 
 
-        // 기존 이름으로 변경해야 드럼통 폭파 가능(DestructionRay 스크립트 참조)
-        //player.name = "Player";   //태그로 셋팅해서 안해도될듯    // 이거 하든 안하든 깡통이랑 박스 공격이 안되는데...
-
-        //PhotonNetwork.InstantiateSceneObject(string prefabName, Vector3 position, Quaternion rotation, byte group, object[] data);
-        //이 함수도 PhotonNetwork.Instantiate와 마찬가지로 네트워크 상에 프리팹을 동시에 생성시키지만, Master Client 만 생성 및 삭제 가능.
-        //생성된 프리팹 오브젝트의 PhotonView 컴포넌트의 Owner는 Scene이 된다.
 
         yield return null;
     }
@@ -266,12 +175,19 @@ public class StageManager : MonoBehaviour
     {
         while(true)
         {
-            GameObject plank = PhotonNetwork.InstantiateSceneObject("Plank", objectPos.position, objectPos.rotation, 0, null);
-            Vector3 newPosition_1 = objectPos.position + new Vector3(0f, 0f, 50f);
-            GameObject plastic = PhotonNetwork.InstantiateSceneObject("Plastic", newPosition_1, objectPos.rotation, 0, null);
-            Vector3 newPosition_2 = objectPos.position + new Vector3(0f, -2f, 100f);
-            GameObject leaf = PhotonNetwork.InstantiateSceneObject("Leaf", newPosition_2, objectPos.rotation, 0, null);
-            yield return new WaitForSeconds(10f);
+            for (int i = 0; i < 7; i++)
+            {
+                GameObject plank = ObjetPool.instance.GetQueue();
+                plank.transform.position = objectPos.position + new Vector3(Random.Range(-50f, 50f), transform.position.y, Random.Range(-50f, 50f));
+                plank.transform.rotation = Quaternion.identity;
+            }
+
+            //GameObject plank = PhotonNetwork.InstantiateSceneObject("Plank", objectPos.position, objectPos.rotation, 0, null);
+            //Vector3 newPosition_1 = objectPos.position + new Vector3(0f, 0f, 50f);
+            //GameObject plastic = PhotonNetwork.InstantiateSceneObject("Plastic", newPosition_1, objectPos.rotation, 0, null);
+            //Vector3 newPosition_2 = objectPos.position + new Vector3(0f, -2f, 100f);
+            //GameObject leaf = PhotonNetwork.InstantiateSceneObject("Leaf", newPosition_2, objectPos.rotation, 0, null);
+            yield return new WaitForSeconds(20f);
         }
     }
 
@@ -397,34 +313,3 @@ void Update()
     }
 }
 }
-
-
-
-/* RPC(Remote Procedure Call)함수의 네트웍 전달 대상 설정인 PhotonTargets 열거형 인자 옵션 설정
- *  옵션                      설명
- *  All                       모든 네트웍 유저에게 RPC 데이타를 전송하고 자신은 즉시 RPC 함수를 실행    
- *  Others                    자기 자신을 제외한 모든 네트웍 유저에게 RPC 데이타를 전송 
- *  MasterClient              Master Client에게만 RPC 데이타를 전송
- *  AllBuffered               All 옵션과 같으며, 또한 나중에 입장한 네트웍 유저에게 버퍼에 저장돼 있던 RPC 데이타가 전송
- *  OtherBuffered             Others 옵션과 같으며, 또한 나중에 입장한 네트웍 유저에게 버퍼에 저장해둔 RPC 데이타를 전송
- *  AllViaServer              모든 네트웍 유저에게 거의 동일한 시간에 RPC 데이타를 전송하기 위하여 서버에서 연결된 
- *                            모든 클라이언트들에게 RPC 데이타를 동시에 전송
- *  AllBufferedViaServer      AllViaServer 옵션과 같으며, 버퍼에 저장해둔 RPC 데이타를 나중에 입장한 네트웍 유저에게 전송 
- *  
- *  사용 방식: 1
- *  //자신의 아바타일 경우는 로컬함수를 호출하여 케논을 발포
- *  FireStart(100);
- *
- *  //원격 네트워크 플레이어의 자신의 아바타 케릭터에는 RPC로 원격으로 FireStart 함수를 호출 
- *  pv.RPC( "FireStart", PhotonTargets.Others, 100 );
- *
- * 사용 방식: 2
- *  //모든 네트웍 유저에게 RPC 데이타를 전송하여 RPC 함수를 호출, 로컬 플레이어는 로컬 Fire 함수를 바로 호출 
- *  //pv.RPC("FireStart", PhotonTargets.All, 100);
- *  
- *   [PunRPC]
- *   //플레이어 발사
- *  private void FireStart(int power)
- *  {
- *  }
- */
