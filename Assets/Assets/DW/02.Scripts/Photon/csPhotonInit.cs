@@ -53,8 +53,11 @@ public class csPhotonInit : MonoBehaviour
 
     public Text nopwd;
     public Text wrongpwd;
- 
 
+    public bool isCreateMode=false;
+
+
+ 
     //App 인증 및 로비연결
     void Awake()
     {
@@ -67,7 +70,7 @@ public class csPhotonInit : MonoBehaviour
             PhotonNetwork.logLevel = LogLevel;
 
             //현재 클라이언트 유저의 이름을 포톤에 설정
-            //PhotonView 컴포넌트의 요소 Owner의 값이 된다.
+            //PhotonView 컴포넌트의 요소 Owner의 값이 된다
            PhotonNetwork.playerName = "GUEST " + Random.Range(1, 9999);
 
         }
@@ -78,6 +81,15 @@ public class csPhotonInit : MonoBehaviour
         // 로비에 자동 입장
         PhotonNetwork.autoJoinLobby = true;
 
+    }
+
+    public void OnClickCreateMode()
+    {
+        isCreateMode=true;
+    }
+    public void OnClickNormalMode()
+    {
+        isCreateMode=false;
     }
 
 
@@ -104,7 +116,7 @@ public class csPhotonInit : MonoBehaviour
         //PhotonNetwork.JoinRandomRoom(); // (UI 버전에서는 주석 처리)
 
         // 유저 아이디를 가져와 셋팅 (UI 버전에서 사용)
-        userId.text = GetUserId();
+        // userId.text = GetUserId();
 
         //특정 조건을 만족하는 룸을 대상으로 무작위로 추출해 입장하는 오버로딩 된 함수 호출 방식 
 
@@ -325,6 +337,9 @@ public class csPhotonInit : MonoBehaviour
 
     **********************************************************************************************************/
 
+
+
+   
     //세계 만들기 버튼 클릭 시 호출될 함수 (UI 버전에서 사용)
     public void OnClickCreateRoom()
     {
@@ -336,7 +351,13 @@ public class csPhotonInit : MonoBehaviour
          }
 
         //로컬 플레이어의 이름을 설정
+        if(isCreateMode)
+        {
+          userId.text="CreateMode";
+        }
+       
         PhotonNetwork.player.NickName = userId.text;
+   
 
         //플레이어의 이름을 로컬 저장
         //PlayerPrefs.SetString("USER_ID", userId.text);

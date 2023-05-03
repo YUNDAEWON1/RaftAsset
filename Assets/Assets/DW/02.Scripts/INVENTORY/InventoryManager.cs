@@ -56,14 +56,11 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("item ID: " + item.ID);
         }
-
-
-         ChangeSelectedSLot(0);
-        foreach(var item in startItems){
-            AddItem(item);
-        }
-
+       
         LoadInventory();
+         
+       
+
 
         
     }
@@ -723,6 +720,10 @@ public void LoadInventory()
     else
     {
         Debug.Log("Inventory file not found!");
+         ChangeSelectedSLot(0);
+        foreach(var item in startItems){
+            AddItem(item);
+        }
     }
 }
 
