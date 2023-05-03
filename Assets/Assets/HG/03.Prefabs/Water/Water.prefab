@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 11400004}
   - component: {fileID: 11400002}
   - component: {fileID: 11400000}
+  - component: {fileID: 3295535734879916636}
   m_Layer: 0
   m_Name: Water
   m_TagString: Ground
@@ -213,6 +214,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e7f46d0e5a84171a3909479c1646ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3295535734879916636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd4ddf5d86190e4eb0c8a293945a973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterColor: {r: 0.12936097, g: 0.17599536, b: 0.4811321, a: 1}
+  waterFogDensity: 0
 --- !u!1 &100012
 GameObject:
   m_ObjectHideFlags: 0
