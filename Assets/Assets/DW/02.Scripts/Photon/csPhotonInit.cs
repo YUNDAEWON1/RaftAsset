@@ -493,13 +493,6 @@ public class csPhotonInit : MonoBehaviour
             _roomName=roomName.text+"[pwd]";
          }
 
-        // 방 정보 저장
-        // RoomData roomData = new RoomData();
-        // roomData.roomName = _roomName;
-        // roomData.hostName = PhotonNetwork.player.NickName;
-        // roomData.password = _passWord;
-        // RoomDataManager.Instance.SaveRoomData(roomData);
-
         //로컬 플레이어의 이름을 설정
         PhotonNetwork.player.NickName = userId.text;
 
