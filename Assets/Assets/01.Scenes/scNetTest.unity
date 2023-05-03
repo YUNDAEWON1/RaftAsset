@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -855,6 +855,7 @@ MonoBehaviour:
   chatField: {fileID: 7020562241888170997}
   chatUI: {fileID: 279575601301233854}
   chatTimeout: 5
+  op: {fileID: 0}
 --- !u!1 &42809318
 GameObject:
   m_ObjectHideFlags: 0
@@ -4026,7 +4027,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181024757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -150, y: 10, z: 100}
+  m_LocalPosition: {x: -150, y: 10, z: 85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 876365065}
@@ -9573,7 +9574,7 @@ MonoBehaviour:
   - {fileID: 6637302415784610745, guid: 3feee6787f92af04cb3d1c27343ec2d6, type: 3}
   - {fileID: 7555463953228965194, guid: 57b4c1e51cdf14d44bcd21a3ff2efda4, type: 3}
   - {fileID: 6793330618509676344, guid: 1241a42e4624af8448c9f0ecf18430e9, type: 3}
-  spawn: {x: 0, y: 0, z: 0}
+  spawns: {fileID: 0}
 --- !u!1 &502429966
 GameObject:
   m_ObjectHideFlags: 0
@@ -18656,7 +18657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983800628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -150, y: 10, z: 101}
+  m_LocalPosition: {x: -150, y: 10, z: 86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 876365065}
@@ -36909,7 +36910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982733316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -151, y: 10, z: 100}
+  m_LocalPosition: {x: -151, y: 10, z: 85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 876365065}
