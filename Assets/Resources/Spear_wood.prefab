@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 4055415655607669264}
   - component: {fileID: 5642292468080298290}
   - component: {fileID: 1183005974085696714}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Spear_wood
-  m_TagString: Untagged
+  m_TagString: Spear_wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
