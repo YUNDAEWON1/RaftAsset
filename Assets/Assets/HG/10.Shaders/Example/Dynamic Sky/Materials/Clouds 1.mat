@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Clouds 1
   m_Shader: {fileID: 4800000, guid: d1b928c1678247d7ba7e5e810deac9b1, type: 3}
-  m_ShaderKeywords: DSKY_CLOUD_2 STC_GTYPE_BRANCH
+  m_ShaderKeywords: DSKY_CLOUD_1 STC_GTYPE_BRANCH
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -102,7 +102,7 @@ Material:
     - _VectorY3: -0.7
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.94048584, b: 0.8016194, a: 0.70980394}
+    - _Color: {r: 1, g: 0.94048584, b: 0.8016194, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Level0Color: {r: 0.37, g: 0.78, b: 0.92, a: 1}
     - _Level1Color: {r: 0.65, g: 0.86, b: 0.63, a: 1}
