@@ -855,6 +855,7 @@ MonoBehaviour:
   chatField: {fileID: 7020562241888170997}
   chatUI: {fileID: 279575601301233854}
   chatTimeout: 5
+  op: {fileID: 0}
 --- !u!1 &42809318
 GameObject:
   m_ObjectHideFlags: 0
@@ -6962,6 +6963,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 420923270}
+        m_MethodName: SaveInventory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &350842596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9573,7 +9585,7 @@ MonoBehaviour:
   - {fileID: 6637302415784610745, guid: 3feee6787f92af04cb3d1c27343ec2d6, type: 3}
   - {fileID: 7555463953228965194, guid: 57b4c1e51cdf14d44bcd21a3ff2efda4, type: 3}
   - {fileID: 6793330618509676344, guid: 1241a42e4624af8448c9f0ecf18430e9, type: 3}
-  spawn: {x: 0, y: 0, z: 0}
+  spawns: {fileID: 0}
 --- !u!1 &502429966
 GameObject:
   m_ObjectHideFlags: 0
