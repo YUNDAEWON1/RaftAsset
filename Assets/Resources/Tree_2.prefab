@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6590384703758067548}
   - component: {fileID: -5655487185830940323}
   - component: {fileID: 1278071738224179115}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Tree_2
   m_TagString: InteractionObject
   m_Icon: {fileID: 0}
@@ -62,8 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 348939f3c95295f4398df6f920010e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plankPrefab: {fileID: 6637302415784610745, guid: 3feee6787f92af04cb3d1c27343ec2d6,
-    type: 3}
 --- !u!33 &2035405497520580988
 MeshFilter:
   m_ObjectHideFlags: 0

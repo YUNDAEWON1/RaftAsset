@@ -197,10 +197,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec348f7481ec0c4689dbab53580e4b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAnimating: 0
   gravity: 0
   turnSpeed: 2
   inventoryOn: 0
   EscapeOn: 0
+  chatingOn: 0
   constructMode: 0
   hammerMode: 0
   swapNum: 0
@@ -342,7 +344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2359601795302359478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0.7}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1751337598596513508}
@@ -562,6 +564,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: ConstructClick
+  - Type: 9
+    SynchronizeType: 0
+    Name: AxeAttack
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

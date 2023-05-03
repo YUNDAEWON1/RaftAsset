@@ -9,6 +9,7 @@ public class RoamingBox : MonoBehaviour
         if(other.tag == "Enemy")
         {
             other.gameObject.GetComponent<SharkCtrl>().RoamingCheckStart();
+            other.gameObject.GetComponent<SharkCtrl>().run = false;
         }
     }
     
