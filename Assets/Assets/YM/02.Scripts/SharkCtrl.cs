@@ -24,6 +24,8 @@ public class SharkCtrl : MonoBehaviour
 
     private GameManager gm;
 
+    public Material[] sharkDamagedEffectMat;
+
     private enum State
     {
         Idle,
@@ -166,6 +168,7 @@ public class SharkCtrl : MonoBehaviour
 
     public void Damaged()
     {
+        StartCoroutine(DamagedEffect());
         HP -= 25;
 
         if(HP <= 50)
@@ -180,6 +183,13 @@ public class SharkCtrl : MonoBehaviour
         }
     }
 
+    IEnumerator DamagedEffect()
+    {
+        transform.GetChild(3).GetComponent<SkinnedMeshRenderer>().material = sharkDamagedEffectMat[1];
+        yield return new WaitForSeconds(2f);
+        transform.GetChild(3).GetComponent<SkinnedMeshRenderer>().material = sharkDamagedEffectMat[0];
+    }
+
     IEnumerator Dead()
     {
         deadBool = true;
@@ -192,6 +202,7 @@ public class SharkCtrl : MonoBehaviour
         deadBool = false;
         run = false;
     }
+
 
     public void RoamingCheckStart()
     {

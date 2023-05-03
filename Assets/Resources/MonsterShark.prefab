@@ -477,6 +477,9 @@ MonoBehaviour:
   attackDistance: 2
   HP: 100
   roamingTarget: {fileID: 0}
+  sharkDamagedEffectMat:
+  - {fileID: 2100000, guid: 3be2bf45143b082448b4ae6c19138846, type: 2}
+  - {fileID: 2100000, guid: 5355b6b3190157745b16a6ff4b1b446d, type: 2}
   targetPlayer: {fileID: 0}
   run: 0
 --- !u!114 &7288830687563828072
