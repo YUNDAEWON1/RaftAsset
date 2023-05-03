@@ -134,7 +134,7 @@ public class SharkCtrl : MonoBehaviour
 
         // 추적하는 플레이어는 가장 먼저 물에 들어온 플레이어
         transform.LookAt(targetPlayer);                                         
-        transform.position += transform.forward * (moveSpeed * 2) * Time.deltaTime;     // Chase(추격) 시 평소(Idle) 스피드 4배
+        transform.position += transform.forward * (moveSpeed * 3) * Time.deltaTime;     // Chase(추격) 시 평소(Idle) 스피드 6배
 
         // 일정 거리 이내에 있으면 상태를 Attack로 변경
         if (Vector3.Distance(transform.position, targetPlayer.position) <= attackDistance)

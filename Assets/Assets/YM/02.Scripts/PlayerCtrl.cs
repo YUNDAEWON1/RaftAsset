@@ -40,6 +40,7 @@ public class PlayerCtrl : MonoBehaviour {
     private float throwGage = 0f;                   // 훅 던질때 사용할 게이지변수
     public bool inventoryOn = false;                // 인벤토리가 켜져있는지 확인할 변수
     public bool EscapeOn = false;                   // esc메뉴가 켜져있는지 확인할 변수
+    public bool chatingOn = false;                  // 채팅창이 켜져있는지 확인할 변수
     public bool constructMode = false;              // 건축모드인지 확인할 변수
     public bool hammerMode = false;              // 해머모드인지 확인할 변수
 
@@ -148,7 +149,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(pv.isMine)
         {
-            if (!inventoryOn && !EscapeOn)
+            if (!inventoryOn && !EscapeOn && !chatingOn)
             {
                 #region 캐릭터이동
                 // 캐릭터 이동 //
@@ -404,7 +405,7 @@ public class PlayerCtrl : MonoBehaviour {
                         // 도끼 관련 상호작용
                         if (rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
                         {
-                            if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].collider.tag == "InteractionObject" && !swimMode)  // 도끼는 물에 있을때는 못쓰게
+                            if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].collider.tag == "InteractionObject" && hits[j].transform.gameObject.layer == 19 && !swimMode)  // 도끼는 물에 있을때는 못쓰게
                             {
                                 if (!isAnimating)
                                 {
@@ -417,7 +418,7 @@ public class PlayerCtrl : MonoBehaviour {
                                 }
 
                             }
-                            else if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].transform.gameObject.layer == 12 && !swimMode)  // 해머오브젝트일때
+                            else if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && (hits[j].transform.gameObject.layer == 12 || hits[j].transform.gameObject.layer == 8) && !swimMode)  // 해머오브젝트, 건설오브젝트일때
                             {
                                 if (!isAnimating)
                                 {
@@ -518,6 +519,11 @@ public class PlayerCtrl : MonoBehaviour {
             {
                 EscapeOn = !EscapeOn;
             }
+
+            //if(Input.GetKeyDown(KeyCode.Return))
+            //{
+            //    chatingOn = !chatingOn;
+            //}
         }
         else  // 아바타
         {
