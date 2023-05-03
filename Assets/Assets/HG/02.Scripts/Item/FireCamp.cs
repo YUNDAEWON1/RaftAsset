@@ -5,18 +5,32 @@ using UnityEngine;
 public class FireCamp : MonoBehaviour
 {
     public InventoryManager ivenManger;
+    private InteractionObject interObj;
 
-    private void Start()
+    private void Awake()
     {
         ivenManger = FindObjectOfType<InventoryManager>();
+        interObj = GetComponent<InteractionObject>();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F) && other.gameObject.CompareTag("Potato"))
+        if (interObj.interaction)
         {
             ivenManger.Craft(ivenManger.craftingRecipes[7]);
-            PhotonNetwork.Destroy(other.gameObject);
+            //PhotonNetwork.Destroy(other.gameObject);
+
+            interObj.interaction = !interObj.interaction;
+            return;
         }
     }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if(Input.GetKeyDown(KeyCode.F) && other.gameObject.CompareTag("Potato"))
+    //    {
+    //        ivenManger.Craft(ivenManger.craftingRecipes[7]);
+    //        PhotonNetwork.Destroy(other.gameObject);
+    //    }
+    //}
 }

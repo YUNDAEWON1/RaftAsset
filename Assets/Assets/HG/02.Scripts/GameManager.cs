@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     {
         if (hungry > 0)
         {
-            hungry -= Time.deltaTime * 0.01f;
+            hungry -= Time.deltaTime * 0.005f;
 
             if (hungry < 0)
             {
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         if (thirsty > 0)
         {
-            thirsty -= Time.deltaTime * 0.01f;
+            thirsty -= Time.deltaTime * 0.005f;
 
             if (thirsty < 0)
             {

@@ -88,6 +88,7 @@ public class PlayerCtrl : MonoBehaviour {
     private ConstructMode constructScript;
     private HammerMode hammerScript;
     private SharkCtrl sharkCtrl;
+    private GameManager gm;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
 
@@ -133,6 +134,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     void Start()
     {
+        gm = FindObjectOfType<GameManager>();
         sharkCtrl = GameObject.FindGameObjectWithTag("Enemy").GetComponent<SharkCtrl>();
 
         speed = 3.0f;
@@ -324,7 +326,21 @@ public class PlayerCtrl : MonoBehaviour {
                 {
                     if (hits[j].collider.tag != "Ground"&& hits[j].collider.tag != "Player")  // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
                     {
-                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")                                // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
+                        // 상호작용 가능한 오브젝트들 UI띄우기
+                        // InteractionObject를 제외하고는 바로 아래에 주울 수 있는 오브젝트 상호작용 if문 조건 따라가야함
+                        if (hits[j].collider.tag == "InteractionObject" || hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")
+                        {
+                            for (int i = 0; i < inventoryManager.itemList.Count; i++)
+                            {
+                                if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                                {
+                                    Debug.Log(inventoryManager.itemList[i].Name);
+                                }
+                            }
+                        }
+
+                        #region 주울 수 있는 오브젝트 상호작용
+                        if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")      // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
                         {
                             if (Input.GetKeyDown("e"))
                             {
@@ -345,22 +361,48 @@ public class PlayerCtrl : MonoBehaviour {
                                 pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, hits[j].transform.GetComponent<PhotonView>().viewID);
                             }
                         }
+                        #endregion
 
-                        // 상호작용 가능한 오브젝트들 UI띄우기
-                        // InteractionObject를 제외하고는 바로 위에 if문 조건 따라가야함
-                        if (hits[j].collider.tag == "InteractionObject" || hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato") 
+                        #region 그릴 상호작용
+                        if (rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
                         {
-                            for(int i = 0; i < inventoryManager.itemList.Count; i++)
+                            // 레이케스트에 걸린게 상호작용가능오브젝트고 14(그릴)이고 손에든게 감자일때
+                            if (hits[j].collider.tag == "InteractionObject" && hits[j].transform.GetComponent<PhotonObject>().objectNum == 14 && rightHandle.transform.GetChild(0).gameObject.tag == "Potato")
                             {
-                                if(inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                                if (Input.GetKeyDown("f"))
                                 {
-                                    Debug.Log(inventoryManager.itemList[i].Name);
+                                    hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                    PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
                                 }
                             }
                         }
+                        #endregion
 
+                        #region 컵 & 정수기 상호작용
+                        if (rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
+                        {
+                            // 레이케스트에 걸린게 상호작용가능오브젝트고 6(정수기)이고 손에든게 컵일때
+                            if (hits[j].collider.tag == "InteractionObject" && hits[j].transform.GetComponent<PhotonObject>().objectNum == 6 && rightHandle.transform.GetChild(0).gameObject.tag == "Cup")
+                            {
+                                if (Input.GetMouseButtonDown(0))
+                                {
+                                    hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                }
+                            }
+
+                            if(hits[j].collider.tag == "Sea" && rightHandle.transform.GetChild(0).gameObject.tag == "Cup")
+                            {
+                                if (Input.GetMouseButtonDown(0))
+                                {
+                                    gm.thirsty -= 0.1f;
+                                }
+                            }
+                        }
+                        #endregion
+
+                        #region 도끼 상호작용
                         // 도끼 관련 상호작용
-                        if(rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
+                        if (rightHandle.transform.childCount > 0)        // 손에 뭔가를 들고 있을 때만 상호작용
                         {
                             if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].collider.tag == "InteractionObject" && !swimMode)  // 도끼는 물에 있을때는 못쓰게
                             {
@@ -373,9 +415,9 @@ public class PlayerCtrl : MonoBehaviour {
                                         hits[j].transform.GetComponent<InteractionObject>().interaction = true;
                                     }
                                 }
-                                    
+
                             }
-                            else if(rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].transform.gameObject.layer == 12 && !swimMode)  // 해머오브젝트일때
+                            else if (rightHandle.transform.GetChild(0).gameObject.tag == "Axe" && hits[j].transform.gameObject.layer == 12 && !swimMode)  // 해머오브젝트일때
                             {
                                 if (!isAnimating)
                                 {
@@ -388,6 +430,9 @@ public class PlayerCtrl : MonoBehaviour {
                                 }
                             }
                         }
+                        #endregion
+
+                        
                     }
                 }
                 

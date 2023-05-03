@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5437129047137967816}
   - component: {fileID: 2985734633163228591}
   - component: {fileID: 2987677763366767004}
+  - component: {fileID: -532158290738073599}
   m_Layer: 8
   m_Name: Grill
   m_TagString: Object
@@ -167,6 +168,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7591107, y: 1.68, z: 0.7350552}
   m_Center: {x: -0.04709889, y: 0.82, z: 0.00042180717}
+--- !u!114 &-532158290738073599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7996703592551186742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1e30eeb45f9b04eb8e90f3fcf376b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: 0
 --- !u!1001 &4126415200944064257
 PrefabInstance:
   m_ObjectHideFlags: 0
