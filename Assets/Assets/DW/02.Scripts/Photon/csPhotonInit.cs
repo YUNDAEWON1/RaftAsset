@@ -85,11 +85,11 @@ public class csPhotonInit : MonoBehaviour
 
     public void OnClickCreateMode()
     {
-        isCreateMode=true;
+        userId.text="CreateMode";
     }
     public void OnClickNormalMode()
     {
-        isCreateMode=false;
+        userId.text="";
     }
 
 
@@ -351,11 +351,6 @@ public class csPhotonInit : MonoBehaviour
          }
 
         //로컬 플레이어의 이름을 설정
-        if(isCreateMode)
-        {
-          userId.text="CreateMode";
-        }
-       
         PhotonNetwork.player.NickName = userId.text;
    
 
