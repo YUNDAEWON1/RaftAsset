@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviour {
 
@@ -40,17 +41,24 @@ public class PlayerCtrl : MonoBehaviour {
     public float turnSpeed = 2f;                  // 마우스 회전 속도(추후 UI세팅에서 감도설정 넣을수도 있을듯)          
     private float xRotate = 0.0f;                   // 내부 사용할 X축 회전량은 별도 정의 ( 카메라 위 아래 방향 )
     private float throwGage = 0f;                   // 훅 던질때 사용할 게이지변수
+    [HideInInspector]
     public bool inventoryOn = false;                // 인벤토리가 켜져있는지 확인할 변수
-    public bool EscapeOn = false;                   // esc메뉴가 켜져있는지 확인할 변수
-    public bool chatingOn = false;                  // 채팅창이 켜져있는지 확인할 변수
+    private bool EscapeOn = false;                   // esc메뉴가 켜져있는지 확인할 변수
+    private bool chatingOn = false;                  // 채팅창이 켜져있는지 확인할 변수
     public bool constructMode = false;              // 건축모드인지 확인할 변수
     public bool hammerMode = false;              // 해머모드인지 확인할 변수
 
     public int swapNum = 0;                         // 소지품 몇번째칸을 가리키고 있는지
 
-    public float hp = 100;                          // 체력
-    public float satiety = 100;                     // 포만감
-    public float thirsty = 100;                     // 목마름
+    public float hp = 1;                          // 체력
+    public float hungry = 1;                     // 포만감
+    public float thirsty = 1;                     // 목마름
+    private GameObject hungry_Gage;
+    private GameObject thirsty_Gage;
+    private GameObject hpGage;
+    private Image hungryGageImage;
+    private Image thirstyGageImage;
+    private Image hpGageImage;
 
     public bool swimMode = false;                   // 물에 들어갔는지 판단할 변수
     public bool hookThrow = false;                  // Hook을 던진상태인지 확인을 위한 변수(훅 던지고 회수 안된 상태-> true)
@@ -91,7 +99,7 @@ public class PlayerCtrl : MonoBehaviour {
     private ConstructMode constructScript;
     private HammerMode hammerScript;
     private SharkCtrl sharkCtrl;
-    private GameManager gm;
+    //private GameManager gm;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
 
@@ -106,11 +114,15 @@ public class PlayerCtrl : MonoBehaviour {
 
         stuffs = GameObject.FindGameObjectWithTag("QuickSlot");
         inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
-        //for (int i = 0; i < GameObject.FindGameObjectWithTag("Stuffs").transform.childCount; i++)       // 추후에는 처음시작시에는 Hook만 가지게끔하고 저장된데이터가 있으면 가져와서 넣게끔하기
-        //{
-        //    stuffs[i] = GameObject.FindGameObjectWithTag("Stuffs").transform.GetChild(i).gameObject;
-        //    stuffsCount[i] = 1;
-        //}
+
+        hungry_Gage = GameObject.FindGameObjectWithTag("HungryGage");
+        thirsty_Gage = GameObject.FindGameObjectWithTag("ThirstyGage");
+        hpGage = GameObject.FindGameObjectWithTag("HPGage");
+
+        hungryGageImage = hungry_Gage.GetComponent<Image>();
+        thirstyGageImage = thirsty_Gage.GetComponent<Image>();
+        hpGageImage = hpGage.GetComponent<Image>();
+        
 
         // 포톤추가
         //PhotonView 컴포넌트 할당
@@ -123,7 +135,7 @@ public class PlayerCtrl : MonoBehaviour {
         pv.synchronization = ViewSynchronization.UnreliableOnChange;
 
         //카메라 관련 넣을지 확인해보기
-        //Debug.Log(pv.isMine);
+        Debug.Log(pv.isMine);
         if (pv.isMine)
         {
             Camera.main.GetComponent<FirstPersonCam>().target = this.camTrans;
@@ -137,7 +149,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     void Start()
     {
-        gm = FindObjectOfType<GameManager>();
+        //gm = FindObjectOfType<GameManager>();
         sharkCtrl = FindObjectOfType<SharkCtrl>();
 
         speed = 3.0f;
@@ -151,8 +163,56 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(pv.isMine)
         {
+            #region 체력&포만감&목마름 관련
+            if (hungry > 0)
+            {
+                hungry -= Time.deltaTime * 0.005f;
+
+                if (hungry < 0)
+                {
+                    hungry = 0;
+                }
+            }
+
+            hungryGageImage.fillAmount = hungry;
+
+            if (thirsty > 0)
+            {
+                thirsty -= Time.deltaTime * 0.005f;
+
+                if (thirsty < 0)
+                {
+                    thirsty = 0;
+                }
+            }
+
+            thirstyGageImage.fillAmount = thirsty;
+
+            if (hungry <= 0 || thirsty <= 0)
+            {
+                hp -= Time.deltaTime * 0.01f;
+
+                if (hp < 0)
+                {
+                    hp = 0;
+                }
+            }
+
+            if (hp <= 0.0f)
+            {
+                //Time.timeScale = 0;
+            }
+
+            else
+            {
+                hpGageImage.fillAmount = hp;
+            }
+            #endregion
+
             if (!inventoryOn && !EscapeOn && !chatingOn)
             {
+                
+
                 #region 캐릭터이동
                 // 캐릭터 이동 //
 
@@ -251,6 +311,10 @@ public class PlayerCtrl : MonoBehaviour {
                         {
                                 hammerScript.HammerClick();
                                 inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
+                        }
+                        else if(rightHandle.transform.GetChild(0).tag == "Potato")
+                        {
+                            rightHandle.transform.GetChild(0).GetComponent<Potato_Object>().EatPotato(pv.viewID);
                         }
                     }
                 }
@@ -372,7 +436,7 @@ public class PlayerCtrl : MonoBehaviour {
                             // 레이케스트에 걸린게 상호작용가능오브젝트고 14(그릴)이고 손에든게 감자일때
                             if (hits[j].collider.tag == "InteractionObject" && hits[j].transform.GetComponent<PhotonObject>().objectNum == 14 && rightHandle.transform.GetChild(0).gameObject.tag == "Potato")
                             {
-                                if (Input.GetKeyDown("f"))
+                                if (Input.GetKeyDown("e"))
                                 {
                                     hits[j].transform.GetComponent<InteractionObject>().interaction = true;
                                     PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
@@ -389,7 +453,8 @@ public class PlayerCtrl : MonoBehaviour {
                             {
                                 if (Input.GetMouseButtonDown(0))
                                 {
-                                    hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                    //hits[j].transform.GetComponent<InteractionObject>().interaction = true;
+                                    hits[j].transform.GetComponent<Purifier>().UsePurifier(pv.viewID);
                                 }
                             }
 
@@ -397,7 +462,7 @@ public class PlayerCtrl : MonoBehaviour {
                             {
                                 if (Input.GetMouseButtonDown(0))
                                 {
-                                    gm.thirsty -= 0.1f;
+                                    this.thirsty -= 0.1f;
                                 }
                             }
                         }

@@ -24,7 +24,7 @@ public class FirstPersonCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ani.GetBool("Swimming"))
+        if (ani.GetBool("Swimming"))
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y,
             (-transform.parent.transform.localEulerAngles.z) + 18

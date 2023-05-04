@@ -5,28 +5,23 @@ using UnityEngine.UI;
 
 public class Potato_Object : MonoBehaviour
 {
-    public GameManager gm;
+    //public GameManager gm;
     public InventoryManager ivenmanager;
+    //private InteractionObject interSc;
+    private PlayerCtrl pCtrl;
     public float hungry = 0.3f;
 
     private void Awake()
     {
+        //interSc = GetComponent<InteractionObject>();
         ivenmanager = FindObjectOfType<InventoryManager>();
     }
 
-    private void Start()
+    public void EatPotato(int viewID)
     {
-        gm = FindObjectOfType<GameManager>();
-
-    }
-
-    private void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            gm.hungry += hungry;
-            ivenmanager.UseSelectedItem();
-            PhotonNetwork.Destroy(this.gameObject);
-        }
+        PhotonView.Find(viewID).gameObject.GetComponent<PlayerCtrl>().hungry += hungry;
+        ivenmanager.UseSelectedItem();
+        PhotonNetwork.Destroy(this.gameObject);
+        return;
     }
 }

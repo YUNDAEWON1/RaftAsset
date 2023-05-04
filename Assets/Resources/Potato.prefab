@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83039c746475973458de9163b6c7fdd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 0}
   ivenmanager: {fileID: 0}
   hungry: 0.2
 --- !u!33 &8041195221168044999

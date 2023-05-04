@@ -28,7 +28,7 @@ public class HammerMode : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         playerCtrl = GetComponent<PlayerCtrl>();
-        buildingUI = GameObject.FindGameObjectsWithTag("BuildingUI");
+        
         inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
 
     }
@@ -36,6 +36,8 @@ public class HammerMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        buildingUI = GameObject.FindGameObjectsWithTag("BuildingUI");
+
         this.photonMapping = playerCtrl.photonMapping;
         hammerShadow.position = Vector3.zero;
         hammerShadow.rotation = Quaternion.identity;

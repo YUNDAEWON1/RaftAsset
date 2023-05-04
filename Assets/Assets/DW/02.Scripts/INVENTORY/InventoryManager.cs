@@ -28,13 +28,14 @@ public class InventoryManager : MonoBehaviour
     /////////////////////DATA SAVE&LOAD////////////////////////////
 
    string path;
-   string filename="save_" + PhotonNetwork.player.NickName + ".json";
+   string filename;
 
     private void Awake()
     {
         instance=this;
         craftUI=GetComponent<CraftingUI>();
         path= Application.dataPath+"/";
+        filename = "save_" + PhotonNetwork.player.NickName + ".json";
     }
 
     private void Start()
