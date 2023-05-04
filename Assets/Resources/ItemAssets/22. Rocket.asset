@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 22
   _name: "\uD3ED\uC8FD"
-  _tooltip: "\uD0C8\uCD9C\uC774\uB2E4~"
+  _tooltip: "\uAD6C\uC870\uD5EC\uAE30\uB97C \uD638\uCD9C\uD560 \uC218 \uC788\uB294
+    \uD3ED\uC8FD\uC774\uB2E4"
   itemPrefab: {fileID: 1513864311348878, guid: 028420c6b5f056e42a7d76e5d27e1a7e, type: 3}
   type: 0
   actionType: 0

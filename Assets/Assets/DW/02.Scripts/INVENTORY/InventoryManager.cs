@@ -84,6 +84,7 @@ public class InventoryManager : MonoBehaviour
     CheckCraft6(craftingRecipes[6]);   //나무 창
     CheckCraft7(craftingRecipes[8]); //도끼
     CheckCraft8(craftingRecipes[9]); //침대
+    CheckCraft9(craftingRecipes[10]); //폭죽
     
 
     //////////////////////빌드 관련//////////////////////
@@ -507,6 +508,23 @@ private void CheckCraft8(CraftingRecipe recipe)
      
     }
 }
+
+
+private void CheckCraft9(CraftingRecipe recipe)
+{
+    if(recipe.CanCraft(this))
+    {
+        craftUI.OnbtnOK9();
+    
+    }
+    else
+    {
+        craftUI.OnbtnNO9();
+     
+    }
+}
+
+
     public void btnCup()
 {
     Craft(craftingRecipes[0]);
@@ -547,6 +565,10 @@ public void vtnBed()
     Craft(craftingRecipes[9]);
 }
 
+public void btnRocket()
+{
+    Craft(craftingRecipes[10]);
+}
 ////////////////////Building 관련 함수들///////////////////
 
 public void Build(BuildingRecipe _recipe)
