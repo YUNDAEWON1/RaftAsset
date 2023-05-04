@@ -53,6 +53,9 @@ public class ToolUI : MonoBehaviour
     public GameObject craft_bed;
     public GameObject btn_bed;
 
+    public GameObject craft_rocket;
+    public GameObject btn_rocket;
+
 
    
 
@@ -78,6 +81,7 @@ public class ToolUI : MonoBehaviour
         btn_spear.GetComponent<Button>().onClick.AddListener(ToggleSpearUI);
         btn_Axe.GetComponent<Button>().onClick.AddListener(ToggleAxeUI);
         btn_bed.GetComponent<Button>().onClick.AddListener(ToggleBedUI);
+        btn_rocket.GetComponent<Button>().onClick.AddListener(ToggleRocketUI);
 
     }
 
@@ -231,6 +235,21 @@ public void ToggleBedUI()
   
     craft_bed.SetActive(true);
     currentUI = craft_bed;
+}
+
+public void ToggleRocketUI()
+{
+    // 현재 열려있는 UI가 있으면 닫아줌
+    if (currentUI != null && currentUI != otherUI)
+    {
+        currentUI.SetActive(false);
+    }
+
+    craft_rocket.transform.SetParent(otherUI.transform);
+
+  
+    craft_rocket.SetActive(true);
+    currentUI = craft_rocket;
 }
 
  

@@ -32,6 +32,9 @@ public class CraftingUI : MonoBehaviour
     public GameObject axe_OK;
     public GameObject axe_NO;
 
+    public GameObject rocket_NO;
+    public GameObject rocket_OK;
+
     public void OnbtnOK()
     {
         cup_OK.SetActive(true);
@@ -128,6 +131,19 @@ public class CraftingUI : MonoBehaviour
         bed_OK.SetActive(false);
         bed_NO.SetActive(true);
     }
+
+     public void OnbtnOK9()
+    {
+        rocket_OK.SetActive(true);
+        rocket_NO.SetActive(false);
+    }
+    public void OnbtnNO9()
+    {
+        rocket_OK.SetActive(false);
+        rocket_NO.SetActive(true);
+    }
+
+
 
 
 }
