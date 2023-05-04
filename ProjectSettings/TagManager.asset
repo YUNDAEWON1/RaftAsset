@@ -33,6 +33,11 @@ TagManager:
   - L
   - InteractionObject
   - Spear_wood
+  - HungryGage
+  - ThirstyGage
+  - HPGage
+  - ItemGetUI
+  - ItemNameUI
   layers:
   - Default
   - TransparentFX

@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class Purifier : MonoBehaviour
 {
-    public GameManager gm;
-    private InteractionObject interObj;
+    //public GameManager gm;
+    //private InteractionObject interObj;
 
-    private void Awake()
+    //private void Awake()
+    //{
+    //    //gm = FindObjectOfType<GameManager>();
+    //    interObj = GetComponent<InteractionObject>();
+    //}
+
+    //private void Update()
+    //{
+        
+    //}
+
+    public void UsePurifier(int viewID)
     {
-        gm = FindObjectOfType<GameManager>();
-        interObj = GetComponent<InteractionObject>();
+        PhotonView.Find(viewID).gameObject.GetComponent<PlayerCtrl>().thirsty += 0.5f;
+
+        //interObj.interaction = !interObj.interaction;
+        return;
     }
 
-    private void Update()
-    {
-        if (interObj.interaction)
-        {
-            gm.thirsty += 0.5f;
-
-            interObj.interaction = !interObj.interaction;
-            return;
-        }
-    }
     //private void OnTriggerStay(Collider other)
     //{
     //    if (Input.GetKeyDown(KeyCode.F) && other.gameObject.CompareTag("Cup"))

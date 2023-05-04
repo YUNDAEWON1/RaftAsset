@@ -22,7 +22,7 @@ public class SharkCtrl : MonoBehaviour
 
     private Animator ani;
 
-    private GameManager gm;
+    //private GameManager gm;
 
     public Material[] sharkDamagedEffectMat;
 
@@ -52,7 +52,7 @@ public class SharkCtrl : MonoBehaviour
 
     private void Start()
     {
-        gm = FindObjectOfType<GameManager>();
+        //gm = FindObjectOfType<GameManager>();
         currentState = State.Idle;
         RoamingCheckStart();
     }
@@ -150,7 +150,7 @@ public class SharkCtrl : MonoBehaviour
         // 공격이 끝나면 targetPlayer를 null로 초기화
         if(targetPlayer.tag == "Player")
         {
-            gm.hp -= 0.005f;
+            targetPlayer.GetComponent<PlayerCtrl>().hp -= 0.005f;
             yield return new WaitForSeconds(0.5f);
 
             run = true;

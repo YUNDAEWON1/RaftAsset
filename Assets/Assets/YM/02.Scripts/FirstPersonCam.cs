@@ -8,11 +8,6 @@ public class FirstPersonCam : MonoBehaviour
     //private GameObject parentObj;
     private Animator ani;
 
-    void Awake()
-    {
-        
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +19,7 @@ public class FirstPersonCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ani.GetBool("Swimming"))
+        if (ani.GetBool("Swimming"))
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y,
             (-transform.parent.transform.localEulerAngles.z) + 18
