@@ -500,7 +500,7 @@ public class PlayerCtrl : MonoBehaviour {
 
                             if(hits[j].collider.tag == "Sea" && rightHandle.transform.GetChild(0).gameObject.tag == "Cup")
                             {
-                                if (Input.GetMouseButtonDown(0))
+                                if (Input.GetKeyDown("e"))
                                 {
                                     this.thirsty -= 0.1f;
                                 }
@@ -912,11 +912,10 @@ public class PlayerCtrl : MonoBehaviour {
     [PunRPC]
     void PhotonObjectDestroyMaster(int viewID)
     {
-        // ID를 사용하여 게임 오브젝트 찾기
-        GameObject obj = PhotonView.Find(viewID).gameObject;
-
         if (PhotonNetwork.isMasterClient)
         {
+            // ID를 사용하여 게임 오브젝트 찾기
+            GameObject obj = PhotonView.Find(viewID).gameObject;
             PhotonNetwork.Destroy(obj);
         }
     }

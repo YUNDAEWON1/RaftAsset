@@ -116,6 +116,16 @@ public class StageManager : MonoBehaviour
             PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-85.6f, 11.6f, 82.3f), Quaternion.identity, 0, null);
             PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-85.5f, 11.4f, 78.8f), Quaternion.identity, 0, null);
 
+            // 스크랩
+            PhotonNetwork.InstantiateSceneObject("Scrap", new Vector3(-81.46f, 11.21f, 74.07f), Quaternion.Euler(41.23f, 0f, 0f), 0, null);
+            PhotonNetwork.InstantiateSceneObject("Scrap", new Vector3(-81.46f, 11.41f, 78.05f), Quaternion.Euler(41.23f, 0f, 0f), 0, null);
+            PhotonNetwork.InstantiateSceneObject("Scrap", new Vector3(-85.75f, 11.69f, 83.15f), Quaternion.Euler(41.23f, 0f, 0f), 0, null);
+
+            // 바위
+            PhotonNetwork.InstantiateSceneObject("Rock", new Vector3(-84.9f, 10.75f, 75.44f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Rock", new Vector3(-84.9f, 10.75f, 72.45f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Rock", new Vector3(-85.9f, 10.75f, 69.81f), Quaternion.identity, 0, null);
+
         }
 
         yield return null;
