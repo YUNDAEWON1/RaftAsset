@@ -8,11 +8,6 @@ public class FirstPersonCam : MonoBehaviour
     //private GameObject parentObj;
     private Animator ani;
 
-    void Awake()
-    {
-        
-    }
-
     // Start is called before the first frame update
     void Start()
     {

@@ -36,6 +36,8 @@ TagManager:
   - HungryGage
   - ThirstyGage
   - HPGage
+  - ItemGetUI
+  - ItemNameUI
   layers:
   - Default
   - TransparentFX

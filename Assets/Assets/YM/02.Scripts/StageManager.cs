@@ -126,6 +126,7 @@ public class StageManager : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             // HG
+            op.CreateQueue();
             StartCoroutine(this.CreateObject());
         }
     }

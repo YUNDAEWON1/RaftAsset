@@ -36,314 +36,321 @@ public class HammerMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buildingUI = GameObject.FindGameObjectsWithTag("BuildingUI");
-
-        this.photonMapping = playerCtrl.photonMapping;
-        hammerShadow.position = Vector3.zero;
-        hammerShadow.rotation = Quaternion.identity;
-
-        for (int i = 0; i < buildingUI.Length; i++)
+        if(pv.isMine)
         {
-            buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
-        }
-    }
+            buildingUI = GameObject.FindGameObjectsWithTag("BuildingUI");
 
-    void Update()
-    {
-        if (playerCtrl.hammerMode)
-        {
-            if (Input.GetKeyDown("q"))
-            {
-                selectObject--;
-                if (selectObject < 0)
-                {
-                    selectObject = 4;
-                }
-            }
-            if (Input.GetKeyDown("e"))
-            {
-                selectObject++;
-                if (selectObject > 4)   //최대 수 추가할때마다 올려주기
-                {
-                    selectObject = 0;
-                }
-            }
-
-            //Debug.Log(buildingUI.Length);
-            for(int i = 0; i < buildingUI.Length; i++)
-            {
-                buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
-            }
-            buildingUI[selectObject].gameObject.SetActive(true);
-
-            if (Input.GetKeyDown("r"))
-            {
-                rotation++;
-                if(rotation > 3)
-                {
-                    rotation = 0;
-                }
-            }
-
-            RaycastHit[] hits = Physics.SphereCastAll(firePos.transform.position, transform.lossyScale.x / 1f, Camera.main.transform.forward, 3f); // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
-            for (int j = 0; j < hits.Length; j++)
-            {
-                if (hits[j].collider.gameObject.layer == 12)
-                {
-                    if(inventoryManager.buildingRecipes[selectObject].CanBuild(inventoryManager))
-                    {
-                        hammerShadow.GetComponent<MeshRenderer>().material = ShadowMat[0];
-                    }
-                    else
-                    {
-                        hammerShadow.GetComponent<MeshRenderer>().material = ShadowMat[1];
-                    }
-
-                    hammerShadow.GetComponent<MeshFilter>().mesh = hammerObject[selectObject].GetComponent<MeshFilter>().sharedMesh;
-                    Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hits[j].distance;          // 레이케스트 충돌지점(모든 hammerobject감지)
-
-                    switch (selectObject)
-                    {
-                        case 0: // 뗏목바닥
-                            {
-                                Vector3 newPosition = hits[j].collider.bounds.center;
-
-                                Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
-
-                                if (hitInfo.collider != null)
-                                {
-                                    if (hitInfo.collider.tag == "Foundation")
-                                    {
-                                        hammerShadow.GetComponent<MeshFilter>().mesh = null;
-                                        break;
-                                    }
-                                }
-
-                                // 충돌한 물체의 센터 - 충돌지점
-                                if ((hits[j].collider.bounds.center - hits[j].point).x > 0.5)  // 왼쪽
-                                {
-                                    newPosition.x = newPosition.x - 1.5f;
-                                }
-                                else if ((hits[j].collider.bounds.center - hits[j].point).x < -0.5)   // 오른쪽
-                                {
-                                    newPosition.x = newPosition.x + 1.5f;
-                                }
-                                else if ((hits[j].collider.bounds.center - hits[j].point).z > 0.5)     // 아래
-                                {
-                                    newPosition.z = newPosition.z - 1.5f;
-                                }
-                                else if ((hits[j].collider.bounds.center - hits[j].point).z < -0.5)   // 위
-                                {
-                                    newPosition.z = newPosition.z + 1.5f;
-                                }
-                                newPosition.y = newPosition.y + 0.25f;
-
-                                hammerShadow.position = newPosition;
-                                hammerShadow.rotation = Quaternion.identity;
-
-                                break;
-                            }
-
-                        case 1: // 나무기둥
-                            {
-                                Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
-
-                                if (hitInfo.collider != null)
-                                {
-                                    if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
-                                    {
-                                        switch (rotation)
-                                        {
-                                            case 0:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z + 0.75f);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
-                                                    break;
-                                                }
-                                            case 1:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 90));
-                                                    break;
-                                                }
-                                            case 2:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z - 0.75f);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 90));
-                                                    break;
-                                                }
-
-                                            case 3:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 90));
-                                                    break;
-                                                }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        hammerShadow.GetComponent<MeshFilter>().mesh = null;
-                                        break;
-                                    }
-                                }
-                                break;
-
-                            }
-                        case 2: // 나무계단
-                            {
-                                Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
-
-                                if (hitInfo.collider != null)
-                                {
-                                    if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
-                                    {
-                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.bounds.center.z);
-                                        hammerShadow.position = newPosition;
-
-                                        switch(rotation)
-                                        {
-                                            case 0:
-                                                hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                                                break;
-                                            case 1:
-                                                hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
-                                                break;
-                                            case 2:
-                                                hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-                                                break;
-                                            case 3:
-                                                hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 0));
-                                                break;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        hammerShadow.GetComponent<MeshFilter>().mesh = null;
-                                        break;
-                                    }
-                                }
-                                break;
-
-                            }
-                        case 3: // 나무바닥
-                            {
-                                Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
-
-                                if (hitInfo.collider != null)
-                                {
-                                    if (hitInfo.collider.tag == "WoodenPole")
-                                    {
-                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 1.35f, hitInfo.collider.bounds.center.z);
-                                        hammerShadow.position = newPosition;
-                                        hammerShadow.rotation = Quaternion.identity;
-                                    }
-                                    else if(hitInfo.collider.tag == "WoodenFloor")
-                                    {
-                                        Vector3 newPosition = hitInfo.collider.bounds.center;
-
-                                        if ((hitInfo.collider.bounds.center - hitInfo.point).x > 0.5)  // 왼쪽
-                                        {
-                                            newPosition.x = newPosition.x - 1.5f;
-                                        }
-                                        else if ((hitInfo.collider.bounds.center - hitInfo.point).x < -0.5)   // 오른쪽
-                                        {
-                                            newPosition.x = newPosition.x + 1.5f;
-                                        }
-                                        else if ((hitInfo.collider.bounds.center - hitInfo.point).z > 0.5)     // 아래
-                                        {
-                                            newPosition.z = newPosition.z - 1.5f;
-                                        }
-                                        else if ((hitInfo.collider.bounds.center - hitInfo.point).z < -0.5)   // 위
-                                        {
-                                            newPosition.z = newPosition.z + 1.5f;
-                                        }
-                                        newPosition.y = newPosition.y + 0.1f;
-
-                                        hammerShadow.position = newPosition;
-                                        hammerShadow.rotation = Quaternion.identity;
-                                    }
-                                    else
-                                    {
-                                        hammerShadow.GetComponent<MeshFilter>().mesh = null;
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-                        case 4: // 나무벽
-                            {
-                                Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
-
-                                if (hitInfo.collider != null)
-                                {
-                                    if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
-                                    {
-                                        switch (rotation)
-                                        {
-                                            case 0:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z + 0.75f);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                                                    break;
-                                                }
-                                            case 1:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
-                                                    break;
-                                                }
-                                            case 2:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z - 0.75f);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-                                                    break;
-                                                }
-                                                
-                                            case 3:
-                                                {
-                                                    Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z);
-                                                    hammerShadow.position = newPosition;
-                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 0));
-                                                    break;
-                                                }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        hammerShadow.GetComponent<MeshFilter>().mesh = null;
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-
-
-                    }
-                    break;
-                }
-                else
-                {
-                    hammerShadow.GetComponent<MeshFilter>().mesh = null;
-                }
-            }
-        }
-        else
-        {
-            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+            this.photonMapping = playerCtrl.photonMapping;
+            hammerShadow.position = Vector3.zero;
+            hammerShadow.rotation = Quaternion.identity;
 
             for (int i = 0; i < buildingUI.Length; i++)
             {
                 buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
             }
         }
+    }
+
+    void Update()
+    {
+        if(pv.isMine)
+        {
+            if (playerCtrl.hammerMode)
+            {
+                if (Input.GetKeyDown("q"))
+                {
+                    selectObject--;
+                    if (selectObject < 0)
+                    {
+                        selectObject = 4;
+                    }
+                }
+                if (Input.GetKeyDown("e"))
+                {
+                    selectObject++;
+                    if (selectObject > 4)   //최대 수 추가할때마다 올려주기
+                    {
+                        selectObject = 0;
+                    }
+                }
+
+                //Debug.Log(buildingUI.Length);
+                for (int i = 0; i < buildingUI.Length; i++)
+                {
+                    buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
+                }
+                buildingUI[selectObject].gameObject.SetActive(true);
+
+                if (Input.GetKeyDown("r"))
+                {
+                    rotation++;
+                    if (rotation > 3)
+                    {
+                        rotation = 0;
+                    }
+                }
+
+                RaycastHit[] hits = Physics.SphereCastAll(firePos.transform.position, transform.lossyScale.x / 1f, Camera.main.transform.forward, 3f); // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
+                for (int j = 0; j < hits.Length; j++)
+                {
+                    if (hits[j].collider.gameObject.layer == 12)
+                    {
+                        if (inventoryManager.buildingRecipes[selectObject].CanBuild(inventoryManager))
+                        {
+                            hammerShadow.GetComponent<MeshRenderer>().material = ShadowMat[0];
+                        }
+                        else
+                        {
+                            hammerShadow.GetComponent<MeshRenderer>().material = ShadowMat[1];
+                        }
+
+                        hammerShadow.GetComponent<MeshFilter>().mesh = hammerObject[selectObject].GetComponent<MeshFilter>().sharedMesh;
+                        Vector3 shadowPos = firePos.transform.position + Camera.main.transform.forward * hits[j].distance;          // 레이케스트 충돌지점(모든 hammerobject감지)
+
+                        switch (selectObject)
+                        {
+                            case 0: // 뗏목바닥
+                                {
+                                    Vector3 newPosition = hits[j].collider.bounds.center;
+
+                                    Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
+
+                                    if (hitInfo.collider != null)
+                                    {
+                                        if (hitInfo.collider.tag == "Foundation")
+                                        {
+                                            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+                                            break;
+                                        }
+                                    }
+
+                                    // 충돌한 물체의 센터 - 충돌지점
+                                    if ((hits[j].collider.bounds.center - hits[j].point).x > 0.5)  // 왼쪽
+                                    {
+                                        newPosition.x = newPosition.x - 1.5f;
+                                    }
+                                    else if ((hits[j].collider.bounds.center - hits[j].point).x < -0.5)   // 오른쪽
+                                    {
+                                        newPosition.x = newPosition.x + 1.5f;
+                                    }
+                                    else if ((hits[j].collider.bounds.center - hits[j].point).z > 0.5)     // 아래
+                                    {
+                                        newPosition.z = newPosition.z - 1.5f;
+                                    }
+                                    else if ((hits[j].collider.bounds.center - hits[j].point).z < -0.5)   // 위
+                                    {
+                                        newPosition.z = newPosition.z + 1.5f;
+                                    }
+                                    newPosition.y = newPosition.y + 0.25f;
+
+                                    hammerShadow.position = newPosition;
+                                    hammerShadow.rotation = Quaternion.identity;
+
+                                    break;
+                                }
+
+                            case 1: // 나무기둥
+                                {
+                                    Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
+
+                                    if (hitInfo.collider != null)
+                                    {
+                                        if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
+                                        {
+                                            switch (rotation)
+                                            {
+                                                case 0:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z + 0.75f);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                                                        break;
+                                                    }
+                                                case 1:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 90));
+                                                        break;
+                                                    }
+                                                case 2:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z - 0.75f);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 90));
+                                                        break;
+                                                    }
+
+                                                case 3:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.transform.localPosition.z);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 90));
+                                                        break;
+                                                    }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                }
+                            case 2: // 나무계단
+                                {
+                                    Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
+
+                                    if (hitInfo.collider != null)
+                                    {
+                                        if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
+                                        {
+                                            Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 0.2f, hitInfo.collider.bounds.center.z);
+                                            hammerShadow.position = newPosition;
+
+                                            switch (rotation)
+                                            {
+                                                case 0:
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                                                    break;
+                                                case 1:
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                                                    break;
+                                                case 2:
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                                                    break;
+                                                case 3:
+                                                    hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 0));
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                }
+                            case 3: // 나무바닥
+                                {
+                                    Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
+
+                                    if (hitInfo.collider != null)
+                                    {
+                                        if (hitInfo.collider.tag == "WoodenPole")
+                                        {
+                                            Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y + 1.35f, hitInfo.collider.bounds.center.z);
+                                            hammerShadow.position = newPosition;
+                                            hammerShadow.rotation = Quaternion.identity;
+                                        }
+                                        else if (hitInfo.collider.tag == "WoodenFloor")
+                                        {
+                                            Vector3 newPosition = hitInfo.collider.bounds.center;
+
+                                            if ((hitInfo.collider.bounds.center - hitInfo.point).x > 0.5)  // 왼쪽
+                                            {
+                                                newPosition.x = newPosition.x - 1.5f;
+                                            }
+                                            else if ((hitInfo.collider.bounds.center - hitInfo.point).x < -0.5)   // 오른쪽
+                                            {
+                                                newPosition.x = newPosition.x + 1.5f;
+                                            }
+                                            else if ((hitInfo.collider.bounds.center - hitInfo.point).z > 0.5)     // 아래
+                                            {
+                                                newPosition.z = newPosition.z - 1.5f;
+                                            }
+                                            else if ((hitInfo.collider.bounds.center - hitInfo.point).z < -0.5)   // 위
+                                            {
+                                                newPosition.z = newPosition.z + 1.5f;
+                                            }
+                                            newPosition.y = newPosition.y + 0.1f;
+
+                                            hammerShadow.position = newPosition;
+                                            hammerShadow.rotation = Quaternion.identity;
+                                        }
+                                        else
+                                        {
+                                            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            case 4: // 나무벽
+                                {
+                                    Physics.SphereCast(firePos.transform.position, transform.lossyScale.x / 5f, Camera.main.transform.forward, out hitInfo, 3f);
+
+                                    if (hitInfo.collider != null)
+                                    {
+                                        if (hitInfo.collider.tag == "Foundation" || hitInfo.collider.tag == "WoodenFloor")
+                                        {
+                                            switch (rotation)
+                                            {
+                                                case 0:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z + 0.75f);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                                                        break;
+                                                    }
+                                                case 1:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x - 0.75f, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                                                        break;
+                                                    }
+                                                case 2:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z - 0.75f);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                                                        break;
+                                                    }
+
+                                                case 3:
+                                                    {
+                                                        Vector3 newPosition = new Vector3(hitInfo.collider.bounds.center.x + 0.75f, hitInfo.collider.bounds.center.y, hitInfo.collider.transform.localPosition.z);
+                                                        hammerShadow.position = newPosition;
+                                                        hammerShadow.rotation = Quaternion.Euler(new Vector3(0, 270, 0));
+                                                        break;
+                                                    }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            hammerShadow.GetComponent<MeshFilter>().mesh = null;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+
+
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        hammerShadow.GetComponent<MeshFilter>().mesh = null;
+                    }
+                }
+            }
+            else
+            {
+                hammerShadow.GetComponent<MeshFilter>().mesh = null;
+
+                for (int i = 0; i < buildingUI.Length; i++)
+                {
+                    buildingUI[i].gameObject.SetActive(false);  // 모든 빌딩UI끄기
+                }
+            }
+        }
+        
     }
 
     public void HammerClick()

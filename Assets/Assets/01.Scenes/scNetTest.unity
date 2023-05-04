@@ -7402,11 +7402,11 @@ GameObject:
   - component: {fileID: 380323697}
   m_Layer: 5
   m_Name: ItemGetUI
-  m_TagString: Untagged
+  m_TagString: ItemGetUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &380323696
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22456,11 +22456,11 @@ GameObject:
   - component: {fileID: 1173990177}
   m_Layer: 5
   m_Name: ItemNameUI
-  m_TagString: Untagged
+  m_TagString: ItemNameUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1173990176
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22512,7 +22512,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC544\uC774\uD15C \uC774\uB984"
+  m_Text: 
 --- !u!222 &1173990178
 CanvasRenderer:
   m_ObjectHideFlags: 0

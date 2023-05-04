@@ -99,6 +99,9 @@ public class PlayerCtrl : MonoBehaviour {
     private ConstructMode constructScript;
     private HammerMode hammerScript;
     private SharkCtrl sharkCtrl;
+
+    private GameObject itemGetUI;
+    private GameObject itemNameUI;
     //private GameManager gm;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
@@ -122,7 +125,10 @@ public class PlayerCtrl : MonoBehaviour {
         hungryGageImage = hungry_Gage.GetComponent<Image>();
         thirstyGageImage = thirsty_Gage.GetComponent<Image>();
         hpGageImage = hpGage.GetComponent<Image>();
-        
+
+        itemGetUI = GameObject.FindGameObjectWithTag("ItemGetUI");
+        itemNameUI = GameObject.FindGameObjectWithTag("ItemNameUI");
+
 
         // 포톤추가
         //PhotonView 컴포넌트 할당
@@ -168,10 +174,14 @@ public class PlayerCtrl : MonoBehaviour {
             {
                 hungry -= Time.deltaTime * 0.005f;
 
-                if (hungry < 0)
-                {
-                    hungry = 0;
-                }
+            }
+            if (hungry < 0)
+            {
+                hungry = 0;
+            }
+            if(hungry > 1)
+            {
+                hungry = 1;
             }
 
             hungryGageImage.fillAmount = hungry;
@@ -180,10 +190,15 @@ public class PlayerCtrl : MonoBehaviour {
             {
                 thirsty -= Time.deltaTime * 0.005f;
 
-                if (thirsty < 0)
-                {
-                    thirsty = 0;
-                }
+                
+            }
+            if (thirsty < 0)
+            {
+                thirsty = 0;
+            }
+            if (thirsty > 1)
+            {
+                thirsty = 1;
             }
 
             thirstyGageImage.fillAmount = thirsty;
@@ -191,11 +206,15 @@ public class PlayerCtrl : MonoBehaviour {
             if (hungry <= 0 || thirsty <= 0)
             {
                 hp -= Time.deltaTime * 0.01f;
+            }
+            if(hungry > 0.7 && thirsty > 0.7)
+            {
+                hp += Time.deltaTime * 0.01f;
+            }
 
-                if (hp < 0)
-                {
-                    hp = 0;
-                }
+            if (hp > 1)
+            {
+                hp = 1;
             }
 
             if (hp <= 0.0f)
@@ -387,28 +406,29 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                     }
                 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                    
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                    
+                itemGetUI.SetActive(false);
+                itemNameUI.GetComponent<Text>().text = null;
 
                 for (int j = 0; j < hits.Length; j++)   // 레이케스트에 감지된것이 있을때만 작동함
                 {
                     if (hits[j].collider.tag != "Ground"&& hits[j].collider.tag != "Player")  // 2미터 앞에 스페어캐스트에 걸리는게 있다면(범위 추후 조정필요할듯)
                     {
-                        // 상호작용 가능한 오브젝트들 UI띄우기
-                        // InteractionObject를 제외하고는 바로 아래에 주울 수 있는 오브젝트 상호작용 if문 조건 따라가야함
-                        if (hits[j].collider.tag == "InteractionObject" || hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")
-                        {
-                            for (int i = 0; i < inventoryManager.itemList.Count; i++)
-                            {
-                                if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
-                                {
-                                    Debug.Log(inventoryManager.itemList[i].Name);
-                                }
-                            }
-                        }
 
                         #region 주울 수 있는 오브젝트 상호작용
                         if (hits[j].collider.tag == "Object" || hits[j].collider.tag == "Potato")      // 주울 수 있는 애들에? 상호작용이 가능한 애들에? Object 태그달기
                         {
+                            // 상호작용UI띄우기
+                            for (int i = 0; i < inventoryManager.itemList.Count; i++)
+                            {
+                                if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                                {
+                                    itemGetUI.SetActive(true);
+                                    itemNameUI.GetComponent<Text>().text = inventoryManager.itemList[i].Name;
+                                    //Debug.Log(inventoryManager.itemList[i].Name);
+                                }
+                            }
+
                             if (Input.GetKeyDown("e"))
                             {
                                 if (hits[j].transform.GetComponent<WaterMoveObject>() != null)
@@ -436,6 +456,16 @@ public class PlayerCtrl : MonoBehaviour {
                             // 레이케스트에 걸린게 상호작용가능오브젝트고 14(그릴)이고 손에든게 감자일때
                             if (hits[j].collider.tag == "InteractionObject" && hits[j].transform.GetComponent<PhotonObject>().objectNum == 14 && rightHandle.transform.GetChild(0).gameObject.tag == "Potato")
                             {
+                                // 상호작용UI띄우기
+                                for (int i = 0; i < inventoryManager.itemList.Count; i++)   
+                                {
+                                    if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                                    {
+                                        itemGetUI.SetActive(true);
+                                        itemNameUI.GetComponent<Text>().text = inventoryManager.itemList[i].Name;
+                                        //Debug.Log(inventoryManager.itemList[i].Name);
+                                    }
+                                }
                                 if (Input.GetKeyDown("e"))
                                 {
                                     hits[j].transform.GetComponent<InteractionObject>().interaction = true;
@@ -451,7 +481,17 @@ public class PlayerCtrl : MonoBehaviour {
                             // 레이케스트에 걸린게 상호작용가능오브젝트고 6(정수기)이고 손에든게 컵일때
                             if (hits[j].collider.tag == "InteractionObject" && hits[j].transform.GetComponent<PhotonObject>().objectNum == 6 && rightHandle.transform.GetChild(0).gameObject.tag == "Cup")
                             {
-                                if (Input.GetMouseButtonDown(0))
+                                // 상호작용UI띄우기
+                                for (int i = 0; i < inventoryManager.itemList.Count; i++)
+                                {
+                                    if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                                    {
+                                        itemGetUI.SetActive(true);
+                                        itemNameUI.GetComponent<Text>().text = inventoryManager.itemList[i].Name;
+                                        //Debug.Log(inventoryManager.itemList[i].Name);
+                                    }
+                                }
+                                if (Input.GetKeyDown("e"))
                                 {
                                     //hits[j].transform.GetComponent<InteractionObject>().interaction = true;
                                     hits[j].transform.GetComponent<Purifier>().UsePurifier(pv.viewID);
