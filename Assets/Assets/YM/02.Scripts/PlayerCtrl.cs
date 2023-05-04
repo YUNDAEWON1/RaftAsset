@@ -500,7 +500,7 @@ public class PlayerCtrl : MonoBehaviour {
 
                             if(hits[j].collider.tag == "Sea" && rightHandle.transform.GetChild(0).gameObject.tag == "Cup")
                             {
-                                if (Input.GetMouseButtonDown(0))
+                                if (Input.GetKeyDown("e"))
                                 {
                                     this.thirsty -= 0.1f;
                                 }
