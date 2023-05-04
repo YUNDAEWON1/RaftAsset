@@ -31,6 +31,7 @@ MonoBehaviour:
   - Chat
   - ColorRpc
   - ConstructClickMaster
+  - ConstructObjectChangeTag
   - DestroyRpc
   - DoJump
   - Flash
@@ -49,5 +50,4 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - TaggedPlayer
-  - ConstructObjectChangeTag
   DisableAutoOpenWizard: 1
