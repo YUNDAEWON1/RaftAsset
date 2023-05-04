@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: febfeea78f64ac748a66deedb04ff770, type: 3}
-  m_Name: 17. Rocket
+  m_Name: 23. Rock
   m_EditorClassIdentifier: 
-  _id: 17
-  _name: "\uD3ED\uC8FD"
-  _tooltip: "\uD0C8\uCD9C\uC774\uB2E4~"
-  itemPrefab: {fileID: 1513864311348878, guid: 028420c6b5f056e42a7d76e5d27e1a7e, type: 3}
+  _id: 23
+  _name: "\uC9F1\uB3CC"
+  _tooltip: "\uB2E8\uB2E8\uD55C \uB3CC"
+  itemPrefab: {fileID: 8672003455025440434, guid: aa0ba387f794005419a74fdfff3da4df,
+    type: 3}
   type: 0
   actionType: 0
   range: {x: 5, y: 4}
   stackable: 1
-  image: {fileID: 21300000, guid: 86ad38afb4709b94185801a75a94720b, type: 3}
+  image: {fileID: 21300000, guid: 1ed3e0dda451e434ea390a43e1d99617, type: 3}

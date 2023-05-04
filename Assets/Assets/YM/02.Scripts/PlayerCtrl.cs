@@ -28,7 +28,9 @@ public class PlayerCtrl : MonoBehaviour {
         {18, "WoodenPole"},
         {19, "WoodenFloor"},
         {20, "Foundation" },
-        {21, "Cooked_Potato"}
+        {21, "Cooked_Potato"},
+        {22, "Rocket"},
+        {23, "Rock"}
     };
     [HideInInspector]
     public bool isAnimating = false;               // 애니메이션 실행중 중복 실행을 막기위한 변수

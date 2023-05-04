@@ -11,15 +11,20 @@ public class Potato_Object : MonoBehaviour
 
     private void Awake()
     {
-        gm = FindObjectOfType<GameManager>();
         ivenmanager = FindObjectOfType<InventoryManager>();
+    }
+
+    private void Start()
+    {
+        gm = FindObjectOfType<GameManager>();
+
     }
 
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            gm.hungry += hungry;            
+            gm.hungry += hungry;
             ivenmanager.UseSelectedItem();
             PhotonNetwork.Destroy(this.gameObject);
         }

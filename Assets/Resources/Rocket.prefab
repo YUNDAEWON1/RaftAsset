@@ -4667,7 +4667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4093250359713848
 Transform:
   m_ObjectHideFlags: 0
@@ -37296,6 +37296,8 @@ GameObject:
   - component: {fileID: 82026818448535542}
   - component: {fileID: 4342259785598348605}
   - component: {fileID: 8601362249303364211}
+  - component: {fileID: 7933521609592011646}
+  - component: {fileID: 6169154644271057909}
   m_Layer: 8
   m_Name: Rocket
   m_TagString: Object
@@ -37312,7 +37314,7 @@ Transform:
   m_GameObject: {fileID: 1513864311348878}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 128.24878, y: 0, z: 234.31482}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4093250359713848}
   - {fileID: 4831174767594046}
@@ -37361,9 +37363,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2e5ff5e1726464abf49773cd407aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rig: {fileID: 54652842233546022}
-  cf: {fileID: 75885357253604122}
+  rig: {fileID: 0}
+  cf: {fileID: 0}
   IsKinematic: {fileID: 0}
+  rocket: {fileID: 4639243719179848}
+  y: 0.5
 --- !u!82 &82026818448535542
 AudioSource:
   m_ObjectHideFlags: 0
@@ -37472,7 +37476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b1f7064a27de94b8a01aaca26b1a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectNum: 17
+  objectNum: 22
 --- !u!114 &8601362249303364211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37500,6 +37504,53 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!33 &7933521609592011646
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513864311348878}
+  m_Mesh: {fileID: 4300000, guid: af68d8f3f4deeea438334f6ba580c7d7, type: 3}
+--- !u!23 &6169154644271057909
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513864311348878}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6bfb7b7a23d7bcc4d95addab12247eca, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &1673957015377684
 GameObject:
   m_ObjectHideFlags: 0
@@ -46819,7 +46870,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: 682029ccf4af3b74ebe8a826b4656306, type: 2}
+  - {fileID: 2100000, guid: 3632881d102df0f47864d899fa15a49d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

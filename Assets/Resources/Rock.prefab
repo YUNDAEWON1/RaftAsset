@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -7276051056621208660}
   m_Layer: 0
   m_Name: Rock
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090f6b26dcce96d49a4f8c7a1cce4c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rock: 0
+  rock: 23
 --- !u!33 &8672003455028804274
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -156,12 +156,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 8672003455025937042}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

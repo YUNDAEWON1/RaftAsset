@@ -16,11 +16,22 @@ public class Rocket4 : MonoBehaviour
         yield return new WaitForSeconds(3);
 
         //Game object will turn off
-        GameObject.Find("MeshRenderer4").SetActive(false);
+        GameObject.Find("Rocket").SetActive(false);
 
         rig.isKinematic = true;
         cf.enabled = false;
 
 
+    }
+    public Transform rocket;
+    [SerializeField] float y;
+    private void Awake()
+    {
+        Destroy(this, 10f);
+    }
+
+    private void Update()
+    {
+        rocket.transform.position = Vector3.Lerp(rocket.transform.position, new Vector3(rocket.transform.position.x, rocket.transform.position.y + y, rocket.transform.position.z), 3f);
     }
 }
