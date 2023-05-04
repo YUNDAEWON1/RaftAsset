@@ -9,171 +9,13 @@ using System.Data;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-/*
- * 포톤 네트워크 게임 엔진
- * 1) 제품 종류는 크게 Photon Server/ Photon PUN 으로 나뉨 (참고 : Photon Cloude=>Photon PUN으로 이름이 바뀜) 
- *  ■ Photon Server : 물리적인 서버를 직접 운영하는 것으로서 운영하려면 서버의 보안 및 백업/네트워크 트래픽/로드밸런싱/유지보수 등의
- *  관리를 위한 전문 네트워크 관련 인력이 필요함 
- *  (제품 종류 <Photon Server 계열> : Photon Server)
- *  
- *  ■ Photon PUN    : 우리가 사용할 방식으로 소프트웨어를 임대해 사용하는 방식인 SaaS(Software as a Service)의 개념으로 
- *  서버를 임대하여 사용함으로써 Photon Server의 제한적 사항을 전혀 신경 쓰지 않아도 됨
- *  또한 Photon PUN(Photon Unity Networking)은 게임 개발 테스트를 위하여 동시 접속 사용자( CCU(Concurrent User) )수 20명까지 무료로 제공
- *  (제품 종류 <Photon Cloud 계열> : Photon PUN(우리가 사용할 제품), Photon RealTime, Photon Bolt, Photon Thunder, Photon TrueSync,
- *   Photon Chat, Photon Voice)
- *  
- *  ■ 비교
- *                           Photon Server                                Photon PUN
- *  라이선스                 추가 서버당 과금 체계                        동시 접속 사용자(CCU)별 과금 체계
- *  서버 운영 및 관리            ○                                           ×
- *  서버 사이드 게임 로직    커스텀 마이징((EX) DB 서버 연동) 가능            ×
- *  로드밸런싱(확장성)       직접 관리(병목현상을 줄여주는)                   ×
- *  
- *  cf) 네트워크 병목 현상 : 처리량 이상의 네트워크 트래픽이 몰리거나 특정 서버에 트래픽이 집중되는 경우 
- *      네트워크 병목 현상이 발생함.=>로드밸런싱으로 병목현상을 줄여줌(스케줄링,라운드로빈,해싱)
- *      
- *      로드밸런싱 : 여러대의 서버를 미리 준비해 작업을 분산해두면 병목 현상을 예방할 수 있다. 이렇게 부하를 분산하는
- *      방식을 로드밸런싱 이라고 한다.(Photon Server) 
- *      
- *      클라우드 로드밸런싱 : 클라우드에서 인스턴스(가상 서버)로 들어오는 트래픽을 자동 분산해
- *      트래픽 병목 현상을 예방하고 네트워크가 효율적으로 동작하도록 하는 것을 말한다.(Photon PUN)
- *      
- * 2) 회원가입 : 포톤 클라우드 서비스를 위해 http://www.exitgames.com 에서 회원가입을 하자~
- *      접속 => 신규 가입 메뉴 => 회원가입 페이지 => 이메일 주소 입력 => 가입 완료 => 가입 시 입력한
- *      이메일로 Confirm 메일 수신 및 (비밀번호 설정)링크 확인 후 계정 비밀번호 설정 => 계정 만들기 클릭
- *      => 메뉴에 사용자 설정(사람모양) 클릭 => 퍼블릭 클라우드(어플리케이션 리스트) 클릭
- *      => 가입하자마자 바로 사용 할 수 있는 Application Id(게임당 하나씩 부여되는 고유넘버로서 
- *      포톤 서버와 통신하기 위함)가 자동으로 할당 즉 자동으로 Apllication 정보가 생성됨(우리 게임에 연동해야함)
- *      => (포톤 클라우드를 이용하기 위해) 메뉴에 제품 클릭 => PUN 클릭 => Photon Unity Networking (플러그인) 에셋 스토어 패키지 에서 
- *      PUN FREE 다운 및 PUN 플러그인 설치 (유니티 에셋스토어 에서 다운 가능 : PUN(Photon Unity Networking) )
- *      
- *  3) PUN(Photon Unity Networking) 플러그인 설정
- *     PUN 플러그인 임포트 완료시 또는 메뉴 => Window => Photon Unity Networking => PUN WIzard 클릭 시 PUN WIzard 창 오픈
- *     PUN WIzard(여기서 회원가입 가능 => Cloud Dashboard Login)에서 => Setup Project 클릭 => AppId(포톤 사이트에 등록된...)  or Email 입력(=>Cloud Dashboard Login 후 AppId 얻어와서 셋팅) 
- *     후 => Setup Project 클릭 
- *     =>
- *     PhotonServerSettings 플러그인 세팅을 자동 선택 및 인스펙터의 요소들이 나열 된다.(나중에 직접 수정시..폴더 경로로 찾아가도 되지만..
- *     PUN Wizard => Locate PhotonServerSettings 클릭으로 찾아가도 됨)
- *     
- *     =>
- *     인스펙터의 속성 중 Hosting 속성 : 각 옵션을 선택하여 포톤 구동 방식을 선택하는 것으로  Photon Cloude(우리가 사용할 Photon PUN), Selef Hosted(Photon Server : 물리적인 서버)
- *     정도로 나뉘며 각 항목중 Photon Cloude 옵션 선택시 하단에 Region 속성이 활성화 된다. 이것은 현재 대륙별 서버를ㄴ 운영 중인 지역을 선택 하는것으로 가장 가까운 서버를 선택해야 함
- *     또는 Hosting 옵션중에 Best Region 선택시 현재 App 접속 지역을 기준으로 각 대륙 서버로 Ping 테스트를 한다(RTT : Round Trip Time) 즉 가장 빠른 속도로 응답이 오는 지역 서버로
- *     자동 접속된다.(우린 이걸 사용~!) 또한 하단에 Enabled Regions 설정으로 대륙을 선택 할 수 있다. 즉, Ping 테스트를 제외 시킬수 있다.(그냥 Everything 으로 셋팅!)
- *     Protocol : udp/tcp 중 우리 게임에 유리한 udp 프로토콜 셋팅!!! 
- *     Client Settings => Auto-Join Lobby 체크시 : 마스터 접속후 자동으로 로비로 조인한다.  => PUN 플러그인 설정 완료!!!
- *     
- *     (참고) PUN 플러그인은 Project 뷰 => Photon Unity Networking 안에 설치된다..또한 PhotonServerSettings 플러그인은 => Resources 안에 저장 되어있다. PhotonServerSettings 클릭시
- *     인스펙터 뷰에 포톤 클라우드 접속 정보 및 RPC 목록을 확인 할 수 있다. 
- *     즉, 인스펙터 뷰에 호스팅 방법(포톤 서버, 포톤 클라우드, 오프라인 모드), AppId(Application Id), Protocol 정보를 확인 및 수정할 수 있다. 
- *     
- *     % RPC( 원격 프로시저 호출, Remote Procedure Call, 리모트 프로시저 콜) ??? 
- *     별도의 원격 제어를 위한 코딩 없이 다른 주소 공간에서 함수나 
- *     프로시저(프로시저는 특정 작업을 수행하기 위한 프로그램의 일부== (프로그래밍에선) 함수)를 실행할 수 있게하는 프로세스(컴퓨터 내에서 실행중인 프로그램) 간 통신 기술이다.
- *     
- *     
- *     
- */
 
-/* 포톤 클라우드의 주요 흐름
- * 1. 서버접속
- * 2. 로비접속
- * 3. 방으로 접근
- * 4. 방으로 접근시도후 실패시 방만듬
- * 5. 방입장
- * 6. "방장"의 명령에 따라 Object들을 Sync
-*/
-
-/*
- * 포톤 클라우드 콜백 함수 
- * 
- * 1 서버 접속
- * 
- * Method (PhotonNetwork) 
- * PhotonNetwork.ConnectUsingSettings(string version); 
- *
- * Event :서버접속후 발생하는 이벤트
- * void OnConnectedToPhoton(){ ~이벤트처리 로직~ }=> Event들을 이렇게 사용
- * 
- * - OnConnectedToPhoton : 포톤에 접속되었을 때 
- * - OnLeftRoom : 방에서 나갔을 때
- * - OnMasterClientSwitched : 마스터클라이언트가 바뀌었을 때
- * - OnPhotonCreateRoomFailed : 방만들기 실패
- * - OnPhotonJoinRoomFailed : 방에 들어가기 실패
- * - OnCreatedRoom : 방이 만들어 졌을 때
- * - OnJoinedLobby : 로비에 접속했을 때
- * - OnLeftLobby : 로비에서 나갔을 때
- * - OnDisconnectedFromPhoton : 포톤 접속 종료
- * - OnConnectionFail : 연결실패 void OnConnectionFail(DisconnectCause cause){ ... }
- * - OnFailedToConnectToPhoton : 포톤에 연결 실패 시  void OnFailedToConnectToPhoton(DisconnectCause cause){... }
- * - OnReceivedRoomList : 방목록 수신시 
- * - OnReceivedRoomListUpdate : 방목록 업데이트 수신시
- * - OnJoinedRoom : 방에 들어갔을 때 
- * - OnPhotonPlayerConnected : 다른 플레이어가 방에 접속했을 때 void OnPhotonPlayerConnected(PhotonPlayer newPlayer){ ... }
- * - OnPhotonPlayerDisconnected : 다른 플레이어가 방에서 접속 종료시  void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer){ ... }
- * - OnPhotonRandomJoinFailed : 렌덤하게 방으로 입장하는게 실패했을 때
- * - OnConnectedToMaster : 마스터로 접속했을 때   "Master_Join"
- * - OnPhotonSerializeView : 네트워크싱크시  void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){ ...}
- * - OnPhotonInstantiate : 네트워크 오브젝트 생성시 void OnPhotonInstantiate(PhotonMessageInfo info){ ... } "NetworkObj"
- * 
- * 2 로비관련 :로비 접속에 성공하면, 이제부터는 방목록을 얻어 온다던가... 아니면 방을 만든다던가... 이것도 아니라면 아무 방에 들어가기 위한 노력
- * 
- * Method
- *  RoomInfo [] PhotonNetwork.GetRoomList ( ) //방목록을 가져옴
- *  void PhotonNetwork.CreateRoom ( string roomName ) //방을 이름으로만 만듬
- *  void PhotonNetwork.CreateRoom ( string roomName, bool isVisible, bool isOpen, int maxPlayers ) //방을 만들되 이름, 보임여부, 오픈여부, 최대 플레이어 수를 지정함.
- *  void PhotonNetwork.JoinRandomRoom ( ) //아무방이나 들어감.
- *  void PhotonNetwork.JoinRoom ( string roomName ) //지정한 방으로 들어감.
- *  [RPC]도 호출이 가능하니 로비에서 채팅 가능
- *  
- *  
- * 3 방에서 
- * 
- * Method 
- * //resources폴더에 있는 prefab의 이름으로 게임오브젝트를 생성.
- * GameObject PhotonNetwork.Instantiate ( string prefabName, Vector3 position, Quaternion rotation, int group) 
- * //씬에 종속된 게임오브젝트를 생성.(마스터만이 네트워크 게임오브젝트를 생성가능함)
- * GameObject PhotonNetwork.InstantiateSceneObject ( string prefabName, Vector3 position, Quaternion rotation, int group, object[] data ) 
- * 
- * 위 2개의 Method 차이는 플레이어에 종속된 GameObject를 만들것인가, 플레이어의 접속이 끝나도 계속 살아남을 Object를 만들것인가...
- * 
- * Event :방에서 PhotonView로 설정한 객체는 서로 데이터를 Sync할 수 있다. 이때 발생하는 이벤트는 딱 1개라고 생각해도 됨
- * void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){ ...}
- * 
- * 
- * 네트워크상에서의 동기화는 다음과 같이 수행됨.: 게임오브젝트에 반드시 PhotonView(Component)가 추가 되야한다.
- *
- *   void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
- *       {
- *           if (stream.isWriting)
- *           {
- *               stream.SendNext(transform.position);
- *               stream.SendNext(transform.rotation);
- *           }
- *           else
- *           {
- *               this.correctPlayerPos = (Vector3)stream.ReceiveNext();
- *               this.correctPlayerRot = (Quaternion)stream.ReceiveNext();
- *           }
- *   }
- *   
- * 위 코드에서 사용가능한 데이터형
- * - Bool
- * - Int
- * - string
- * - char
- * - short
- * - float
- * - PhotonPlayer
- * - Vector3
- * - Vector2
- * - Quaternion
- * - PhotonViewID
- */
 
 public class csPhotonInit : MonoBehaviour
 {
 
+
+    InventoryManager inventory;
     //App의 버전 정보 (번들 버전과 일치 시키자...)
     public string version = "Ver 0.1.0";
 
@@ -211,8 +53,11 @@ public class csPhotonInit : MonoBehaviour
 
     public Text nopwd;
     public Text wrongpwd;
- 
 
+    public bool isCreateMode=false;
+
+
+ 
     //App 인증 및 로비연결
     void Awake()
     {
@@ -225,7 +70,7 @@ public class csPhotonInit : MonoBehaviour
             PhotonNetwork.logLevel = LogLevel;
 
             //현재 클라이언트 유저의 이름을 포톤에 설정
-            //PhotonView 컴포넌트의 요소 Owner의 값이 된다.
+            //PhotonView 컴포넌트의 요소 Owner의 값이 된다
            PhotonNetwork.playerName = "GUEST " + Random.Range(1, 9999);
 
         }
@@ -236,6 +81,15 @@ public class csPhotonInit : MonoBehaviour
         // 로비에 자동 입장
         PhotonNetwork.autoJoinLobby = true;
 
+    }
+
+    public void OnClickCreateMode()
+    {
+        userId.text="CreateMode";
+    }
+    public void OnClickNormalMode()
+    {
+        userId.text="";
     }
 
 
@@ -262,7 +116,7 @@ public class csPhotonInit : MonoBehaviour
         //PhotonNetwork.JoinRandomRoom(); // (UI 버전에서는 주석 처리)
 
         // 유저 아이디를 가져와 셋팅 (UI 버전에서 사용)
-        userId.text = GetUserId();
+        // userId.text = GetUserId();
 
         //특정 조건을 만족하는 룸을 대상으로 무작위로 추출해 입장하는 오버로딩 된 함수 호출 방식 
 
@@ -483,6 +337,9 @@ public class csPhotonInit : MonoBehaviour
 
     **********************************************************************************************************/
 
+
+
+   
     //세계 만들기 버튼 클릭 시 호출될 함수 (UI 버전에서 사용)
     public void OnClickCreateRoom()
     {
@@ -493,15 +350,9 @@ public class csPhotonInit : MonoBehaviour
             _roomName=roomName.text+"[pwd]";
          }
 
-        // 방 정보 저장
-        // RoomData roomData = new RoomData();
-        // roomData.roomName = _roomName;
-        // roomData.hostName = PhotonNetwork.player.NickName;
-        // roomData.password = _passWord;
-        // RoomDataManager.Instance.SaveRoomData(roomData);
-
         //로컬 플레이어의 이름을 설정
         PhotonNetwork.player.NickName = userId.text;
+   
 
         //플레이어의 이름을 로컬 저장
         //PlayerPrefs.SetString("USER_ID", userId.text);

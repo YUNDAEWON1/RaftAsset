@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -23,19 +25,20 @@ public class InventoryManager : MonoBehaviour
     public CraftingUI craftUI;
     public BuildingUI buildingUI;
 
+    /////////////////////DATA SAVE&LOAD////////////////////////////
+
+   string path;
+   string filename="save_" + PhotonNetwork.player.NickName + ".json";
+
     private void Awake()
     {
         instance=this;
         craftUI=GetComponent<CraftingUI>();
+        path= Application.dataPath+"/";
     }
 
     private void Start()
     {
-        ChangeSelectedSLot(0);
-        foreach(var item in startItems){
-            AddItem(item);
-        }
-
         // Resources 폴더에서 아이템 에셋 로드
         Item[] items = Resources.LoadAll<Item>("ItemAssets");
 
@@ -53,6 +56,13 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("item ID: " + item.ID);
         }
+       
+        LoadInventory();
+         
+       
+
+
+        
     }
 
     private void Update()
@@ -612,4 +622,148 @@ public void CheckBuildStairs(BuildingRecipe _recipe)
 
 }
 
+
+//////////////////////////////JSON///////////////////////////////
+
+public void SaveInventory()
+{
+    // 인벤토리 정보를 저장할 InventoryData 객체 생성
+    InventoryData inventoryData = new InventoryData();
+    inventoryData.items = new List<InventoryItem>();
+    inventoryData.PlayerName=PhotonNetwork.player.NickName;
+    Debug.Log(inventoryData.PlayerName);
+
+    // 인벤토리 슬롯 배열을 순회하며 아이템 정보를 수집하여 InventoryData에 저장
+    for(int i = 0; i < inventorySlots.Length; i++)
+    {
+        InventorySlot slot = inventorySlots[i];
+        DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+        if(itemInSlot != null)
+        {
+            InventoryItem inventoryItem = new InventoryItem();
+            inventoryItem.id = itemInSlot.item.ID;
+            inventoryItem.count = itemInSlot.count;
+            inventoryData.items.Add(inventoryItem);
+            Debug.Log(inventoryItem);
+        }
+    }
+
+    // InventoryData를 JSON 문자열로 변환하여 파일에 저장
+    string json = JsonUtility.ToJson(inventoryData);
+    File.WriteAllText(path+filename, json);
+
+    Debug.Log(path);
+}
+
+public void LoadInventory()
+{
+   
+    // 저장된 인벤토리 데이터 파일을 불러옵니다.
+    if (File.Exists(path + filename))
+    {
+        string json = File.ReadAllText(path + filename);
+        InventoryData inventoryData = JsonUtility.FromJson<InventoryData>(json);
+
+        // 저장된 플레이어 이름이 로컬 플레이어 이름과 일치할 경우에만 인벤토리를 로드합니다.
+        if (inventoryData.PlayerName == PhotonNetwork.playerName)
+        {
+            Debug.Log(inventoryData.items.Count);
+
+            // 인벤토리 슬롯을 초기화합니다.
+            for (int i = 0; i < inventorySlots.Length; i++)
+            {
+                InventorySlot slot = inventorySlots[i];
+
+                // 해당 슬롯에 아이템이 배치되어 있으면 삭제
+                if (slot.transform.childCount > 0)
+                {
+                    Destroy(slot.transform.GetChild(0).gameObject);
+                }
+            }
+
+            // InventoryData에 저장된 아이템 정보를 인벤토리 슬롯에 추가합니다.
+            for (int i = 0; i < inventoryData.items.Count; i++)
+            {
+                InventoryItem item = inventoryData.items[i];
+
+                // itemList에 저장된 아이템들 중 같은 ID를 가진 아이템을 찾아 추가합니다.
+                for (int j = 0; j < itemList.Count; j++)
+                {
+                    Item currentItem = itemList[j];
+
+                    if (currentItem.ID == item.id)
+                    {
+                        // 해당 슬롯에 아이템이 배치되어 있지 않은 경우, 아이템을 추가합니다.
+                        // 배치되어 있는 경우, 개수만 업데이트합니다.
+                        InventorySlot slot = inventorySlots[j];
+                        if (slot.transform.childCount == 0)
+                        {   
+                            AddItem(currentItem, item.count);
+                        }
+                        else
+                        {
+                            DraggableItem draggableItem = slot.transform.GetChild(0).GetComponent<DraggableItem>();
+                            draggableItem.count = item.count;
+                            draggableItem.RefreshCount();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Player name does not match inventory data.");
+        }
+    }
+    else
+    {
+        Debug.Log("Inventory file not found!");
+         ChangeSelectedSLot(0);
+        foreach(var item in startItems){
+            AddItem(item);
+        }
+    }
+}
+
+
+
+
+}
+
+
+
+
+
+// 인벤토리 아이템 정보를 담는 클래스
+[System.Serializable]
+public class InventoryItem
+{
+    [SerializeField]
+    public int id;
+    [SerializeField]
+    public int count;
+
+    public int ID
+    {
+        get { return id; }
+        set { id = value; }
+    }
+
+    public int Count
+    {
+        get { return count; }
+        set { count = value; }
+    }
+}
+
+
+
+// 인벤토리 정보를 담는 클래스
+[Serializable]
+public class InventoryData
+{
+    public List<InventoryItem> items;
+    public string PlayerName;
 }
