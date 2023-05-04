@@ -28,8 +28,9 @@ public class Rocket4 : MonoBehaviour
         //rig.isKinematic = true;
         //cf.enabled = false;
 
+        pv.RPC("PhotonObjectCreateMaster", PhotonTargets.AllBuffered, "Heli", new Vector3(-89f, 36f, -89f), Quaternion.identity);
         pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, pv.viewID);
-        StartCoroutine(Test());
+
     }
 
     [PunRPC]
@@ -41,6 +42,15 @@ public class Rocket4 : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.Destroy(obj);
+        }
+    }
+
+    [PunRPC]
+    void PhotonObjectCreateMaster(string name, Vector3 pos, Quaternion rot)
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.InstantiateSceneObject(name, pos, rot, 0, null);
         }
     }
 
