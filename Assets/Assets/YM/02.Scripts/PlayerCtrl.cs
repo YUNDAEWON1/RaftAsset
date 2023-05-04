@@ -123,7 +123,7 @@ public class PlayerCtrl : MonoBehaviour {
         pv.synchronization = ViewSynchronization.UnreliableOnChange;
 
         //카메라 관련 넣을지 확인해보기
-        Debug.Log(pv.isMine);
+        //Debug.Log(pv.isMine);
         if (pv.isMine)
         {
             Camera.main.GetComponent<FirstPersonCam>().target = this.camTrans;
@@ -138,7 +138,7 @@ public class PlayerCtrl : MonoBehaviour {
     void Start()
     {
         gm = FindObjectOfType<GameManager>();
-        sharkCtrl = GameObject.FindGameObjectWithTag("Enemy").GetComponent<SharkCtrl>();
+        sharkCtrl = FindObjectOfType<SharkCtrl>();
 
         speed = 3.0f;
         jumpSpeed = 6.0f;

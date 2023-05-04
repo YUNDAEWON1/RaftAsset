@@ -98,12 +98,24 @@ public class StageManager : MonoBehaviour
 
         if(PhotonNetwork.isMasterClient)
         {
+            // 몬스터
             PhotonNetwork.InstantiateSceneObject("MonsterShark", new Vector3(-155f, 7f, 85), Quaternion.identity, 0, null);
 
+            // 뗏목바닥
             PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-150f, 10f, 85), Quaternion.identity, 0, null);
             PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-151.5f, 10f, 85), Quaternion.identity, 0, null);
             PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-150f, 10f, 86.5f), Quaternion.identity, 0, null);
             PhotonNetwork.InstantiateSceneObject("Foundation", new Vector3(-151.5f, 10f, 86.5f), Quaternion.identity, 0, null);
+
+            // 나무
+            PhotonNetwork.InstantiateSceneObject("Tree_1", new Vector3(-89f, 10f, 76f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Tree_1", new Vector3(-88.5f, 11f, 80.8f), Quaternion.identity, 0, null);
+
+            // 감자
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-85.5f, 11.4f, 80.9f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-85.6f, 11.6f, 82.3f), Quaternion.identity, 0, null);
+            PhotonNetwork.InstantiateSceneObject("Potato", new Vector3(-85.5f, 11.4f, 78.8f), Quaternion.identity, 0, null);
+
         }
 
         yield return null;
