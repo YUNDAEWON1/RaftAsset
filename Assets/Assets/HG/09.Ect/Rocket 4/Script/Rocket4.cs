@@ -27,7 +27,6 @@ public class Rocket4 : MonoBehaviour
     [SerializeField] float y;
     private void Awake()
     {
-        Destroy(this, 10f);
     }
 
     private void Update()
