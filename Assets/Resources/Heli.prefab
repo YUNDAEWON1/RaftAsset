@@ -172,6 +172,8 @@ GameObject:
   - component: {fileID: 8907684036203424696}
   - component: {fileID: 8907684036212223164}
   - component: {fileID: 2895232886156462948}
+  - component: {fileID: 4403523535655403925}
+  - component: {fileID: 5276752205193070751}
   m_Layer: 0
   m_Name: Heli
   m_TagString: Untagged
@@ -209,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387cf146c38405b47b6ab6bc0c17a7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heli: {fileID: 0}
   player: {fileID: 0}
 --- !u!33 &8907684036202457464
 MeshFilter:
@@ -301,6 +302,36 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!136 &4403523535655403925
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907684036205360504}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 194.7
+  m_Height: 1159.3
+  m_Direction: 2
+  m_Center: {x: 0, y: 159.6, z: -263.1855}
+--- !u!54 &5276752205193070751
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907684036205360504}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8907684036205360506
 GameObject:
   m_ObjectHideFlags: 0
