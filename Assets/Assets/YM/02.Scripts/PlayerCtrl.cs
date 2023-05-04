@@ -339,7 +339,7 @@ public class PlayerCtrl : MonoBehaviour {
                 }
                 else  // 손에 아무것도 들고있지 않고
                 {
-                    if (stuffs.transform.GetChild(swapNum).childCount > 0)     // 건설 오브젝트들 못버리게
+                    if (stuffs.transform.GetChild(swapNum).childCount > 0)
                     {
                         if (Input.GetKeyDown("g"))       // 버리기
                         {
@@ -813,7 +813,10 @@ public class PlayerCtrl : MonoBehaviour {
                             ani.SetTrigger("Swap");
                         }
                     }
-                    else if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8)    // 건축오브젝트 레이어번호 확인해서 수정하기
+                    else if (
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 18 // 건축오브젝트이거나 로켓
+                        )    // 건축오브젝트 레이어번호 확인해서 수정하기
                     {
                         //PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
                         //Destroy(rightHandle.transform.GetChild(0).gameObject);
@@ -863,7 +866,10 @@ public class PlayerCtrl : MonoBehaviour {
                         ani.SetTrigger("Swap");
                     }
                 }
-                else if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8)    // 건축오브젝트 레이어번호 확인해서 수정하기
+                else if (
+                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8 ||
+                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 18 // 건축오브젝트이거나 로켓
+                         )    // 건축오브젝트 레이어번호 확인해서 수정하기
                 {
                     //PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
                     //Destroy(rightHandle.transform.GetChild(0).gameObject);
