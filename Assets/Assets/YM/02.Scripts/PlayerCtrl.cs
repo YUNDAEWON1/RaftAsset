@@ -336,9 +336,6 @@ public class PlayerCtrl : MonoBehaviour {
                         hammerMode = false;
                         constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
                         ani.SetBool("ConstructMode", false);
-
-                        audioSource.clip = audioClips[8];       // 드롭아이템
-                        audioSource.Play();
                     }
 
                     if (Input.GetMouseButtonDown(0))                            // 마우스 왼쪽버튼 다운시
@@ -378,9 +375,6 @@ public class PlayerCtrl : MonoBehaviour {
                             hammerMode = false;
                             constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
                             ani.SetBool("ConstructMode", false);
-
-                            audioSource.clip = audioClips[8];       // 드롭아이템
-                            audioSource.Play();
                         }
                     }
 
@@ -1033,6 +1027,9 @@ public class PlayerCtrl : MonoBehaviour {
     // 아이템 버리기
     public void ThrowItem(int id)
     {
+        audioSource.clip = audioClips[8];       // 드롭아이템
+        audioSource.Play();
+
         Vector3 createPos = transform.position + new Vector3(this.transform.forward.x, this.transform.forward.y + 1.5f, this.transform.forward.z);
         pv.RPC("PhotonObjectCreateMaster", PhotonTargets.AllBuffered, photonMapping[id], createPos, transform.rotation);
     }
