@@ -13,7 +13,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
     public Item[] startItems;
 
-    public int maxItems=10;
+    public int maxItems=64;
     public InventorySlot[] inventorySlots;
 
     public GameObject DraggableItemPrefab;
@@ -36,11 +36,9 @@ public class InventoryManager : MonoBehaviour
         craftUI=GetComponent<CraftingUI>();
         path= Application.dataPath+"/Resources/";
         filename = "save_" + PhotonNetwork.player.NickName + ".json";
-    }
 
-    private void Start()
-    {
-        // Resources 폴더에서 아이템 에셋 로드
+
+         // Resources 폴더에서 아이템 에셋 로드
         Item[] items = Resources.LoadAll<Item>("ItemAssets");
 
         // itemList에 로드된 아이템 추가
@@ -57,13 +55,11 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("item ID: " + item.ID);
         }
-       
+    }
+
+    private void Start()
+    {
         LoadInventory();
-         
-       
-
-
-        
     }
 
     private void Update()
@@ -692,17 +688,17 @@ public void LoadInventory()
         if (inventoryData.PlayerName == PhotonNetwork.playerName)
         {
             
-            // // 인벤토리 슬롯을 초기화합니다.
-            // for (int i = 0; i < inventorySlots.Length; i++)
-            // {
-            //     InventorySlot slot = inventorySlots[i];
+            // 인벤토리 슬롯을 초기화합니다.
+            for (int i = 0; i < inventorySlots.Length; i++)
+            {
+                InventorySlot slot = inventorySlots[i];
 
-            //     // 해당 슬롯에 아이템이 배치되어 있으면 삭제
-            //     if (slot.transform.childCount > 0)
-            //     {
-            //         Destroy(slot.transform.GetChild(0).gameObject);
-            //     }
-            // }
+                // 해당 슬롯에 아이템이 배치되어 있으면 삭제
+                if (slot.transform.childCount > 0)
+                {
+                    Destroy(slot.transform.GetChild(0).gameObject);
+                }
+            }
 
             // InventoryData에 저장된 아이템 정보를 인벤토리 슬롯에 추가합니다.
             for (int i = 0; i < inventoryData.items.Count; i++)
@@ -722,13 +718,14 @@ public void LoadInventory()
                         if (slot.transform.childCount == 0)
                         {   
                             AddItem(currentItem, item.count);
+                            Debug.Log(currentItem.ID);
                         }
-                        // else
-                        // {
-                        //     DraggableItem draggableItem = slot.transform.GetChild(0).GetComponent<DraggableItem>();
-                        //     draggableItem.count = item.count;
-                        //     draggableItem.RefreshCount();
-                        // }
+                        else
+                        {
+                            DraggableItem draggableItem = slot.transform.GetChild(0).GetComponent<DraggableItem>();
+                            draggableItem.count = item.count;
+                            draggableItem.RefreshCount();
+                        }
                         break;
                     }
                 }
