@@ -35,6 +35,11 @@ public class PlayerCtrl : MonoBehaviour {
     };
     [HideInInspector]
     public bool isAnimating = false;               // 애니메이션 실행중 중복 실행을 막기위한 변수
+
+    [HideInInspector]
+    public AudioSource audioSource;
+    public AudioClip[] audioClips;
+
     private float speed;                             // 캐릭터 움직임 스피드.
     private float jumpSpeed;                         // 캐릭터 점프 힘.
     public float gravity;                           // 캐릭터에게 작용하는 중력.
@@ -111,6 +116,8 @@ public class PlayerCtrl : MonoBehaviour {
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+
         constructScript = GetComponent<ConstructMode>();
         hammerScript = GetComponent<HammerMode>();
         ani = gameObject.GetComponentInChildren<Animator>();
@@ -334,8 +341,12 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                         else if(hammerMode && swimMode == false && hookThrow == false && inventoryManager.buildingRecipes[hammerScript.selectObject].CanBuild(inventoryManager))
                         {
-                                hammerScript.HammerClick();
-                                inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
+                            hammerScript.HammerClick();
+
+                            audioSource.clip = audioClips[1];       // 나무힛트 소리
+                            audioSource.Play();
+
+                            inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
                         }
                         else if(rightHandle.transform.GetChild(0).tag == "Potato")
                         {
@@ -368,13 +379,6 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                     }
                 }
-                //else  // SpearAttack 테스트를 위한 손에 아무것도 없을때 애니메이션
-                //{
-                //    if (Input.GetMouseButtonDown(0))                            // 마우스 왼쪽버튼 다운시
-                //    {
-                //        ani.SetTrigger("SpearAttack");
-                //    }
-                //}
 
                 if (hookThrow == true)                                           // 훅이 던져진 상태
                 {
@@ -400,10 +404,15 @@ public class PlayerCtrl : MonoBehaviour {
                                 isAnimating = true;
                                 ani.SetTrigger("SpearAttack");
 
+                                audioSource.clip = audioClips[3];       // 휘두르는 소리
+                                audioSource.Play();
+
                                 for (int i = 0; i < hits.Length; i++)   // 여기만 레이케스트에 감지된것이 있으면 작동
                                 {
                                     if (hits[i].collider.tag == "Enemy")
                                     {
+                                        audioSource.clip = audioClips[2];       // 스피어힛트 소리
+                                        audioSource.Play();
                                         // 상어한테 데미지주는 소스
                                         sharkCtrl.Damaged();
                                     }
@@ -649,6 +658,16 @@ public class PlayerCtrl : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryOn = !inventoryOn;
+                if(inventoryOn)
+                {
+                    audioSource.clip = audioClips[4];
+                    audioSource.Play();
+                }
+                else
+                {
+                    audioSource.clip = audioClips[5];
+                    audioSource.Play();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -696,6 +715,9 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(other.tag == "Sea")
         {
+            audioSource.clip = audioClips[0];   // 물 풍덩소리
+            audioSource.Play();
+
             ani.SetBool("Run", false);
             swimMode = true;
             ani.SetBool("Swim", true);

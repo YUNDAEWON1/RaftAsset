@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SharkCtrl : MonoBehaviour
 {
+    private AudioSource playerAudioSource;
+
+    public AudioClip[] audioClips;
+    private AudioSource audioSource;
+
     public float moveSpeed = 5f;
     public float attackDistance = 2f;
     public int HP = 100;
@@ -43,6 +48,7 @@ public class SharkCtrl : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         ani = GetComponent<Animator>();
         // 로밍 위치 얻기
         roamingCheckPoints = GameObject.Find("RoamingPoint").GetComponentsInChildren<Transform>();
@@ -154,6 +160,16 @@ public class SharkCtrl : MonoBehaviour
         {
             targetPlayer.GetComponent<PlayerCtrl>().hp -= 0.01f;
             yield return new WaitForSeconds(0.5f);
+
+            if(run == false)
+            {
+                targetPlayer.GetComponent<PlayerCtrl>().audioSource.clip = targetPlayer.GetComponent<PlayerCtrl>().audioClips[6];
+                targetPlayer.GetComponent<PlayerCtrl>().audioSource.Play();
+
+                audioSource.clip = audioClips[0];
+                audioSource.volume = 0.5f;
+                audioSource.Play();
+            }
 
             run = true;
             targetPlayer = roamingTarget;
