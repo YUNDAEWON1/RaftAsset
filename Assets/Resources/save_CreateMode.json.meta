@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Assets/YM/07.Animations/Dead.anim.meta
+guid: fd1c48b088545d84e9e6b3c0e5db248f
+NativeFormatImporter:
+========
+guid: 433b71871f724334fbf33fc3ea6ea604
+TextScriptImporter:
+>>>>>>>> master:Assets/Resources/save_CreateMode.json.meta
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
