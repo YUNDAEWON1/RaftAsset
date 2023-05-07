@@ -47,6 +47,7 @@ public class PlayerCtrl : MonoBehaviour {
     private bool chatingOn = false;                  // 채팅창이 켜져있는지 확인할 변수
     public bool constructMode = false;              // 건축모드인지 확인할 변수
     public bool hammerMode = false;              // 해머모드인지 확인할 변수
+    public bool Dead = false;
 
     public int swapNum = 0;                         // 소지품 몇번째칸을 가리키고 있는지
 
@@ -102,6 +103,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     private GameObject itemGetUI;
     private GameObject itemNameUI;
+    private StageManager stageMgr;
     //private GameManager gm;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
@@ -129,6 +131,7 @@ public class PlayerCtrl : MonoBehaviour {
         itemGetUI = GameObject.FindGameObjectWithTag("ItemGetUI");
         itemNameUI = GameObject.FindGameObjectWithTag("ItemNameUI");
 
+        stageMgr = FindObjectOfType<StageManager>();
 
         // 포톤추가
         //PhotonView 컴포넌트 할당
@@ -157,6 +160,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         //gm = FindObjectOfType<GameManager>();
         sharkCtrl = FindObjectOfType<SharkCtrl>();
+        
 
         speed = 3.0f;
         jumpSpeed = 6.0f;
@@ -219,7 +223,9 @@ public class PlayerCtrl : MonoBehaviour {
 
             if (hp <= 0.0f)
             {
-                //Time.timeScale = 0;
+                Dead = true;
+                ani.SetBool("Dead", true);
+                StartCoroutine(DeadPlayer());
             }
 
             else
@@ -228,7 +234,7 @@ public class PlayerCtrl : MonoBehaviour {
             }
             #endregion
 
-            if (!inventoryOn && !EscapeOn && !chatingOn)
+            if (!inventoryOn && !EscapeOn && !chatingOn && !Dead)
             {
                 
 
@@ -540,7 +546,30 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                         #endregion
 
-                        
+                        #region 헬기 상호작용
+                        if (hits[j].collider.tag == "Heli")
+                        {
+                            // 상호작용UI띄우기
+                            //for (int i = 0; i < inventoryManager.itemList.Count; i++)
+                            //{
+                            //    if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                            //    {
+                            itemGetUI.SetActive(true);
+                            //        itemNameUI.GetComponent<Text>().text = inventoryManager.itemList[i].Name;
+                            //        //Debug.Log(inventoryManager.itemList[i].Name);
+                            //    }
+                            //}
+
+                            if (Input.GetKeyDown("e"))
+                            {
+                                Debug.Log("헬리콥터");
+
+                                // 헬기 상호작용 시 엔딩UI띄우기 및 로비로나가기 함수 호출
+                                StartCoroutine(Ending());
+                                //pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, hits[j].transform.GetComponent<PhotonView>().viewID);
+                            }
+                        }
+                        #endregion
                     }
                 }
                 
@@ -684,6 +713,30 @@ public class PlayerCtrl : MonoBehaviour {
             ani.SetBool("Swim", false);
             gravity = 20;
         }
+    }
+
+    IEnumerator DeadPlayer()
+    {
+        // 죽음 UI 띄우기
+
+        yield return new WaitForSeconds(7.5f);
+        stageMgr.OnClickExitRoom();                 // 로비로 나가기
+
+        Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+        Cursor.visible = true;
+        yield return null;
+    }
+
+    IEnumerator Ending()
+    {
+        // 엔딩 영상 재생
+
+        yield return new WaitForSeconds(10f);
+        stageMgr.OnClickExitRoom();                 // 로비로 나가기
+
+        Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+        Cursor.visible = true;
+        yield return null;
     }
 
     IEnumerator PullHook()

@@ -70,6 +70,7 @@ public class SharkCtrl : MonoBehaviour
                     targetPlayer = player.transform;
                     currentState = State.Chase;
                     ani.SetBool("Chase", true);
+                    ani.SetBool("Attack", true);
                     break;
                 }
                 else
@@ -129,6 +130,7 @@ public class SharkCtrl : MonoBehaviour
         {
             currentState = State.Idle;
             ani.SetBool("Chase", false);
+            ani.SetBool("Attack", false);
             return;
         }
 
@@ -150,7 +152,7 @@ public class SharkCtrl : MonoBehaviour
         // 공격이 끝나면 targetPlayer를 null로 초기화
         if(targetPlayer.tag == "Player")
         {
-            targetPlayer.GetComponent<PlayerCtrl>().hp -= 0.005f;
+            targetPlayer.GetComponent<PlayerCtrl>().hp -= 0.01f;
             yield return new WaitForSeconds(0.5f);
 
             run = true;
