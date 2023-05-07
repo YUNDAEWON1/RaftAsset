@@ -69,6 +69,7 @@ public class InventoryManager : MonoBehaviour
         if(isNumber&&number>0&&number<10){
             ChangeSelectedSLot(number-1);}
         }
+        SaveInventory();
 
 
     CheckCraft(craftingRecipes[0]);    //컵제작
