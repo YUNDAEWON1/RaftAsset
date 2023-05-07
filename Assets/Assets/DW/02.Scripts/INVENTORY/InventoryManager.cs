@@ -34,7 +34,7 @@ public class InventoryManager : MonoBehaviour
     {
         instance=this;
         craftUI=GetComponent<CraftingUI>();
-        path= Application.dataPath+"/";
+        path= Application.dataPath+"/Resources/";
         filename = "save_" + PhotonNetwork.player.NickName + ".json";
     }
 
@@ -691,19 +691,18 @@ public void LoadInventory()
         // 저장된 플레이어 이름이 로컬 플레이어 이름과 일치할 경우에만 인벤토리를 로드합니다.
         if (inventoryData.PlayerName == PhotonNetwork.playerName)
         {
-            Debug.Log(inventoryData.items.Count);
+            
+            // // 인벤토리 슬롯을 초기화합니다.
+            // for (int i = 0; i < inventorySlots.Length; i++)
+            // {
+            //     InventorySlot slot = inventorySlots[i];
 
-            // 인벤토리 슬롯을 초기화합니다.
-            for (int i = 0; i < inventorySlots.Length; i++)
-            {
-                InventorySlot slot = inventorySlots[i];
-
-                // 해당 슬롯에 아이템이 배치되어 있으면 삭제
-                if (slot.transform.childCount > 0)
-                {
-                    Destroy(slot.transform.GetChild(0).gameObject);
-                }
-            }
+            //     // 해당 슬롯에 아이템이 배치되어 있으면 삭제
+            //     if (slot.transform.childCount > 0)
+            //     {
+            //         Destroy(slot.transform.GetChild(0).gameObject);
+            //     }
+            // }
 
             // InventoryData에 저장된 아이템 정보를 인벤토리 슬롯에 추가합니다.
             for (int i = 0; i < inventoryData.items.Count; i++)
@@ -724,12 +723,12 @@ public void LoadInventory()
                         {   
                             AddItem(currentItem, item.count);
                         }
-                        else
-                        {
-                            DraggableItem draggableItem = slot.transform.GetChild(0).GetComponent<DraggableItem>();
-                            draggableItem.count = item.count;
-                            draggableItem.RefreshCount();
-                        }
+                        // else
+                        // {
+                        //     DraggableItem draggableItem = slot.transform.GetChild(0).GetComponent<DraggableItem>();
+                        //     draggableItem.count = item.count;
+                        //     draggableItem.RefreshCount();
+                        // }
                         break;
                     }
                 }
