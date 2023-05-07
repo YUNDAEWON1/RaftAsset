@@ -209,7 +209,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ee92353ce84e8c143a5610a0618096b6, type: 3}
   - {fileID: 8300000, guid: fd3c2128bf5006246acd7c10e335a05b, type: 3}
   - {fileID: 8300000, guid: ac0b1be9a1e2ca44a923bb6c6e39ee50, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 39b02829be498cd4aa0d5e9bc7e99bf9, type: 3}
+  - {fileID: 8300000, guid: ba4ea5bb4bcc3c94886c245148be987e, type: 3}
+  - {fileID: 8300000, guid: 6f54be0482260c84094a5a8e98f68cb6, type: 3}
+  - {fileID: 8300000, guid: b73fc009f89928b44baa8d3bc2593fe6, type: 3}
+  - {fileID: 8300000, guid: 9f34729cda7b45a48b55d2bc6f271311, type: 3}
   gravity: 0
   turnSpeed: 2
   inventoryOn: 0

@@ -109,6 +109,8 @@ public class PlayerCtrl : MonoBehaviour {
     private GameObject itemGetUI;
     private GameObject itemNameUI;
     private StageManager stageMgr;
+
+    private Fade fadeScript;
     //private GameManager gm;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
@@ -139,6 +141,7 @@ public class PlayerCtrl : MonoBehaviour {
         itemNameUI = GameObject.FindGameObjectWithTag("ItemNameUI");
 
         stageMgr = FindObjectOfType<StageManager>();
+        fadeScript = FindObjectOfType<Fade>();
 
         // 포톤추가
         //PhotonView 컴포넌트 할당
@@ -232,7 +235,11 @@ public class PlayerCtrl : MonoBehaviour {
             {
                 Dead = true;
                 ani.SetBool("Dead", true);
-                StartCoroutine(DeadPlayer());
+                fadeScript.fadeIN = true;
+
+                Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+                Cursor.visible = true;
+                //StartCoroutine(DeadPlayer());
             }
 
             else
@@ -329,6 +336,9 @@ public class PlayerCtrl : MonoBehaviour {
                         hammerMode = false;
                         constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
                         ani.SetBool("ConstructMode", false);
+
+                        audioSource.clip = audioClips[8];       // 드롭아이템
+                        audioSource.Play();
                     }
 
                     if (Input.GetMouseButtonDown(0))                            // 마우스 왼쪽버튼 다운시
@@ -351,6 +361,9 @@ public class PlayerCtrl : MonoBehaviour {
                         else if(rightHandle.transform.GetChild(0).tag == "Potato")
                         {
                             rightHandle.transform.GetChild(0).GetComponent<Potato_Object>().EatPotato(pv.viewID);
+
+                            audioSource.clip = audioClips[7];       // 먹는소리
+                            audioSource.Play();
                         }
                     }
                 }
@@ -365,6 +378,9 @@ public class PlayerCtrl : MonoBehaviour {
                             hammerMode = false;
                             constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
                             ani.SetBool("ConstructMode", false);
+
+                            audioSource.clip = audioClips[8];       // 드롭아이템
+                            audioSource.Play();
                         }
                     }
 
@@ -510,6 +526,9 @@ public class PlayerCtrl : MonoBehaviour {
                                 {
                                     //hits[j].transform.GetComponent<InteractionObject>().interaction = true;
                                     hits[j].transform.GetComponent<Purifier>().UsePurifier(pv.viewID);
+
+                                    audioSource.clip = audioClips[9];       // 물마시는사운드
+                                    audioSource.Play();
                                 }
                             }
 
@@ -518,6 +537,9 @@ public class PlayerCtrl : MonoBehaviour {
                                 if (Input.GetKeyDown("e"))
                                 {
                                     this.thirsty -= 0.1f;
+
+                                    audioSource.clip = audioClips[9];       // 물마시는사운드
+                                    audioSource.Play();
                                 }
                             }
                         }
@@ -571,7 +593,7 @@ public class PlayerCtrl : MonoBehaviour {
 
                             if (Input.GetKeyDown("e"))
                             {
-                                Debug.Log("헬리콥터");
+                                //Debug.Log("헬리콥터");
 
                                 // 헬기 상호작용 시 엔딩UI띄우기 및 로비로나가기 함수 호출
                                 StartCoroutine(Ending());
@@ -737,23 +759,25 @@ public class PlayerCtrl : MonoBehaviour {
         }
     }
 
-    IEnumerator DeadPlayer()
-    {
-        // 죽음 UI 띄우기
+    //IEnumerator DeadPlayer()
+    //{
+    //    // 죽음 UI 띄우기
 
-        yield return new WaitForSeconds(7.5f);
-        stageMgr.OnClickExitRoom();                 // 로비로 나가기
+    //    yield return new WaitForSeconds(7.5f);
+    //    stageMgr.OnClickExitRoom();                 // 로비로 나가기
 
-        Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
-        Cursor.visible = true;
-        yield return null;
-    }
+    //    Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+    //    Cursor.visible = true;
+    //    yield return null;
+    //}
 
     IEnumerator Ending()
     {
+        GameObject.FindGameObjectWithTag("Heli").GetComponent<AudioSource>().clip = null;
         // 엔딩 영상 재생
+        fadeScript.isExit = true;
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(12f);
         stageMgr.OnClickExitRoom();                 // 로비로 나가기
 
         Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
@@ -798,6 +822,8 @@ public class PlayerCtrl : MonoBehaviour {
             //eventCS.hookThrowGage = throwGage;
             yield return new WaitForSeconds(0.1f);
         }
+        audioSource.clip = audioClips[10];       // 훅 던지는 사운드
+        audioSource.Play();
 
         // 마우스 다운이 끝난 후 Hook 던지는 부분
         ani.speed = 1f;                                             // 애니메이션에서 이벤트함수로 처리한 애니메이션 스탑 풀기
@@ -821,6 +847,9 @@ public class PlayerCtrl : MonoBehaviour {
 
     IEnumerator ConstructClick(int ID)
     {
+        audioSource.clip = audioClips[11];   // 플레이스 오브젝트(별루임...)
+        audioSource.Play();
+
         ani.SetTrigger("ConstructClick");
         // 여기에다가 건축관련 함수 호출하면 될듯(홀로그램은 저쪽에서 캐릭터 constructMode 변수 체크식으로 해서 활성화시키면 될듯)
         constructScript.ConstructClick(ID);

@@ -46,7 +46,7 @@ public class Fade : MonoBehaviour
   {
     IngaemeCanvas.alpha-=Time.deltaTime;
     DieCanvas.alpha+=Time.deltaTime;
-    Invoke("QuitUI",3.0f);
+    Invoke("QuitUI",5.0f);
   }
 
   public void QuitUI()
