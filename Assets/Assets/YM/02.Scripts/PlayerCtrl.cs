@@ -35,6 +35,11 @@ public class PlayerCtrl : MonoBehaviour {
     };
     [HideInInspector]
     public bool isAnimating = false;               // 애니메이션 실행중 중복 실행을 막기위한 변수
+
+    [HideInInspector]
+    public AudioSource audioSource;
+    public AudioClip[] audioClips;
+
     private float speed;                             // 캐릭터 움직임 스피드.
     private float jumpSpeed;                         // 캐릭터 점프 힘.
     public float gravity;                           // 캐릭터에게 작용하는 중력.
@@ -47,6 +52,7 @@ public class PlayerCtrl : MonoBehaviour {
     private bool chatingOn = false;                  // 채팅창이 켜져있는지 확인할 변수
     public bool constructMode = false;              // 건축모드인지 확인할 변수
     public bool hammerMode = false;              // 해머모드인지 확인할 변수
+    public bool Dead = false;
 
     public int swapNum = 0;                         // 소지품 몇번째칸을 가리키고 있는지
 
@@ -102,6 +108,9 @@ public class PlayerCtrl : MonoBehaviour {
 
     private GameObject itemGetUI;
     private GameObject itemNameUI;
+    private StageManager stageMgr;
+
+    private Fade fadeScript;
     //private GameManager gm;
 
     //public GameObject hookPrefab;                   // test때문에 넣어놓은 훅프리팹
@@ -109,6 +118,8 @@ public class PlayerCtrl : MonoBehaviour {
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+
         constructScript = GetComponent<ConstructMode>();
         hammerScript = GetComponent<HammerMode>();
         ani = gameObject.GetComponentInChildren<Animator>();
@@ -129,6 +140,8 @@ public class PlayerCtrl : MonoBehaviour {
         itemGetUI = GameObject.FindGameObjectWithTag("ItemGetUI");
         itemNameUI = GameObject.FindGameObjectWithTag("ItemNameUI");
 
+        stageMgr = FindObjectOfType<StageManager>();
+        fadeScript = FindObjectOfType<Fade>();
 
         // 포톤추가
         //PhotonView 컴포넌트 할당
@@ -157,6 +170,7 @@ public class PlayerCtrl : MonoBehaviour {
     {
         //gm = FindObjectOfType<GameManager>();
         sharkCtrl = FindObjectOfType<SharkCtrl>();
+        
 
         speed = 3.0f;
         jumpSpeed = 6.0f;
@@ -219,7 +233,13 @@ public class PlayerCtrl : MonoBehaviour {
 
             if (hp <= 0.0f)
             {
-                //Time.timeScale = 0;
+                Dead = true;
+                ani.SetBool("Dead", true);
+                fadeScript.fadeIN = true;
+
+                Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+                Cursor.visible = true;
+                //StartCoroutine(DeadPlayer());
             }
 
             else
@@ -228,7 +248,7 @@ public class PlayerCtrl : MonoBehaviour {
             }
             #endregion
 
-            if (!inventoryOn && !EscapeOn && !chatingOn)
+            if (!inventoryOn && !EscapeOn && !chatingOn && !Dead)
             {
                 
 
@@ -316,6 +336,9 @@ public class PlayerCtrl : MonoBehaviour {
                         hammerMode = false;
                         constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
                         ani.SetBool("ConstructMode", false);
+
+                        audioSource.clip = audioClips[8];       // 드롭아이템
+                        audioSource.Play();
                     }
 
                     if (Input.GetMouseButtonDown(0))                            // 마우스 왼쪽버튼 다운시
@@ -328,18 +351,25 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                         else if(hammerMode && swimMode == false && hookThrow == false && inventoryManager.buildingRecipes[hammerScript.selectObject].CanBuild(inventoryManager))
                         {
-                                hammerScript.HammerClick();
-                                inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
+                            hammerScript.HammerClick();
+
+                            audioSource.clip = audioClips[1];       // 나무힛트 소리
+                            audioSource.Play();
+
+                            inventoryManager.Build(inventoryManager.buildingRecipes[hammerScript.selectObject]);                            
                         }
                         else if(rightHandle.transform.GetChild(0).tag == "Potato")
                         {
                             rightHandle.transform.GetChild(0).GetComponent<Potato_Object>().EatPotato(pv.viewID);
+
+                            audioSource.clip = audioClips[7];       // 먹는소리
+                            audioSource.Play();
                         }
                     }
                 }
                 else  // 손에 아무것도 들고있지 않고
                 {
-                    if (stuffs.transform.GetChild(swapNum).childCount > 0)     // 건설 오브젝트들 못버리게
+                    if (stuffs.transform.GetChild(swapNum).childCount > 0)
                     {
                         if (Input.GetKeyDown("g"))       // 버리기
                         {
@@ -348,6 +378,9 @@ public class PlayerCtrl : MonoBehaviour {
                             hammerMode = false;
                             constructMode = false;      // 혹시나를 위한 해머모드 건설모드 false
                             ani.SetBool("ConstructMode", false);
+
+                            audioSource.clip = audioClips[8];       // 드롭아이템
+                            audioSource.Play();
                         }
                     }
 
@@ -362,13 +395,6 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                     }
                 }
-                //else  // SpearAttack 테스트를 위한 손에 아무것도 없을때 애니메이션
-                //{
-                //    if (Input.GetMouseButtonDown(0))                            // 마우스 왼쪽버튼 다운시
-                //    {
-                //        ani.SetTrigger("SpearAttack");
-                //    }
-                //}
 
                 if (hookThrow == true)                                           // 훅이 던져진 상태
                 {
@@ -394,10 +420,15 @@ public class PlayerCtrl : MonoBehaviour {
                                 isAnimating = true;
                                 ani.SetTrigger("SpearAttack");
 
+                                audioSource.clip = audioClips[3];       // 휘두르는 소리
+                                audioSource.Play();
+
                                 for (int i = 0; i < hits.Length; i++)   // 여기만 레이케스트에 감지된것이 있으면 작동
                                 {
                                     if (hits[i].collider.tag == "Enemy")
                                     {
+                                        audioSource.clip = audioClips[2];       // 스피어힛트 소리
+                                        audioSource.Play();
                                         // 상어한테 데미지주는 소스
                                         sharkCtrl.Damaged();
                                     }
@@ -495,6 +526,9 @@ public class PlayerCtrl : MonoBehaviour {
                                 {
                                     //hits[j].transform.GetComponent<InteractionObject>().interaction = true;
                                     hits[j].transform.GetComponent<Purifier>().UsePurifier(pv.viewID);
+
+                                    audioSource.clip = audioClips[9];       // 물마시는사운드
+                                    audioSource.Play();
                                 }
                             }
 
@@ -503,6 +537,9 @@ public class PlayerCtrl : MonoBehaviour {
                                 if (Input.GetKeyDown("e"))
                                 {
                                     this.thirsty -= 0.1f;
+
+                                    audioSource.clip = audioClips[9];       // 물마시는사운드
+                                    audioSource.Play();
                                 }
                             }
                         }
@@ -540,7 +577,30 @@ public class PlayerCtrl : MonoBehaviour {
                         }
                         #endregion
 
-                        
+                        #region 헬기 상호작용
+                        if (hits[j].collider.tag == "Heli")
+                        {
+                            // 상호작용UI띄우기
+                            //for (int i = 0; i < inventoryManager.itemList.Count; i++)
+                            //{
+                            //    if (inventoryManager.itemList[i].ID == hits[j].transform.GetComponent<PhotonObject>().objectNum)
+                            //    {
+                            itemGetUI.SetActive(true);
+                            //        itemNameUI.GetComponent<Text>().text = inventoryManager.itemList[i].Name;
+                            //        //Debug.Log(inventoryManager.itemList[i].Name);
+                            //    }
+                            //}
+
+                            if (Input.GetKeyDown("e"))
+                            {
+                                //Debug.Log("헬리콥터");
+
+                                // 헬기 상호작용 시 엔딩UI띄우기 및 로비로나가기 함수 호출
+                                StartCoroutine(Ending());
+                                //pv.RPC("PhotonObjectDestroyMaster", PhotonTargets.AllBuffered, hits[j].transform.GetComponent<PhotonView>().viewID);
+                            }
+                        }
+                        #endregion
                     }
                 }
                 
@@ -620,6 +680,16 @@ public class PlayerCtrl : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryOn = !inventoryOn;
+                if(inventoryOn)
+                {
+                    audioSource.clip = audioClips[4];
+                    audioSource.Play();
+                }
+                else
+                {
+                    audioSource.clip = audioClips[5];
+                    audioSource.Play();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -667,6 +737,9 @@ public class PlayerCtrl : MonoBehaviour {
     {
         if(other.tag == "Sea")
         {
+            audioSource.clip = audioClips[0];   // 물 풍덩소리
+            audioSource.Play();
+
             ani.SetBool("Run", false);
             swimMode = true;
             ani.SetBool("Swim", true);
@@ -684,6 +757,32 @@ public class PlayerCtrl : MonoBehaviour {
             ani.SetBool("Swim", false);
             gravity = 20;
         }
+    }
+
+    //IEnumerator DeadPlayer()
+    //{
+    //    // 죽음 UI 띄우기
+
+    //    yield return new WaitForSeconds(7.5f);
+    //    stageMgr.OnClickExitRoom();                 // 로비로 나가기
+
+    //    Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+    //    Cursor.visible = true;
+    //    yield return null;
+    //}
+
+    IEnumerator Ending()
+    {
+        GameObject.FindGameObjectWithTag("Heli").GetComponent<AudioSource>().clip = null;
+        // 엔딩 영상 재생
+        fadeScript.isExit = true;
+
+        yield return new WaitForSeconds(12f);
+        stageMgr.OnClickExitRoom();                 // 로비로 나가기
+
+        Cursor.lockState = CursorLockMode.None;     // 마우스 활성화
+        Cursor.visible = true;
+        yield return null;
     }
 
     IEnumerator PullHook()
@@ -723,6 +822,8 @@ public class PlayerCtrl : MonoBehaviour {
             //eventCS.hookThrowGage = throwGage;
             yield return new WaitForSeconds(0.1f);
         }
+        audioSource.clip = audioClips[10];       // 훅 던지는 사운드
+        audioSource.Play();
 
         // 마우스 다운이 끝난 후 Hook 던지는 부분
         ani.speed = 1f;                                             // 애니메이션에서 이벤트함수로 처리한 애니메이션 스탑 풀기
@@ -746,6 +847,9 @@ public class PlayerCtrl : MonoBehaviour {
 
     IEnumerator ConstructClick(int ID)
     {
+        audioSource.clip = audioClips[11];   // 플레이스 오브젝트(별루임...)
+        audioSource.Play();
+
         ani.SetTrigger("ConstructClick");
         // 여기에다가 건축관련 함수 호출하면 될듯(홀로그램은 저쪽에서 캐릭터 constructMode 변수 체크식으로 해서 활성화시키면 될듯)
         constructScript.ConstructClick(ID);
@@ -813,7 +917,10 @@ public class PlayerCtrl : MonoBehaviour {
                             ani.SetTrigger("Swap");
                         }
                     }
-                    else if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8)    // 건축오브젝트 레이어번호 확인해서 수정하기
+                    else if (
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8 ||
+                        Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 18 // 건축오브젝트이거나 로켓
+                        )    // 건축오브젝트 레이어번호 확인해서 수정하기
                     {
                         //PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
                         //Destroy(rightHandle.transform.GetChild(0).gameObject);
@@ -863,7 +970,10 @@ public class PlayerCtrl : MonoBehaviour {
                         ani.SetTrigger("Swap");
                     }
                 }
-                else if (Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8)    // 건축오브젝트 레이어번호 확인해서 수정하기
+                else if (
+                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 8 ||
+                         Resources.Load<GameObject>(photonMapping[stuffs.transform.GetChild(swapNum).GetChild(0).GetComponent<DraggableItem>().item.ID]).layer == 18 // 건축오브젝트이거나 로켓
+                         )    // 건축오브젝트 레이어번호 확인해서 수정하기
                 {
                     //PhotonNetwork.Destroy(rightHandle.transform.GetChild(0).gameObject);
                     //Destroy(rightHandle.transform.GetChild(0).gameObject);

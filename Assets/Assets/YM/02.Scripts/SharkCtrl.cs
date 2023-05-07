@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SharkCtrl : MonoBehaviour
 {
+    private AudioSource playerAudioSource;
+
+    public AudioClip[] audioClips;
+    private AudioSource audioSource;
+
     public float moveSpeed = 5f;
     public float attackDistance = 2f;
     public int HP = 100;
@@ -43,6 +48,7 @@ public class SharkCtrl : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         ani = GetComponent<Animator>();
         // 로밍 위치 얻기
         roamingCheckPoints = GameObject.Find("RoamingPoint").GetComponentsInChildren<Transform>();
@@ -70,6 +76,7 @@ public class SharkCtrl : MonoBehaviour
                     targetPlayer = player.transform;
                     currentState = State.Chase;
                     ani.SetBool("Chase", true);
+                    ani.SetBool("Attack", true);
                     break;
                 }
                 else
@@ -129,6 +136,7 @@ public class SharkCtrl : MonoBehaviour
         {
             currentState = State.Idle;
             ani.SetBool("Chase", false);
+            ani.SetBool("Attack", false);
             return;
         }
 
@@ -150,8 +158,18 @@ public class SharkCtrl : MonoBehaviour
         // 공격이 끝나면 targetPlayer를 null로 초기화
         if(targetPlayer.tag == "Player")
         {
-            targetPlayer.GetComponent<PlayerCtrl>().hp -= 0.005f;
+            targetPlayer.GetComponent<PlayerCtrl>().hp -= 0.01f;
             yield return new WaitForSeconds(0.5f);
+
+            if(run == false)
+            {
+                targetPlayer.GetComponent<PlayerCtrl>().audioSource.clip = targetPlayer.GetComponent<PlayerCtrl>().audioClips[6];
+                targetPlayer.GetComponent<PlayerCtrl>().audioSource.Play();
+
+                audioSource.clip = audioClips[0];
+                audioSource.volume = 0.5f;
+                audioSource.Play();
+            }
 
             run = true;
             targetPlayer = roamingTarget;

@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Assets/DW/10.Etc.meta
+guid: 262e10575ffbd8740bb721a6ac436b16
+folderAsset: yes
+DefaultImporter:
+========
 guid: 3ff58fcf0f4d6624fa61395e0d04c652
 NativeFormatImporter:
+>>>>>>>> master:Assets/Assets/DW/New Render Texture.renderTexture.meta
   externalObjects: {}
   mainObjectFileID: 8400000
   userData: 

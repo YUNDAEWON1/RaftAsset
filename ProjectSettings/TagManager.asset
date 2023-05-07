@@ -38,6 +38,7 @@ TagManager:
   - HPGage
   - ItemGetUI
   - ItemNameUI
+  - Heli
   layers:
   - Default
   - TransparentFX
@@ -57,7 +58,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Rocket
   - IslandObject
   - Player
   - 
